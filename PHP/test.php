@@ -11,11 +11,17 @@
   <form action="test.php" method="POST">
     <div>
       <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" value="<?php if (isset($_POST['nombre'])) echo $_POST['nombre']; ?>">
+      <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" value="
+      <?php if (isset($_POST['nombre'])) {
+        echo $_POST['nombre'];
+      } ?>">
     </div>
     <div>
       <label for="apellidos">Apellidos:</label>
-      <input type="text" id="apellido" name="apellido" placeholder="Tus apellidos" value="<?php if (isset($_POST['apellido'])) echo $_POST['apellido']; ?>">
+      <input type="text" id="apellido" name="apellido" placeholder="Tus apellidos" value="
+      <?php if (isset($_POST['apellido'])) {
+        echo $_POST['apellido'];
+      } ?>">
     </div>
     <div>
       <label for="start">Start date:</label>
@@ -24,7 +30,10 @@
     </div>
     <div>
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" placeholder="Tu email" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>">
+      <input type="email" id="email" name="email" placeholder="Tu email" value="
+      <?php if (isset($_POST['email'])) {
+        echo $_POST['email'];
+      } ?>">
     </div>
     <div>
       <label for="password">Contraseña:</label>

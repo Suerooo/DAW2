@@ -5,194 +5,60 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>RU-ROULETTE</title>
+  <title>RU-RULETA</title>
 </head>
 
 
 
 <?php
-// Which number we are going to bet on and how much; roulette generates a random number between 0 and 36; whether we guessed correctly or
-// not; track whether we won or lost; initial balance 1000; correct number pays x36; history of profit/loss amounts and winning numbers
-// Number *36, color x2, even/odd x2, dozens (1-12, 13-24, 25-36) *3, high/low (19-36, 1-18) *2
-// spins without bets
-
-
+session_start();
 
 if (!isset($_SESSION["balance"])) {
   $_SESSION["balance"] = 1000;
 }
 
-
-
 if (!isset($_SESSION["currentGame"])) {
   $_SESSION["currentGame"] = [];
 }
-
-
 
 if (!isset($_SESSION["history"])) {
   $_SESSION["history"] = [];
 }
 
-
-
 const ID_NUMBER = "Number";
 
-const ID_EVEN_ODD = "Even/Odd";
-const EVEN = "Even";
-const ODD = "Odd";
+const ID_EVEN_ODD = "even_odd";
+const EVEN = "even";
+const ODD = "odd";
 
-const ID_COLOR = "Color";
-const RED = "Red";
-const BLACK = "Black";
+const ID_COLOR = "color";
+const RED = "red";
+const BLACK = "black";
 
-const ID_DOZEN = "Dozen";
-const DOZEN1 = "1-12";
-const DOZEN2 = "13-24";
-const DOZEN3 = "25-36";
+const ID_DOZEN = "dozen";
+const DOZEN1 = "dozen_one";
+const DOZEN2 = "dozen_two";
+const DOZEN3 = "dozen_three";
 
-const ID_HIGH_LOW = "High/Low";
-const HIGH = "19-36";
-const LOW = "1-18";
+const ID_HIGH_LOW = "high_low";
+const HIGH = "high";
+const LOW = "low";
 
 
-
-function validateBet(float &$balance): float
+function addBet(array &$currentGame, float &$balance, string $choice, string $betType, float $moneyBet)
 {
-  do {
-    $betAmount = (float) readline("Enter the amount of money you want to bet (current balance: $balance): ");
-  } while ($betAmount > $balance);
-  return $betAmount;
+  if ($moneyBet < 0) {
+    echo "No se puede apostar menos de 0€";
+  } else {
+    $balance -= $moneyBet;
+
+    $currentGame[] = [
+      "type" => $betType,
+      "choice" => $choice,
+      "money" => $moneyBet
+    ];
+  }
 }
-
-
-
-function addBet(array &$currentGame, float &$balance, string $choice, string $betType)
-{
-  $moneyBet = validateBet($_SESSION["balance"]);
-  $balance -= $moneyBet;
-
-  $currentGame[] = [
-    "type" => $betType,
-    "choice" => $choice,
-    "money" => $moneyBet
-  ];
-}
-
-
-
-function betOnNumber(array &$currentGame, float &$balance)
-
-{
-  do {
-    $numberBet = (int) readline("Enter the number you want to bet on (0-36): ");
-  } while ($numberBet < 0 || $numberBet > 36);
-
-  addBet($currentGame, $balance, $numberBet, ID_NUMBER);
-}
-
-
-
-function betOnColor(array &$currentGame, float &$balance)
-
-{
-  do {
-    echo "1. Red <br>";
-    echo "2. Black <br>";
-    $colorChoice = (int) readline("Choose a color: ");
-
-    switch ($colorChoice) {
-      case 1:
-        addBet($currentGame, $balance, RED, ID_COLOR);
-        break;
-      case 2:
-        addBet($currentGame, $balance, BLACK, ID_COLOR);
-        break;
-      default:
-        echo "That option is not available";
-        break;
-    }
-  } while ($colorChoice < 1 || $colorChoice > 2);
-}
-
-
-
-function betOnEvenOdd(array &$currentGame, float &$balance)
-
-{
-
-  do {
-    echo "1. Even <br>";
-    echo "2. Odd <br>";
-
-    $evenOddChoice = (int) readline("Choose even or odd: ");
-
-    switch ($evenOddChoice) {
-      case 1:
-        addBet($currentGame, $balance, EVEN, ID_EVEN_ODD);
-        break;
-      case 2:
-        addBet($currentGame, $balance, ODD, ID_EVEN_ODD);
-        break;
-      default:
-        echo "That option is not available";
-        break;
-    }
-  } while ($evenOddChoice < 1 || $evenOddChoice > 2);
-}
-
-
-
-function betOnDozens(array &$currentGame, float &$balance)
-{
-  do {
-    echo "1. First dozen (1-12) <br>";
-    echo "2. Second dozen (13-24) <br>";
-    echo "3. Third dozen (25-36) <br>";
-
-    $dozenChoice = (int) readline("Choose an option: ");
-
-    switch ($dozenChoice) {
-      case 1:
-        addBet($currentGame, $balance, DOZEN1, ID_DOZEN);
-        break;
-      case 2:
-        addBet($currentGame, $balance, DOZEN2, ID_DOZEN);
-        break;
-      case 3:
-        addBet($currentGame, $balance, DOZEN3, ID_DOZEN);
-        break;
-      default:
-        echo "That option is not available";
-        break;
-    }
-  } while ($dozenChoice < 1 || $dozenChoice > 3);
-}
-
-
-
-function betOnHighLow(array &$currentGame, float &$balance)
-{
-  do {
-    echo "1. Low (1-18) <br>";
-    echo "2. High (19-36) <br>";
-
-    $highLowChoice = (int) readline("Choose an option: ");
-
-    switch ($highLowChoice) {
-      case 1:
-        addBet($currentGame, $balance, LOW, ID_HIGH_LOW);
-        break;
-      case 2:
-        addBet($currentGame, $balance, HIGH, ID_HIGH_LOW);
-        break;
-      default:
-        echo "That option is not available";
-        break;
-    }
-  } while ($highLowChoice < 1 || $highLowChoice > 2);
-}
-
 
 
 function showCurrentGame(array $currentGame, float $balance)
@@ -200,16 +66,16 @@ function showCurrentGame(array $currentGame, float $balance)
   $total = 0;
 
   echo "<br>==============================<br>";
-  echo "         BETS <br>";
+  echo "         APUESTAS <br>";
 
   foreach ($currentGame as $key => $bet) {
-    echo ($key + 1) . ". " . $bet["type"] . " -> " . $bet["choice"] . " -> " . $bet["money"] . "$ <br>";
+    echo ($key + 1) . ". " . $bet["type"] . " -> " . $bet["choice"] . " -> " . $bet["money"] . "€ <br>";
     $total += $bet["money"];
   }
 
   echo "------------------------------<br>";
-  echo "Current balance: $balance$ <br>";
-  echo "Total bet: $total$ <br>";
+  echo "Saldo actual: $balance" . "€ <br>";
+  echo "Total apostado: $total" . "€ <br>";
 }
 
 
@@ -218,7 +84,7 @@ function showCurrentGame(array $currentGame, float $balance)
 
 function checkColor(string $choice, int $winningNumber): bool
 {
-  $redNumbers = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35];
+  $redNumbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
 
   foreach ($redNumbers as $redNumber) {
     $winningColor = ($winningNumber === $redNumber) ? RED : BLACK;
@@ -277,9 +143,9 @@ function resolveBet(int $key, array $bet, bool $result, float &$balance, int $mu
   if ($result) {
     $winnings = $bet["money"] * $multiplier;
     $balance += $winnings;
-    echo ($key + 1) . ". " . $bet["type"] . " -> " . $bet["choice"] . " -> " . "You won" . " -> " . "+" . "$winnings" . "$ <br>";
+    echo ($key + 1) . ". " . $bet["type"] . " -> " . $bet["choice"] . " -> " . "Ganaste" . " -> " . "+" . "$winnings" . "€ <br>";
   } else {
-    echo ($key + 1) . ". " . $bet["type"] . " -> " . $bet["choice"] . " -> " . "You lost" . " -> " . "-" . $bet["money"] . "$ <br>";
+    echo ($key + 1) . ". " . $bet["type"] . " -> " . $bet["choice"] . " -> " . "Perdiste" . " -> " . "-" . $bet["money"] . "€ <br>";
   }
 }
 
@@ -288,7 +154,7 @@ function resolveBet(int $key, array $bet, bool $result, float &$balance, int $mu
 function play(array &$currentGame, float &$balance, array &$history)
 {
   $winningNumber = random_int(0, 36);
-  echo "<br>      WINNING NUMBER $winningNumber <br>";
+  echo "<br>      NUMERO GANADOR $winningNumber <br>";
 
   $totalBet = 0;
 
@@ -321,7 +187,7 @@ function play(array &$currentGame, float &$balance, array &$history)
         break;
 
       default:
-        echo "An error occurred";
+        echo "A ocurrido un error";
         break;
     }
   }
@@ -344,16 +210,16 @@ function showHistory(array $history)
 {
 
   echo "<br>==============================<br>";
-  echo "         HISTORY <br>";
+  echo "         HISTORIAL <br>";
   echo "==============================<br> <br>";
 
 
 
   foreach ($history as $key => $game) {
-    echo ($key + 1) . ". Initial balance: " . $game["initialBalance"] . "$ <br>";
-    echo ($key + 1) . ". Final balance: " . $game["finalBalance"] . "$ <br>";
-    echo ($key + 1) . ". Profit/Loss: " . $game["profitLoss"] . "$ <br>";
-    echo ($key + 1) . ". Winning number: " . $game["winningNumber"] . " <br>";
+    echo ($key + 1) . ". Saldo inicial: " . $game["initialBalance"] . "€ <br>";
+    echo ($key + 1) . ". Saldo final: " . $game["finalBalance"] . "€ <br>";
+    echo ($key + 1) . ". Beneficio/Perdidas: " . $game["profitLoss"] . "€ <br>";
+    echo ($key + 1) . ". Numero ganador: " . $game["winningNumber"] . " <br>";
     echo "---------------------------------- <br> <br>";
   }
 }
@@ -363,167 +229,141 @@ function showHistory(array $history)
 
 
 <body>
-  <form action="Roulette_english.php" method="POST">
+  <form action="Ruleta.php" method="POST">
 
     <div>
-      <h2>BET ON A NUMBER</h2>
+      <h2>APOSTAR A UN NUMERO</h2>
 
-      <label for="number">Number to bet on:</label>
+      <label for="number">Numero al que apostar:</label>
       <input type="number" id="number" name="number" min="0" max="36" placeholder="0-36">
 
       <br>
 
-      <label for="number_bet">Bet amount:</label>
+      <label for="number_bet">Cantidad de dinero a apostar:</label>
       <input type="number" id="number_bet" name="number_bet" min="0">
-
-      <br>
-
-      <button type="submit" name="action" value="number">Bet</button>
     </div>
 
     <div>
-      <h2>BET ON A COLOR</h2>
+      <h2>APOSTAR A UN COLOR</h2>
 
-      <input type="radio" id="color_none" name="color" checked />
-      <label for="color_none">None</label>
+      <input type="radio" id="color_none" name="color" value="" checked />
+      <label for="color_none">Ninguno</label>
 
-      <input type="radio" id="red" name="color" />
-      <label for="red">Red</label>
+      <input type="radio" id="red" name="color" value="red" />
+      <label for="red">Rojo</label>
 
-      <input type="radio" id="black" name="color" />
-      <label for="black">Black</label>
+      <input type="radio" id="black" name="color" value="black" />
+      <label for="black">Negro</label>
 
       <br>
 
-      <label for="color_bet">Bet amount:</label>
+      <label for="color_bet">Cantidad de dinero a apostar:</label>
       <input type="number" id="color_bet" name="color_bet" min="0">
-
-      <br>
-
-      <button type="submit" name="action" value="color">Bet</button>
     </div>
 
     <div>
-      <h2>BET ON EVEN OR ODD</h2>
-      <input type="radio" id="even_odd_none" name="even_odd" checked />
-      <label for="even_odd_none">None</label>
+      <h2>APOSTAR A PAR O IMPAR</h2>
+      <input type="radio" id="even_odd_none" name="even_odd" value="" checked />
+      <label for="even_odd_none">Ninguno</label>
 
-      <input type="radio" id="even" name="even_odd" />
-      <label for="even">Even</label>
+      <input type="radio" id="even" name="even_odd" value="even" />
+      <label for="even">Par</label>
 
-      <input type="radio" id="odd" name="even_odd" />
-      <label for="odd">Odd</label>
+      <input type="radio" id="odd" name="even_odd" value="odd" />
+      <label for="odd">Impar</label>
 
       <br>
 
-      <label for="even_odd_bet">Bet amount:</label>
+      <label for="even_odd_bet">Cantidad de dinero a apostar:</label>
       <input type="number" id="even_odd_bet" name="even_odd_bet" min="0">
-
-      <br>
-
-      <button type="submit" name="action" value="even_odd">Bet</button>
     </div>
 
     <div>
 
-      <h2>BET ON DOZENS</h2>
+      <h2>APOSTAR A DOCENAS</h2>
 
-      <input type="radio" id="dozen_none" name="dozen" checked />
-      <label for="dozen_none">None</label>
+      <input type="radio" id="dozen_none" name="dozen" value="" checked />
+      <label for="dozen_none">Ninguno</label>
 
-      <input type="radio" id="dozen_one" name="dozen" />
-      <label for="dozen_one">First dozen 1-12</label>
+      <input type="radio" id="dozen_one" name="dozen" value="dozen_one" />
+      <label for="dozen_one">Primera docena 1-12</label>
 
-      <input type="radio" id="dozen_two" name="dozen" />
-      <label for="dozen_two">Second dozen 13-24</label>
+      <input type="radio" id="dozen_two" name="dozen" value="dozen_two" />
+      <label for="dozen_two">Segunda docena 13-24</label>
 
-      <input type="radio" id="dozen_three" name="dozen" />
-      <label for="dozen_three">Third dozen 25-36</label>
+      <input type="radio" id="dozen_three" name="dozen" value="dozen_three" />
+      <label for="dozen_three">Tercera docena 25-36</label>
 
       <br>
 
-      <label for="dozen_bet">Bet amount:</label>
+      <label for="dozen_bet">Cantidad de dinero a apostar:</label>
       <input type="number" id="dozen_bet" name="dozen_bet" min="0">
-
-      <br>
-
-      <button type="submit" name="action" value="dozen">Bet</button>
     </div>
 
     <div>
-      <h2>BET ON HIGH OR LOW</h2>
+      <h2>APOSTAR A ALTO O BAJO</h2>
 
-      <input type="radio" id="high_low_none" name="high_low" checked />
-      <label for="high_low_none">None</label>
+      <input type="radio" id="high_low_none" name="high_low" value="" checked />
+      <label for="high_low_none">Ninguno</label>
 
-      <input type="radio" id="high" name="high_low" />
-      <label for="high">High</label>
+      <input type="radio" id="high" name="high_low" value="high" />
+      <label for="high">Alto</label>
 
-      <input type="radio" id="low" name="high_low" />
-      <label for="low">Low</label>
+      <input type="radio" id="low" name="high_low" value="low" />
+      <label for="low">Bajo</label>
 
       <br>
 
-      <label for="high_low_bet">Bet amount:</label>
+      <label for="high_low_bet">Cantidad de dinero a apostar:</label>
       <input type="number" id="high_low_bet" name="high_low_bet" min="0">
-
-      <br>
-
-      <button type="submit" name="action" value="high_low">Bet</button>
     </div>
 
-    <button type="submit" name="action" value="spin">Spin roulette</button>
+    <button type="submit" name="action" value="bet">Apostar</button>
+    <button type="submit" name="action" value="spin">Girar ruleta</button>
 
     <br>
 
   </form>
 
-
-
   <?php
 
-  var_dump($_POST);
+  if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST["action"])) {
+    switch ($_POST["action"]) {
+      case "bet":
 
-  showCurrentGame($_SESSION["currentGame"], $_SESSION["balance"]);
+        if ($_POST["number"] != "") {
+          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["number"], ID_NUMBER, $moneyBet = $_POST["number_bet"] == "" ? 0 : $_POST["number_bet"]);
+        }
 
-  switch ($_POST["action"]) {
-    case "number":
-      betOnNumber($_SESSION["currentGame"], $_SESSION["balance"]);
-      break;
+        if ($_POST["color"] != "") {
+          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["color"], ID_COLOR, $moneyBet = $_POST["color_bet"] == "" ? 0 : $_POST["color_bet"]);
+        }
 
-    case "color":
-      betOnColor($_SESSION["currentGame"], $_SESSION["balance"]);
-      break;
+        if ($_POST["even_odd"] != "") {
+          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["even_odd"], ID_EVEN_ODD, $moneyBet = $_POST["even_odd_bet"] == "" ? 0 : $_POST["even_odd_bet"]);
+        }
 
-    case "even_odd":
-      betOnEvenOdd($_SESSION["currentGame"], $_SESSION["balance"]);
-      break;
+        if ($_POST["dozen"] != "") {
+          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["dozen"], ID_DOZEN, $moneyBet = $_POST["dozen_bet"] == "" ? 0 : $_POST["dozen_bet"]);
+        }
 
-    case "dozen":
-      betOnDozens($_SESSION["currentGame"], $_SESSION["balance"]);
-      break;
+        if ($_POST["high_low"] != "") {
+          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["high_low"], ID_HIGH_LOW, $moneyBet = $_POST["high_low_bet"] == "" ? 0 : $_POST["high_low_bet"]);
+        }
 
-    case "high_low":
-      betOnHighLow($_SESSION["currentGame"], $_SESSION["balance"]);
-      break;
+        break;
 
-    case 6:
-      showHistory($_SESSION["history"]);
-      break;
+      case "spin":
+        play($_SESSION["currentGame"], $_SESSION["balance"], $_SESSION["history"]);
+        break;
 
-    case 7:
-      play($_SESSION["currentGame"], $_SESSION["balance"], $_SESSION["history"]);
-      break;
-
-    case 8:
-      echo "Exiting...\n";
-      break;
-
-    default:
-      echo "That option is not in the menu \n";
-      break;
+      default:
+        echo "Esa opción no esta en el menu \n";
+        break;
+    }
   }
 
+  showCurrentGame($_SESSION["currentGame"], $_SESSION["balance"]);
   showHistory($_SESSION["history"]);
 
   ?>

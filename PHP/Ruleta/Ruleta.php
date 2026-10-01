@@ -112,10 +112,8 @@ function checkDozen(string $choice, int $winningNumber)
   if ($winningNumber >= 1 || $winningNumber <= 12) {
     $winningDozen = DOZEN1;
   } elseif ($winningNumber >= 13 || $winningNumber <= 24) {
-
     $winningDozen = DOZEN2;
   } elseif ($winningNumber >= 25 || $winningNumber <= 36) {
-
     $winningDozen = DOZEN3;
   }
 
@@ -326,28 +324,27 @@ function showHistory(array $history)
   </form>
 
   <?php
-
   if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST["action"])) {
     switch ($_POST["action"]) {
       case "bet":
 
-        if ($_POST["number"] != "") {
+        if ($_POST["number"] != "" && ($_POST["number"] >= 0 && $_POST["number"] <= 36)) {
           addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["number"], ID_NUMBER, $moneyBet = $_POST["number_bet"] == "" ? 0 : $_POST["number_bet"]);
         }
 
-        if ($_POST["color"] != "") {
+        if ($_POST["color"] != "" && ($_POST["color"] === RED || $_POST["color"] === BLACK)) {
           addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["color"], ID_COLOR, $moneyBet = $_POST["color_bet"] == "" ? 0 : $_POST["color_bet"]);
         }
 
-        if ($_POST["even_odd"] != "") {
+        if ($_POST["even_odd"] != "" && ($_POST["even_odd"] === EVEN || $_POST["even_odd"] === ODD)) {
           addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["even_odd"], ID_EVEN_ODD, $moneyBet = $_POST["even_odd_bet"] == "" ? 0 : $_POST["even_odd_bet"]);
         }
 
-        if ($_POST["dozen"] != "") {
+        if ($_POST["dozen"] != "" && ($_POST["dozen"] === DOZEN1 || $_POST["dozen"] === DOZEN2 || $_POST["dozen"] === DOZEN3)) {
           addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["dozen"], ID_DOZEN, $moneyBet = $_POST["dozen_bet"] == "" ? 0 : $_POST["dozen_bet"]);
         }
 
-        if ($_POST["high_low"] != "") {
+        if ($_POST["high_low"] != "" && ($_POST["high_low"] === HIGH || $_POST["high_low"] === LOW)) {
           addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["high_low"], ID_HIGH_LOW, $moneyBet = $_POST["high_low_bet"] == "" ? 0 : $_POST["high_low_bet"]);
         }
 

@@ -8,79 +8,83 @@
   <title>RU-RULETA</title>
 </head>
 
-
-
 <?php
 session_start();
 
-if (!isset($_SESSION["balance"])) {
-  $_SESSION["balance"] = 1000;
-}
+const NUMBER_ID = "number";
+const NUMBER_ID_BET = "number_bet";
 
-if (!isset($_SESSION["currentGame"])) {
-  $_SESSION["currentGame"] = [];
-}
-
-if (!isset($_SESSION["history"])) {
-  $_SESSION["history"] = [];
-}
-
-const ID_NUMBER = "Number";
-
-const ID_EVEN_ODD = "even_odd";
+const EVEN_ODD_ID = "even_odd";
+const EVEN_ODD_ID_BET = "even_odd_bet";
+const EVEN_ODD_ID_NONE = "even_odd_none";
 const EVEN = "even";
 const ODD = "odd";
 
-const ID_COLOR = "color";
+const COLOR_ID = "color";
+const COLOR_ID_BET = "color_bet";
+const COLOR_ID_NONE = "color_none";
 const RED = "red";
 const BLACK = "black";
 
-const ID_DOZEN = "dozen";
+const DOZEN_ID = "dozen";
+const DOZEN_ID_BET = "dozen_bet";
+const DOZEN_ID_NONE = "dozen_none";
 const DOZEN1 = "dozen_one";
 const DOZEN2 = "dozen_two";
 const DOZEN3 = "dozen_three";
 
-const ID_HIGH_LOW = "high_low";
+const HIGH_LOW_ID = "high_low";
+const HIGH_LOW_ID_BET = "high_low_bet";
+const HIGH_LOW_ID_NONE = "high_low_none";
 const HIGH = "high";
 const LOW = "low";
 
+const TYPE = "type";
+const CHOICE = "choice";
+const MONEY = "money";
+const WON = "won";
+const RESULTS = "results";
+const INITIAL_BALANCE = "initial_balance";
+const FINAL_BALANCE = "final_balance";
+const PROFIT_LOSS = "profit_loss";
+const WINNING_NUMBER = "winning_number";
 
-function addBet(array &$currentGame, float &$balance, string $choice, string $betType, float $moneyBet)
-{
-  if ($moneyBet < 0) {
-    echo "No se puede apostar menos de 0€";
-  } else {
-    $balance -= $moneyBet;
+const ACTION = "action";
+const ACTION_BET = "bet";
+const ACTION_SPIN = "spin";
 
-    $currentGame[] = [
-      "type" => $betType,
-      "choice" => $choice,
-      "money" => $moneyBet
-    ];
-  }
+const SESSION_BALANCE = "balance";
+const SESSION_CURRENT_GAME = "current_game";
+const SESSION_HISTORY = "history";
+const SESSION_LAST_RESULT = "last_result";
+
+if (!isset($_SESSION[SESSION_BALANCE])) {
+  $_SESSION[SESSION_BALANCE] = 1000;
 }
 
-
-function showCurrentGame(array $currentGame, float $balance)
-{
-  $total = 0;
-
-  echo "<br>==============================<br>";
-  echo "         APUESTAS <br>";
-
-  foreach ($currentGame as $key => $bet) {
-    echo ($key + 1) . ". " . $bet["type"] . " -> " . $bet["choice"] . " -> " . $bet["money"] . "€ <br>";
-    $total += $bet["money"];
-  }
-
-  echo "------------------------------<br>";
-  echo "Saldo actual: $balance" . "€ <br>";
-  echo "Total apostado: $total" . "€ <br>";
+if (!isset($_SESSION[SESSION_CURRENT_GAME])) {
+  $_SESSION[SESSION_CURRENT_GAME] = [];
 }
 
+if (!isset($_SESSION[SESSION_HISTORY])) {
+  $_SESSION[SESSION_HISTORY] = [];
+}
 
-
-
+function getChoiceLabel(string $choice): string
+{
+  return match ($choice) {
+    HIGH => "Alto",
+    LOW => "Bajo",
+    EVEN => "Par",
+    ODD => "Impar",
+    RED => "Rojo",
+    BLACK => "Negro",
+    DOZEN1 => "Primera docena",
+    DOZEN2 => "Segunda docena",
+    DOZEN3 => "Tercera docena",
+    default => $choice
+  };
+}
 
 function checkColor(string $choice, int $winningNumber): bool
 {
@@ -93,7 +97,6 @@ function checkColor(string $choice, int $winningNumber): bool
 }
 
 
-
 function checkEvenOdd(string $choice, int $winningNumber)
 {
   if ($winningNumber % 2 === 0) {
@@ -104,7 +107,6 @@ function checkEvenOdd(string $choice, int $winningNumber)
 
   return $choice === $winningEvenOdd;
 }
-
 
 
 function checkDozen(string $choice, int $winningNumber)
@@ -121,7 +123,6 @@ function checkDozen(string $choice, int $winningNumber)
 }
 
 
-
 function checkHighLow(string $choice, int $winningNumber)
 {
 
@@ -134,54 +135,74 @@ function checkHighLow(string $choice, int $winningNumber)
   return $winningHighLow === $choice;
 }
 
+function addBet(array &$currentGame, float &$balance, string $choice, string $betType, float $moneyBet)
+{
+  if ($moneyBet > 0) {
+    $balance -= $moneyBet;
 
+    $currentGame[] = [
+      TYPE => $betType,
+      CHOICE => $choice,
+      MONEY => $moneyBet
+    ];
+  }
+}
 
-function resolveBet(int $key, array $bet, bool $result, float &$balance, int $multiplier)
+function resolveBet(array $bet, bool $result, float &$balance, int $multiplier): array
 {
   if ($result) {
-    $winnings = $bet["money"] * $multiplier;
+    $winnings = $bet[MONEY] * $multiplier;
     $balance += $winnings;
-    echo ($key + 1) . ". " . $bet["type"] . " -> " . $bet["choice"] . " -> " . "Ganaste" . " -> " . "+" . "$winnings" . "€ <br>";
+
+    return [
+      TYPE => $bet[TYPE],
+      CHOICE => $bet[CHOICE],
+      MONEY => $winnings,
+      WON => true
+    ];
   } else {
-    echo ($key + 1) . ". " . $bet["type"] . " -> " . $bet["choice"] . " -> " . "Perdiste" . " -> " . "-" . $bet["money"] . "€ <br>";
+    return [
+      TYPE => $bet[TYPE],
+      CHOICE => $bet[CHOICE],
+      MONEY => $bet[MONEY],
+      WON => false
+    ];
   }
 }
 
 
-
-function play(array &$currentGame, float &$balance, array &$history)
+function play(array &$currentGame, float &$balance, array &$history): array
 {
   $winningNumber = random_int(0, 36);
-  echo "<br>      NUMERO GANADOR $winningNumber <br>";
 
   $totalBet = 0;
 
   foreach ($currentGame as $bet) {
-    $totalBet += $bet["money"];
+    $totalBet += $bet[MONEY];
   }
 
   $initialBalance = $balance + $totalBet;
 
-  foreach ($currentGame as $key => $bet) {
-    switch ($bet["type"]) {
-      case ID_NUMBER:
-        resolveBet($key, $bet, ($winningNumber === $bet["choice"]), $balance, 36);
+  foreach ($currentGame as $bet) {
+    switch ($bet[TYPE]) {
+      case NUMBER_ID:
+        $results[] = resolveBet($bet, ($winningNumber === $bet[CHOICE]), $balance, 36);
         break;
 
-      case ID_COLOR:
-        resolveBet($key, $bet, checkColor($bet["choice"], $winningNumber), $balance, 2);
+      case COLOR_ID:
+        $results[] = resolveBet($bet, checkColor($bet[CHOICE], $winningNumber), $balance, 2);
         break;
 
-      case ID_EVEN_ODD:
-        resolveBet($key, $bet, checkEvenOdd($bet["choice"], $winningNumber), $balance, 2);
+      case EVEN_ODD_ID:
+        $results[] = resolveBet($bet, checkEvenOdd($bet[CHOICE], $winningNumber), $balance, 2);
         break;
 
-      case ID_DOZEN:
-        resolveBet($key, $bet, checkDozen($bet["choice"], $winningNumber), $balance, 3);
+      case DOZEN_ID:
+        $results[] = resolveBet($bet, checkDozen($bet[CHOICE], $winningNumber), $balance, 3);
         break;
 
-      case ID_HIGH_LOW:
-        resolveBet($key, $bet, checkHighLow($bet["choice"], $winningNumber), $balance, 2);
+      case HIGH_LOW_ID:
+        $results[] = resolveBet($bet, checkHighLow($bet[CHOICE], $winningNumber), $balance, 2);
         break;
 
       default:
@@ -190,180 +211,186 @@ function play(array &$currentGame, float &$balance, array &$history)
     }
   }
 
-
-
   $history[] = [
-    "initialBalance" => $initialBalance,
-    "finalBalance" => $balance,
-    "profitLoss" => $balance - $initialBalance,
-    "winningNumber" => $winningNumber
+    WINNING_NUMBER => $winningNumber,
+    PROFIT_LOSS => $balance - $initialBalance,
   ];
 
   $currentGame = [];
+
+  return [
+    WINNING_NUMBER => $winningNumber,
+    RESULTS => $results
+  ];
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST[ACTION])) {
+  switch ($_POST[ACTION]) {
+    case ACTION_BET:
 
+      if ($_POST[NUMBER_ID] != "" && ($_POST[NUMBER_ID] >= 0 && $_POST[NUMBER_ID] <= 36)) {
+        addBet($_SESSION[SESSION_CURRENT_GAME], $_SESSION[SESSION_BALANCE], $_POST[NUMBER_ID], NUMBER_ID, $moneyBet = $_POST[NUMBER_ID_BET] == "" ? 0 : $_POST[NUMBER_ID_BET]);
+      }
 
-function showHistory(array $history)
-{
+      if ($_POST[COLOR_ID] != "" && ($_POST[COLOR_ID] === RED || $_POST[COLOR_ID] === BLACK)) {
+        addBet($_SESSION[SESSION_CURRENT_GAME], $_SESSION[SESSION_BALANCE], $_POST[COLOR_ID], COLOR_ID, $moneyBet = $_POST[COLOR_ID_BET] == "" ? 0 : $_POST[COLOR_ID_BET]);
+      }
 
-  echo "<br>==============================<br>";
-  echo "         HISTORIAL <br>";
-  echo "==============================<br> <br>";
+      if ($_POST[EVEN_ODD_ID] != "" && ($_POST[EVEN_ODD_ID] === EVEN || $_POST[EVEN_ODD_ID] === ODD)) {
+        addBet($_SESSION[SESSION_CURRENT_GAME], $_SESSION[SESSION_BALANCE], $_POST[EVEN_ODD_ID], EVEN_ODD_ID, $moneyBet = $_POST[EVEN_ODD_ID_BET] == "" ? 0 : $_POST[EVEN_ODD_ID_BET]);
+      }
 
+      if ($_POST[DOZEN_ID] != "" && ($_POST[DOZEN_ID] === DOZEN1 || $_POST[DOZEN_ID] === DOZEN2 || $_POST[DOZEN_ID] === DOZEN3)) {
+        addBet($_SESSION[SESSION_CURRENT_GAME], $_SESSION[SESSION_BALANCE], $_POST[DOZEN_ID], DOZEN_ID, $moneyBet = $_POST[DOZEN_ID_BET] == "" ? 0 : $_POST[DOZEN_ID_BET]);
+      }
 
+      if ($_POST[HIGH_LOW_ID] != "" && ($_POST[HIGH_LOW_ID] === HIGH || $_POST[HIGH_LOW_ID] === LOW)) {
+        addBet($_SESSION[SESSION_CURRENT_GAME], $_SESSION[SESSION_BALANCE], $_POST[HIGH_LOW_ID], HIGH_LOW_ID, $moneyBet = $_POST[HIGH_LOW_ID_BET] == "" ? 0 : $_POST[HIGH_LOW_ID_BET]);
+      }
 
-  foreach ($history as $key => $game) {
-    echo ($key + 1) . ". Saldo inicial: " . $game["initialBalance"] . "€ <br>";
-    echo ($key + 1) . ". Saldo final: " . $game["finalBalance"] . "€ <br>";
-    echo ($key + 1) . ". Beneficio/Perdidas: " . $game["profitLoss"] . "€ <br>";
-    echo ($key + 1) . ". Numero ganador: " . $game["winningNumber"] . " <br>";
-    echo "---------------------------------- <br> <br>";
+      break;
+
+    case ACTION_SPIN:
+      $_SESSION[SESSION_LAST_RESULT] = play($_SESSION[SESSION_CURRENT_GAME], $_SESSION[SESSION_BALANCE], $_SESSION[SESSION_HISTORY]);
+      break;
+
+    default:
+      echo "Esa opción no esta en el menu \n";
+      break;
   }
+
+  header("Location: Ruleta.php");
+  exit;
 }
-
 ?>
-
 
 
 <body>
   <form action="Ruleta.php" method="POST">
-
+    <h1>APOSTAR</h1>
     <div>
       <h2>APOSTAR A UN NUMERO</h2>
 
-      <label for="number">Numero al que apostar:</label>
-      <input type="number" id="number" name="number" min="0" max="36" placeholder="0-36">
+      <label for="<?= NUMBER_ID ?>">Numero al que apostar:</label>
+      <input type="number" id="<?= NUMBER_ID ?>" name="<?= NUMBER_ID ?>" min="0" max="36" placeholder="0-36">
 
       <br>
 
-      <label for="number_bet">Cantidad de dinero a apostar:</label>
-      <input type="number" id="number_bet" name="number_bet" min="0">
+      <label for="<?= NUMBER_ID_BET ?>">Cantidad de dinero a apostar:</label>
+      <input type="number" id="<?= NUMBER_ID_BET ?>" name="<?= NUMBER_ID_BET ?>" min="0">
     </div>
 
     <div>
       <h2>APOSTAR A UN COLOR</h2>
 
-      <input type="radio" id="color_none" name="color" value="" checked />
-      <label for="color_none">Ninguno</label>
+      <input type="radio" id="<?= COLOR_ID_NONE ?>" name="<?= COLOR_ID ?>" value="" checked />
+      <label for="<?= COLOR_ID_NONE ?>">Ninguno</label>
 
-      <input type="radio" id="red" name="color" value="red" />
-      <label for="red">Rojo</label>
+      <input type="radio" id="<?= RED ?>" name="<?= COLOR_ID ?>" value="<?= RED ?>" />
+      <label for="<?= RED ?>">Rojo</label>
 
-      <input type="radio" id="black" name="color" value="black" />
-      <label for="black">Negro</label>
+      <input type="radio" id="<?= BLACK ?>" name="<?= COLOR_ID ?>" value="<?= BLACK ?>" />
+      <label for="<?= BLACK ?>">Negro</label>
 
       <br>
 
-      <label for="color_bet">Cantidad de dinero a apostar:</label>
-      <input type="number" id="color_bet" name="color_bet" min="0">
+      <label for="<?= COLOR_ID_BET ?>">Cantidad de dinero a apostar:</label>
+      <input type="number" id="<?= COLOR_ID_BET ?>" name="<?= COLOR_ID_BET ?>" min="0">
     </div>
 
     <div>
       <h2>APOSTAR A PAR O IMPAR</h2>
-      <input type="radio" id="even_odd_none" name="even_odd" value="" checked />
-      <label for="even_odd_none">Ninguno</label>
 
-      <input type="radio" id="even" name="even_odd" value="even" />
-      <label for="even">Par</label>
+      <input type="radio" id="<?= EVEN_ODD_ID_NONE ?>" name="<?= EVEN_ODD_ID ?>" value="" checked />
+      <label for="<?= EVEN_ODD_ID_NONE ?>">Ninguno</label>
 
-      <input type="radio" id="odd" name="even_odd" value="odd" />
-      <label for="odd">Impar</label>
+      <input type="radio" id="<?= EVEN ?>" name="<?= EVEN_ODD_ID ?>" value="<?= EVEN ?>" />
+      <label for="<?= EVEN ?>">Par</label>
+
+      <input type="radio" id="<?= ODD ?>" name="<?= EVEN_ODD_ID ?>" value="<?= ODD ?>" />
+      <label for="<?= ODD ?>">Impar</label>
 
       <br>
 
-      <label for="even_odd_bet">Cantidad de dinero a apostar:</label>
-      <input type="number" id="even_odd_bet" name="even_odd_bet" min="0">
+      <label for="<?= EVEN_ODD_ID_BET ?>">Cantidad de dinero a apostar:</label>
+      <input type="number" id="<?= EVEN_ODD_ID_BET ?>" name="<?= EVEN_ODD_ID_BET ?>" min="0">
     </div>
 
     <div>
-
       <h2>APOSTAR A DOCENAS</h2>
 
-      <input type="radio" id="dozen_none" name="dozen" value="" checked />
-      <label for="dozen_none">Ninguno</label>
+      <input type="radio" id="<?= DOZEN_ID_NONE ?>" name="<?= DOZEN_ID ?>" value="" checked />
+      <label for="<?= DOZEN_ID_NONE ?>">Ninguno</label>
 
-      <input type="radio" id="dozen_one" name="dozen" value="dozen_one" />
-      <label for="dozen_one">Primera docena 1-12</label>
+      <input type="radio" id="<?= DOZEN1 ?>" name="<?= DOZEN_ID ?>" value="<?= DOZEN1 ?>" />
+      <label for="<?= DOZEN1 ?>">Primera docena 1-12</label>
 
-      <input type="radio" id="dozen_two" name="dozen" value="dozen_two" />
-      <label for="dozen_two">Segunda docena 13-24</label>
+      <input type="radio" id="<?= DOZEN2 ?>" name="<?= DOZEN_ID ?>" value="<?= DOZEN2 ?>" />
+      <label for="<?= DOZEN2 ?>">Segunda docena 13-24</label>
 
-      <input type="radio" id="dozen_three" name="dozen" value="dozen_three" />
-      <label for="dozen_three">Tercera docena 25-36</label>
+      <input type="radio" id="<?= DOZEN3 ?>" name="<?= DOZEN_ID ?>" value="<?= DOZEN3 ?>" />
+      <label for="<?= DOZEN3 ?>">Tercera docena 25-36</label>
 
       <br>
 
-      <label for="dozen_bet">Cantidad de dinero a apostar:</label>
-      <input type="number" id="dozen_bet" name="dozen_bet" min="0">
+      <label for="<?= DOZEN_ID_BET ?>">Cantidad de dinero a apostar:</label>
+      <input type="number" id="<?= DOZEN_ID_BET ?>" name="<?= DOZEN_ID_BET ?>" min="0">
     </div>
 
     <div>
       <h2>APOSTAR A ALTO O BAJO</h2>
 
-      <input type="radio" id="high_low_none" name="high_low" value="" checked />
-      <label for="high_low_none">Ninguno</label>
+      <input type="radio" id="<?= HIGH_LOW_ID_NONE ?>" name="<?= HIGH_LOW_ID ?>" value="" checked />
+      <label for="<?= HIGH_LOW_ID_NONE ?>">Ninguno</label>
 
-      <input type="radio" id="high" name="high_low" value="high" />
-      <label for="high">Alto</label>
+      <input type="radio" id="<?= HIGH ?>" name="<?= HIGH_LOW_ID ?>" value="<?= HIGH ?>" />
+      <label for="<?= HIGH ?>">Alto</label>
 
-      <input type="radio" id="low" name="high_low" value="low" />
-      <label for="low">Bajo</label>
+      <input type="radio" id="<?= LOW ?>" name="<?= HIGH_LOW_ID ?>" value="<?= LOW ?>" />
+      <label for="<?= LOW ?>">Bajo</label>
 
       <br>
 
-      <label for="high_low_bet">Cantidad de dinero a apostar:</label>
-      <input type="number" id="high_low_bet" name="high_low_bet" min="0">
+      <label for="<?= HIGH_LOW_ID_BET ?>">Cantidad de dinero a apostar:</label>
+      <input type="number" id="<?= HIGH_LOW_ID_BET ?>" name="<?= HIGH_LOW_ID_BET ?>" min="0">
     </div>
 
-    <button type="submit" name="action" value="bet">Apostar</button>
-    <button type="submit" name="action" value="spin">Girar ruleta</button>
+    <button type="submit" name="<?= ACTION ?>" value="<?= ACTION_BET ?>">Apostar</button>
+    <button type="submit" name="<?= ACTION ?>" value="<?= ACTION_SPIN ?>">Girar ruleta</button>
 
     <br>
 
   </form>
 
+  <h1>APUESTAS ACTUALES</h1>
   <?php
-  if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST["action"])) {
-    switch ($_POST["action"]) {
-      case "bet":
+  echo $_SESSION[SESSION_BALANCE];
+  foreach ($_SESSION[SESSION_CURRENT_GAME] ?? [] as $value) {
+    echo "Tipo de apuesta: " . "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: " . $value[MONEY] . "€ <br>";
+  }
+  ?>
 
-        if ($_POST["number"] != "" && ($_POST["number"] >= 0 && $_POST["number"] <= 36)) {
-          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["number"], ID_NUMBER, $moneyBet = $_POST["number_bet"] == "" ? 0 : $_POST["number_bet"]);
-        }
+  <h1>RESULTADOS ÚLTIMA PARTIDA</h1>
 
-        if ($_POST["color"] != "" && ($_POST["color"] === RED || $_POST["color"] === BLACK)) {
-          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["color"], ID_COLOR, $moneyBet = $_POST["color_bet"] == "" ? 0 : $_POST["color_bet"]);
-        }
+  <?php
+  echo "Numero ganador: " . $_SESSION[SESSION_LAST_RESULT][WINNING_NUMBER] . "<br>";
 
-        if ($_POST["even_odd"] != "" && ($_POST["even_odd"] === EVEN || $_POST["even_odd"] === ODD)) {
-          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["even_odd"], ID_EVEN_ODD, $moneyBet = $_POST["even_odd_bet"] == "" ? 0 : $_POST["even_odd_bet"]);
-        }
-
-        if ($_POST["dozen"] != "" && ($_POST["dozen"] === DOZEN1 || $_POST["dozen"] === DOZEN2 || $_POST["dozen"] === DOZEN3)) {
-          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["dozen"], ID_DOZEN, $moneyBet = $_POST["dozen_bet"] == "" ? 0 : $_POST["dozen_bet"]);
-        }
-
-        if ($_POST["high_low"] != "" && ($_POST["high_low"] === HIGH || $_POST["high_low"] === LOW)) {
-          addBet($_SESSION["currentGame"], $_SESSION["balance"], $_POST["high_low"], ID_HIGH_LOW, $moneyBet = $_POST["high_low_bet"] == "" ? 0 : $_POST["high_low_bet"]);
-        }
-
-        break;
-
-      case "spin":
-        play($_SESSION["currentGame"], $_SESSION["balance"], $_SESSION["history"]);
-        break;
-
-      default:
-        echo "Esa opción no esta en el menu \n";
-        break;
+  foreach ($_SESSION[SESSION_LAST_RESULT][RESULTS] ?? [] as $value) {
+    if ($value[WON]) {
+      echo "Apuesta ganada -> " . "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: +" . $value[MONEY] . "€ <br>";
+    } else {
+      echo "Apuesta perdida -> " . "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: -" . $value[MONEY] . "€ <br>";
     }
   }
-
-  showCurrentGame($_SESSION["currentGame"], $_SESSION["balance"]);
-  showHistory($_SESSION["history"]);
-
   ?>
+
+  <h1>HISTORIAL</h1>
+  <?php
+  foreach ($_SESSION[SESSION_HISTORY] ?? [] as $key => $value) {
+    echo ($key + 1) . ". Numero ganador: " . $value[WINNING_NUMBER] . " | Ganancias/Perdidas: " . $value[PROFIT_LOSS] . "€ <br>";
+  }
+  ?>
+
 </body>
 
 </html>

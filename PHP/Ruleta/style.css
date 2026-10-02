@@ -1,10 +1,562 @@
-div {
-  margin-bottom: 20px;
+/* =========================
+   RU-RULETA — CASINO STYLE
+   ========================= */
+
+:root {
+  --bg: #07130d;
+  --bg-secondary: #0b1e14;
+  --card: #10281b;
+  --card-hover: #143421;
+
+  --green: #159947;
+  --green-light: #1fc45a;
+  --green-dark: #087631;
+
+  --gold: #e1b94b;
+  --gold-light: #f5d875;
+
+  --red: #d92d38;
+  --red-light: #f04854;
+
+  --black: #101010;
+
+  --text: #f6f6f6;
+  --text-secondary: #b8c5bc;
+
+  --border: rgba(225, 185, 75, 0.28);
+
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+
+  --radius: 14px;
 }
+
+/* =========================
+   RESET
+   ========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  padding: 40px 20px 80px;
+
+  background: radial-gradient(circle at top, #174d2d 0%, #0b2617 32%, #06110b 75%);
+
+  background-attachment: fixed;
+
+  color: var(--text);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  line-height: 1.5;
+}
+
+/* =========================
+   TITULOS
+   ========================= */
+
+h1 {
+  width: min(1100px, 100%);
+  margin: 45px auto 22px;
+
+  color: var(--gold);
+
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  text-align: center;
+  letter-spacing: 2px;
+
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(225, 185, 75, 0.15);
+}
+
+form > h1 {
+  margin-top: 0;
+
+  font-size: clamp(2.3rem, 6vw, 4rem);
+
+  letter-spacing: 5px;
+}
+
 h2 {
-  font-size: 25px;
-  margin-bottom: 0;
+  margin: 0 0 24px;
+
+  color: var(--gold-light);
+
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  text-align: center;
 }
-input {
-  margin-bottom: 14px;
+
+/* =========================
+   FORMULARIO PRINCIPAL
+   ========================= */
+
+form {
+  width: min(1100px, 100%);
+
+  margin: 0 auto 50px;
+  padding: 28px;
+
+  border: 1px solid var(--border);
+  border-radius: 22px;
+
+  background: linear-gradient(145deg, rgba(16, 40, 27, 0.96), rgba(7, 24, 14, 0.96));
+
+  box-shadow:
+    var(--shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* =========================
+   TARJETAS DE APUESTAS
+   ========================= */
+
+form > div {
+  position: relative;
+
+  margin-bottom: 20px;
+  padding: 25px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(225, 185, 75, 0.16);
+  border-radius: var(--radius);
+
+  background: linear-gradient(145deg, rgba(22, 58, 37, 0.86), rgba(11, 35, 21, 0.86));
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+form > div::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+
+  opacity: 0.55;
+}
+
+form > div:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(225, 185, 75, 0.42);
+
+  background: linear-gradient(145deg, rgba(24, 66, 41, 0.92), rgba(12, 39, 23, 0.92));
+}
+
+/* =========================
+   LABELS
+   ========================= */
+
+label {
+  display: inline-block;
+
+  margin: 7px 5px 7px 0;
+
+  color: var(--text-secondary);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* =========================
+   INPUT NUMERICO
+   ========================= */
+
+input[type="number"] {
+  width: 180px;
+  max-width: 100%;
+
+  margin: 7px 12px 7px 4px;
+  padding: 11px 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9px;
+
+  outline: none;
+
+  background: rgba(0, 0, 0, 0.35);
+
+  color: white;
+
+  font-size: 1rem;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+input[type="number"]::placeholder {
+  color: #75877b;
+}
+
+input[type="number"]:hover {
+  border-color: rgba(225, 185, 75, 0.38);
+}
+
+input[type="number"]:focus {
+  border-color: var(--gold);
+
+  background: rgba(0, 0, 0, 0.5);
+
+  box-shadow:
+    0 0 0 3px rgba(225, 185, 75, 0.12),
+    0 0 15px rgba(225, 185, 75, 0.08);
+}
+
+/* Quitar flechas en Chrome, Edge y Safari */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.5;
+}
+
+/* =========================
+   RADIO BUTTONS
+   ========================= */
+
+input[type="radio"] {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Los labels se convierten en botones */
+
+input[type="radio"] + label {
+  min-width: 90px;
+
+  margin: 7px 4px;
+  padding: 10px 17px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.055);
+
+  color: #dbe5de;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input[type="radio"] + label:hover {
+  transform: translateY(-1px);
+
+  border-color: rgba(225, 185, 75, 0.55);
+
+  background: rgba(225, 185, 75, 0.08);
+}
+
+/* Selección genérica */
+
+input[type="radio"]:checked + label {
+  border-color: var(--gold);
+
+  background: linear-gradient(135deg, var(--gold), #b48720);
+
+  color: #111;
+
+  box-shadow: 0 4px 15px rgba(225, 185, 75, 0.25);
+}
+
+/* =========================
+   ROJO / NEGRO
+   ========================= */
+
+label[for="red"] {
+  border-color: rgba(217, 45, 56, 0.55) !important;
+}
+
+label[for="red"]:hover {
+  background: rgba(217, 45, 56, 0.15) !important;
+}
+
+#red:checked + label {
+  border-color: var(--red-light) !important;
+
+  background: linear-gradient(135deg, var(--red-light), #a81620) !important;
+
+  color: white !important;
+
+  box-shadow: 0 5px 18px rgba(217, 45, 56, 0.3) !important;
+}
+
+label[for="black"] {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+label[for="black"]:hover {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+#black:checked + label {
+  border-color: #777 !important;
+
+  background: linear-gradient(135deg, #252525, #050505) !important;
+
+  color: white !important;
+
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.55) !important;
+}
+
+/* =========================
+   OPCION "NINGUNO"
+   ========================= */
+
+label[for="color_none"],
+label[for="even_odd_none"],
+label[for="dozen_none"],
+label[for="high_low_none"] {
+  color: #95a49b;
+
+  background: rgba(255, 255, 255, 0.025);
+}
+
+#color_none:checked + label,
+#even_odd_none:checked + label,
+#dozen_none:checked + label,
+#high_low_none:checked + label {
+  border-color: #58665d;
+
+  background: #344039;
+
+  color: #c6d0c9;
+
+  box-shadow: none;
+}
+
+/* =========================
+   BOTONES PRINCIPALES
+   ========================= */
+
+button {
+  position: relative;
+
+  min-width: 180px;
+
+  margin: 20px 7px 5px;
+  padding: 14px 24px;
+
+  overflow: hidden;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.08);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Apostar */
+
+button[value="bet"] {
+  background: linear-gradient(135deg, var(--green-light), var(--green-dark));
+
+  color: white;
+
+  box-shadow: 0 7px 18px rgba(21, 153, 71, 0.28);
+}
+
+button[value="bet"]:hover {
+  box-shadow: 0 9px 24px rgba(31, 196, 90, 0.35);
+}
+
+/* Girar ruleta */
+
+button[value="spin"] {
+  background: linear-gradient(135deg, var(--gold-light), #b9841d);
+
+  color: #181408;
+
+  box-shadow: 0 7px 20px rgba(225, 185, 75, 0.28);
+}
+
+button[value="spin"]:hover {
+  box-shadow: 0 10px 28px rgba(225, 185, 75, 0.4);
+}
+
+/* =========================
+   SECCIONES DE RESULTADOS
+   ========================= */
+
+body > h1:not(:first-child) {
+  position: relative;
+
+  margin-top: 55px;
+  padding-top: 25px;
+
+  border-top: 1px solid rgba(225, 185, 75, 0.18);
+}
+
+body > h1:not(:first-child)::after {
+  content: "";
+
+  display: block;
+
+  width: 70px;
+  height: 3px;
+
+  margin: 12px auto 0;
+
+  border-radius: 50px;
+
+  background: var(--gold);
+}
+
+/* =========================
+   TEXTO GENERADO POR PHP
+   ========================= */
+
+body {
+  text-align: center;
+}
+
+form {
+  text-align: left;
+}
+
+/* =========================
+   SELECCION DE TEXTO
+   ========================= */
+
+::selection {
+  background: var(--gold);
+  color: #111;
+}
+
+/* =========================
+   SCROLLBAR
+   ========================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #06110b;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+
+  background: #315c3e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #477e57;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 700px) {
+  body {
+    padding: 20px 12px 60px;
+  }
+
+  form {
+    padding: 16px;
+
+    border-radius: 16px;
+  }
+
+  form > div {
+    padding: 19px 15px;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  input[type="number"] {
+    display: block;
+
+    width: 100%;
+
+    margin: 6px 0 14px;
+  }
+
+  input[type="radio"] + label {
+    min-width: calc(50% - 12px);
+
+    margin: 5px 3px;
+  }
+
+  button {
+    width: 100%;
+
+    margin: 8px 0 4px;
+  }
+}
+
+@media (max-width: 420px) {
+  form > h1 {
+    font-size: 2rem;
+    letter-spacing: 3px;
+  }
+
+  h1 {
+    font-size: 1.55rem;
+  }
+
+  input[type="radio"] + label {
+    width: 100%;
+
+    margin: 4px 0;
+  }
 }

@@ -364,22 +364,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST[ACTION])) {
 
   <h1>APUESTAS ACTUALES</h1>
   <?php
-  echo $_SESSION[SESSION_BALANCE];
+  echo $_SESSION[SESSION_BALANCE] . "<br>";
   foreach ($_SESSION[SESSION_CURRENT_GAME] ?? [] as $value) {
-    echo "Tipo de apuesta: " . "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: " . $value[MONEY] . "€ <br>";
+    echo "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: " . $value[MONEY] . "€ <br>";
   }
   ?>
 
   <h1>RESULTADOS ÚLTIMA PARTIDA</h1>
 
   <?php
-  echo "Numero ganador: " . $_SESSION[SESSION_LAST_RESULT][WINNING_NUMBER] . "<br>";
+  if (isset($_SESSION[SESSION_LAST_RESULT])) {
+    echo "Numero ganador: " . $_SESSION[SESSION_LAST_RESULT][WINNING_NUMBER] . "<br>";
 
-  foreach ($_SESSION[SESSION_LAST_RESULT][RESULTS] ?? [] as $value) {
-    if ($value[WON]) {
-      echo "Apuesta ganada -> " . "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: +" . $value[MONEY] . "€ <br>";
-    } else {
-      echo "Apuesta perdida -> " . "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: -" . $value[MONEY] . "€ <br>";
+    foreach ($_SESSION[SESSION_LAST_RESULT][RESULTS] ?? [] as $value) {
+      if ($value[WON]) {
+        echo "Apuesta ganada -> " . "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: +" . $value[MONEY] . "€ <br>";
+      } else {
+        echo "Apuesta perdida -> " . "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: -" . $value[MONEY] . "€ <br>";
+      }
     }
   }
   ?>

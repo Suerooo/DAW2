@@ -266,6 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST[ACTION])) {
 
 
 <body>
+  <?php include 'header.php' ?>
   <form action="Ruleta.php" method="POST">
     <h1>APOSTAR</h1>
     <div>
@@ -364,7 +365,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST[ACTION])) {
 
   <h1>APUESTAS ACTUALES</h1>
   <?php
-  echo $_SESSION[SESSION_BALANCE] . "<br>";
+  echo "Saldo actual: " . $_SESSION[SESSION_BALANCE] . "€<br>";
   foreach ($_SESSION[SESSION_CURRENT_GAME] ?? [] as $value) {
     echo "Apostó por: " . getChoiceLabel($value[CHOICE]) . " | Apostó: " . $value[MONEY] . "€ <br>";
   }

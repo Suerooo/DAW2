@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-header.css">
   <title>RU-RULETA</title>
 </head>
 
@@ -259,15 +260,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST[ACTION])) {
       break;
   }
 
-  header("Location: Ruleta.php");
+  header("Location: ruleta.php");
   exit;
 }
 ?>
 
 
 <body>
-  <?php include 'header.php' ?>
-  <form action="Ruleta.php" method="POST">
+  <?php include_once 'header.php' ?>
+  <form action="ruleta.php" method="POST">
     <h1>APOSTAR</h1>
     <div>
       <h2>APOSTAR A UN NUMERO</h2>

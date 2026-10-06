@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<header>
+  <img
+    src="https://images.vexels.com/media/users/3/151205/isolated/preview/8857efb275fbf2435db40a222d05b1e6-icono-de-rueda-de-ruleta.png"
+    alt="Logo ruleta">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+  <nav>
+    <a href="Ruleta.php">JUGAR</a>
+    <a href="">SALDO</a>
+  </nav>
 
-<body>
-  <header>
-    <nav>
-      <a href="">Ingresar saldo</a>
-      <a href="">JUGAR</a>
-      <a href="">Retirar saldo</a>
-    </nav>
-  </header>
-</body>
-
-</html>
+  <h2>
+    Saldo: <?= $_SESSION[SESSION_BALANCE] ?>€
+  </h2>
+</header>

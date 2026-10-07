@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -357,7 +357,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST[ACTION])) {
       <input type="number" id="<?= HIGH_LOW_ID_BET ?>" name="<?= HIGH_LOW_ID_BET ?>" min="0">
     </div>
 
-    <button type="submit" name="<?= ACTION ?>" value="<?= ACTION_BET ?>">Apostar</button>
+    <button type="submit"   ">Apostar</button>
     <button type="submit" name="<?= ACTION ?>" value="<?= ACTION_SPIN ?>">Girar ruleta</button>
 
     <br>

@@ -33,20 +33,20 @@ function depositMoney(float $amount_money, float &$balance)
 
 function validateMandatoryFile(): bool
 {
-  $target_dir = "uploads/";
-  $target_file = $target_dir . basename($_FILES[MANDATORY_FILE]["name"]);
-  $image_file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
   $upload_ok = true;
 
-  if (isset($_POST["submit"])) {
+  if (!isset($_FILES[MANDATORY_FILE])) {
+    $upload_ok = false;
+  }
 
-    if (file_exists($target_file)) {
-      $upload_ok = false;
-    }
+  if ($_FILES[MANDATORY_FILE]["error"] !== UPLOAD_ERR_OK) {
+    $upload_ok = false;
+  }
 
-    if ($image_file_type != "pdf") {
-      $upload_ok = false;
-    }
+  $extension = strtolower(pathinfo($_FILES[MANDATORY_FILE]["name"], PATHINFO_EXTENSION));
+
+  if ($extension !== "pdf") {
+    $upload_ok = false;
   }
 
   return $upload_ok;
@@ -72,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST[ACTION])) {
       break;
 
     default:
-      # code...
       break;
   }
 
@@ -88,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST[ACTION])) {
   <form action="saldo.php" method="POST">
     <h1>INGRESAR DINERO</h1>
     <label for="<?= DEPOSIT_MONEY_ID ?>">Cuanto dinero quieres ingresar:</label>
-    <input type="number" id="<?= DEPOSIT_MONEY_ID ?>" name="<?= DEPOSIT_MONEY_ID ?>" min="-2333">
+    <input type="number" id="<?= DEPOSIT_MONEY_ID ?>" name="<?= DEPOSIT_MONEY_ID ?>" min="0" required>
 
     <br>
 
@@ -96,18 +95,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST[ACTION])) {
   </form>
 
   <form action="saldo.php" method="POST" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="<?php MANDATORY_FILE ?>" id="<?php MANDATORY_FILE ?>">
-    <input type="submit" value="Enviar archivo" name="submit">
 
-    <br>
+    <h1>RETIRAR DINERO</h1>
 
-    <label for="<?= WITHDRAW_MONEY_ID ?>">Cuanto dinero quieres ingresar:</label>
-    <input type="number" id="<?= WITHDRAW_MONEY_ID ?>" name="<?= WITHDRAW_MONEY_ID ?>" min="-2333">
+    <label for="<?= MANDATORY_FILE ?>">Selecciona un archivo PDF:</label>
 
-    <br>
+    <input type="file" name="<?= MANDATORY_FILE ?>" id="<?= MANDATORY_FILE ?>" required>
 
-    <button type="submit" name="<?= ACTION ?>" value="<?= ACTION_WITHDRAW ?>">RETIRAR</button>
+    <br><br>
+
+    <label for="<?= WITHDRAW_MONEY_ID ?>">¿Cuánto dinero quieres retirar?</label>
+
+    <input type="number" id="<?= WITHDRAW_MONEY_ID ?>" name="<?= WITHDRAW_MONEY_ID ?>" min="0" required>
+
+    <br><br>
+
+    <button type="submit" name="<?= ACTION ?>" value="<?= ACTION_WITHDRAW ?>"> RETIRAR </button>
+
   </form>
 
 </body>

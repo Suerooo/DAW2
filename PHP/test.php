@@ -17,7 +17,7 @@
       } ?>">
     </div>
     <div>
-      <label for="apellidos">Apellidos:</label>
+      <label for="apellido">Apellidos:</label>
       <input type="text" id="apellido" name="apellido" placeholder="Tus apellidos" value="
       <?php if (isset($_POST['apellido'])) {
         echo $_POST['apellido'];

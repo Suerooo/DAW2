@@ -11,16 +11,16 @@ function registerUser(array $user, PDO $conn): int
   return (int) $conn->lastInsertId();
 }
 
-function registerClient(array $client, PDO $conn)
+function registerClient(Client $client, PDO $conn)
 {
   $stmt = $conn->prepare("INSERT INTO clients (user_id, dni, name, surname, birthdate, driver_license) VALUES (?, ?, ?, ?, ?, ?)");
   $stmt->execute([
-    $client[USER_ID_COLUMN],
-    $client[DNI_COLUMN],
-    $client[NAME_COLUMN],
-    $client[SURNAME_COLUMN],
-    $client[BIRTHDATE_COLUMN],
-    $client[DRIVER_LICENSE_COLUMN]
+    $client->get_user_id(),
+    $client->get_dni(),
+    $client->get_name(),
+    $client->get_surname(),
+    $client->get_birthdate(),
+    $client->get_driver_license(),
   ]);
 }
 
@@ -28,17 +28,18 @@ function validateRegisterForm(array &$errors_message): bool
 {
 
   $requiredFields = [
-    DNI_REGISTER,
-    NAME_REGISTER,
-    SURNAME_REGISTER,
-    BIRTHDATE_REGISTER,
-    EMAIL_REGISTER,
-    PASSWORD_REGISTER
+    DNI_REGISTER => "DNI",
+    NAME_REGISTER => "Nombre",
+    SURNAME_REGISTER => "Apellidos",
+    BIRTHDATE_REGISTER => "Fecha de nacimiento",
+    EMAIL_REGISTER => "Email",
+    PASSWORD_REGISTER => "Contraseña"
   ];
 
-  foreach ($requiredFields as $field) {
+
+  foreach ($requiredFields as $field => $display_field) {
     if (!isset($_POST[$field]) || empty($_POST[$field])) {
-      $errors_message[] = "El campo $field es obligatorio";
+      $errors_message[] = "El campo $display_field es obligatorio";
       return false;
     }
   }

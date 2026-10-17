@@ -19,7 +19,7 @@ unset($_SESSION['errors-message']);
 </head>
 
 <?php
-include_once "variable.php";
+include_once "class/variable.php";
 
 function keepFields(string $field): string
 {
@@ -28,8 +28,8 @@ function keepFields(string $field): string
   return $old_fields[$field] ?? '';
 }
 
-include_once "register.php";
-include_once "login.php";
+include_once "pages/register.php";
+include_once "pages/login.php";
 ?>
 
 <?php
@@ -63,14 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
 
           $userId = registerUser($user, $conn);
 
-          $client = [
-            USER_ID_COLUMN => $userId,
-            DNI_COLUMN => $_POST[DNI_REGISTER],
-            NAME_COLUMN => $_POST[NAME_REGISTER],
-            SURNAME_COLUMN => $_POST[SURNAME_REGISTER],
-            BIRTHDATE_COLUMN => $_POST[BIRTHDATE_REGISTER],
-            DRIVER_LICENSE_COLUMN => $licenseName
-          ];
+          $client = new Client($userId, $_POST[DNI_REGISTER], $_POST[NAME_REGISTER], $_POST[SURNAME_REGISTER], $_POST[BIRTHDATE_REGISTER], $licenseName);
 
           registerClient($client, $conn);
         } catch (Throwable $e) {
@@ -81,8 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
       break;
 
     case LOGIN_ACTION_SUBMIT:
-
-
+      login($_POST[EMAIL_LOGIN], $_POST[PASSWORD_LOGIN], $conn);
       break;
 
     default:
@@ -94,9 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
     NAME_REGISTER => $_POST[NAME_REGISTER] ?? '',
     SURNAME_REGISTER => $_POST[SURNAME_REGISTER] ?? '',
     BIRTHDATE_REGISTER => $_POST[BIRTHDATE_REGISTER] ?? '',
-    EMAIL_REGISTER => $_POST[EMAIL_REGISTER] ?? ''
+    EMAIL_REGISTER => $_POST[EMAIL_REGISTER] ?? '',
+    EMAIL_LOGIN => $_POST[EMAIL_LOGIN] ?? ''
   ];
-      
+
   $_SESSION["errors-message"] = $errors_message;
 
   header("Location: main.php");

@@ -13,15 +13,12 @@ function login(string $email_login, string $password_login, PDO $conn)
       case 'client':
         header("Location: client.php");
         exit;
-        break;
       case 'admin':
         header("Location: admin.php");
         exit;
-        break;
       default:
         header("Location: main.php");
         exit;
-        break;
     }
   }
 }

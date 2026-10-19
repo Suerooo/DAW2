@@ -1,6 +1,14 @@
 <?php
 function registerUser(array $user, PDO $conn): int
 {
+  $stmt = $conn->prepare("SELECT users.* FROM users LEFT JOIN clients ON users.id = clients.user_id WHERE users.email = ? AND users.role = 'client' AND clients.id IS NULL");
+  $stmt->execute([$user[EMAIL_COLUMN]]);
+  $incompleteUser = $stmt->fetch();
+
+  if (!empty($incompleteUser) && password_verify($user[PASSWORD_COLUMN], $incompleteUser[PASSWORD_COLUMN])) {
+    return (int) $incompleteUser[ID_COLUMN];
+  }
+
   if ($user[ROLE_COLUMN] != "admin" && $user[ROLE_COLUMN] != "client") {
     throw new Exception("El rol del usuario tiene que ser 'admin' o 'client'");
   }
@@ -13,7 +21,7 @@ function registerUser(array $user, PDO $conn): int
 
 function registerClient(Client $client, PDO $conn)
 {
-  $stmt = $conn->prepare("INSERT INTO clients (user_id, dni, name, surname, birthdate, driver_license) VALUES (?, ?, ?, ?, ?, ?)");
+  $stmt = $conn->prepare("INSERT INTO clients (user_id, dni, name, surname, birthdate, driving_license) VALUES (?, ?, ?, ?, ?, ?)");
   $stmt->execute([
     $client->get_user_id(),
     $client->get_dni(),
@@ -85,11 +93,9 @@ function saveDriverLicense(array $file): string
 
   return $filename;
 }
-
-
+function showRegisterForm()
+{
 ?>
-
-<body>
   <h1>REGISTER</h1>
   <form action="main.php" method="POST" enctype="multipart/form-data">
     <label for="<?= DNI_REGISTER ?>">DNI:</label>
@@ -122,3 +128,6 @@ function saveDriverLicense(array $file): string
 
     <button type="submit" name="<?= ACTION_SUBMIT ?>" value="<?= REGISTER_ACTION_SUBMIT ?>">Registrar</button>
   </form>
+<?php
+}
+?>

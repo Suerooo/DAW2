@@ -13,6 +13,7 @@ const PASSWORD_LOGIN = "password-login";
 const ACTION_SUBMIT = "action";
 const REGISTER_ACTION_SUBMIT = "register-action";
 const LOGIN_ACTION_SUBMIT = "login-action";
+const VEHICLE_ACTION_SUBMIT = "vehicle-action";
 
 const ID_COLUMN = "id";
 const USER_ID_COLUMN = "user_id";
@@ -20,10 +21,31 @@ const DNI_COLUMN = "dni";
 const NAME_COLUMN = "name";
 const SURNAME_COLUMN = "surname";
 const BIRTHDATE_COLUMN = "birthdate";
-const DRIVER_LICENSE_COLUMN = "driver_license";
+const DRIVER_LICENSE_COLUMN = "driving_license";
 const EMAIL_COLUMN = "email";
 const PASSWORD_COLUMN = "password";
 const ROLE_COLUMN = "role";
+
+const PLATE_VEHICLE = "plate-vehicle";
+const BRAND_VEHICLE = "brand-vehicle";
+const MODEL_VEHICLE = "model-vehicle";
+const COLOR_VEHICLE = "color-vehicle";
+const DOORS_VEHICLE = "doors-vehicle";
+const SEATS_VEHICLE = "seats-vehicle";
+const TRANSMISSION_VEHICLE = "transmission-vehicle";
+const MOTORIZATION_VEHICLE = "motorization-vehicle";
+const CLASS_VEHICLE = "class-vehicle";
+
+const PLATE_COLUMN = "plate";
+const BRAND_COLUMN = "brand";
+const MODEL_COLUMN = "model";
+const COLOR_COLUMN = "color";
+const DOORS_COLUMN = "doors";
+const SEATS_COLUMN = "seats";
+const TRANSMISSION_COLUMN = "transmission";
+const MOTORIZATION_COLUMN = "motorization";
+const VEHICLE_CLASS_COLUMN = "vehicle_class";
+const ACTIVE_COLUMN = "active";
 
 const LICENSE_DIR = 'license';
 

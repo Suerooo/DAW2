@@ -1,11 +1,13 @@
 
-CREATE DATABASE rentacar;
+CREATE DATABASE IF NOT EXISTS rentacar;
+
+USE rentacar;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(254) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    rol ENUM('admin', 'client') NOT NULL DEFAULT 'client'
+    role ENUM('admin', 'client') NOT NULL DEFAULT 'client'
 );
 
 CREATE TABLE clients (

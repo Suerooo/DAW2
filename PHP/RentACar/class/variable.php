@@ -21,7 +21,7 @@ const DNI_COLUMN = "dni";
 const NAME_COLUMN = "name";
 const SURNAME_COLUMN = "surname";
 const BIRTHDATE_COLUMN = "birthdate";
-const DRIVER_LICENSE_COLUMN = "driving_license";
+const DRIVER_LICENSE_COLUMN = "driver_license";
 const EMAIL_COLUMN = "email";
 const PASSWORD_COLUMN = "password";
 const ROLE_COLUMN = "role";
@@ -35,6 +35,7 @@ const SEATS_VEHICLE = "seats-vehicle";
 const TRANSMISSION_VEHICLE = "transmission-vehicle";
 const MOTORIZATION_VEHICLE = "motorization-vehicle";
 const CLASS_VEHICLE = "class-vehicle";
+const BASE_PRICE_VEHICLE = "base-price-vehicle";
 
 const PLATE_COLUMN = "plate";
 const BRAND_COLUMN = "brand";
@@ -46,6 +47,7 @@ const TRANSMISSION_COLUMN = "transmission";
 const MOTORIZATION_COLUMN = "motorization";
 const VEHICLE_CLASS_COLUMN = "vehicle_class";
 const ACTIVE_COLUMN = "active";
+const BASE_PRICE_COLUMN = "base_price";
 
 const LICENSE_DIR = 'license';
 

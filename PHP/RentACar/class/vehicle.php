@@ -10,8 +10,9 @@ class Vehicle
   private string $transmission;
   private string $motorization;
   private string $vehicle_class;
+  private float $base_price;
 
-  public function __construct(string $plate, string $brand, string $model, string $color, int $doors, int $seats, string $transmission, string $motorization, string $vehicle_class)
+  public function __construct(string $plate, string $brand, string $model, string $color, int $doors, int $seats, string $transmission, string $motorization, string $vehicle_class, float $base_price)
   {
     $this->plate = $plate;
     $this->brand = $brand;
@@ -22,6 +23,7 @@ class Vehicle
     $this->transmission = $transmission;
     $this->motorization = $motorization;
     $this->vehicle_class = $vehicle_class;
+    $this->base_price = $base_price;
   }
 
   public function get_plate(): string
@@ -67,5 +69,10 @@ class Vehicle
   public function get_vehicle_class(): string
   {
     return $this->vehicle_class;
+  }
+  
+  public function get_base_price(): float
+  {
+    return $this->base_price;
   }
 }

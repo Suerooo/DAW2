@@ -21,7 +21,7 @@ function registerUser(array $user, PDO $conn): int
 
 function registerClient(Client $client, PDO $conn)
 {
-  $stmt = $conn->prepare("INSERT INTO clients (user_id, dni, name, surname, birthdate, driving_license) VALUES (?, ?, ?, ?, ?, ?)");
+  $stmt = $conn->prepare("INSERT INTO clients (user_id, dni, name, surname, birthdate, driver_license) VALUES (?, ?, ?, ?, ?, ?)");
   $stmt->execute([
     $client->get_user_id(),
     $client->get_dni(),

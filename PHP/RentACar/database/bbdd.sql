@@ -17,7 +17,7 @@ CREATE TABLE clients (
     name VARCHAR(100) NOT NULL,
     surname VARCHAR(150) NOT NULL,
     birthdate DATE NOT NULL,
-    driving_license VARCHAR(255),
+    driver_license VARCHAR(255),
 
     FOREIGN KEY (user_id)
         REFERENCES users(id)
@@ -36,4 +36,33 @@ CREATE TABLE vehicles (
     motorization VARCHAR(50) NOT NULL,
     vehicle_class CHAR(1) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+
+ALTER TABLE vehicles
+ADD COLUMN base_price DECIMAL(10,2) NOT NULL DEFAULT 0.00;
+
+
+CREATE TABLE vehicle_blocks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    vehicle_id INT NOT NULL,
+
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+
+    reason VARCHAR(255),
+
+    FOREIGN KEY (vehicle_id)
+        REFERENCES vehicles(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT chk_block_dates
+        CHECK (end_date >= start_date),
+
+    INDEX idx_vehicle_dates (
+        vehicle_id,
+        start_date,
+        end_date
+    )
 );

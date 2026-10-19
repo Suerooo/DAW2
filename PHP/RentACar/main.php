@@ -20,8 +20,8 @@ function keepFields(string $field): string
   return $old_fields[$field] ?? '';
 }
 
-include_once "pages/register.php";
-include_once "pages/login.php";
+include_once "logic/register.php";
+include_once "logic/login.php";
 
 $conn = null;
 try {
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
           }
 
           error_log($e->getMessage());
-          $errors_message[] = "No se pudo completar el registro";
+          $errors_message[] = "No se pudo completar el registro" . $e->getMessage();
         }
       }
       break;

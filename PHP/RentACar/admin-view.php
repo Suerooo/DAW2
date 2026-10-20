@@ -10,7 +10,7 @@
 <body>
   <header>
     <h1>Gestor de vehículos</h1>
-    <a href="main.php">Volver al inicio</a>
+    <a href="../main.php">Volver al inicio</a>
   </header>
 
   <?php if (!empty($success_message)) { ?>
@@ -42,7 +42,7 @@
       <br>
 
       <label for="<?= COLOR_VEHICLE ?>">Color:</label>
-      <input type="text" name="<?= COLOR_VEHICLE ?>" id="<?= COLOR_VEHICLE ?>" maxlength="50" value="<?= keepVehicleFields(COLOR_VEHICLE) ?>" required>
+      <input type="color" name="<?= COLOR_VEHICLE ?>" id="<?= COLOR_VEHICLE ?>" maxlength="50" value="<?= keepVehicleFields(COLOR_VEHICLE) ?>" required>
       <br>
 
       <label for="<?= DOORS_VEHICLE ?>">Puertas:</label>
@@ -56,17 +56,53 @@
       <label for="<?= TRANSMISSION_VEHICLE ?>">Transmisión:</label>
       <select name="<?= TRANSMISSION_VEHICLE ?>" id="<?= TRANSMISSION_VEHICLE ?>" required>
         <option value="">Selecciona una transmisión</option>
-        <option value="manual" <?php if (keepVehicleFields(TRANSMISSION_VEHICLE) == 'manual') { echo 'selected'; } ?>>Manual</option>
-        <option value="automatic" <?php if (keepVehicleFields(TRANSMISSION_VEHICLE) == 'automatic') { echo 'selected'; } ?>>Automática</option>
+        <option value="manual" <?php if (keepVehicleFields(TRANSMISSION_VEHICLE) == 'manual') {
+                                  echo 'selected';
+                                } ?>>Manual</option>
+        <option value="automatic" <?php if (keepVehicleFields(TRANSMISSION_VEHICLE) == 'automatic') {
+                                    echo 'selected';
+                                  } ?>>Automática</option>
       </select>
       <br>
 
       <label for="<?= MOTORIZATION_VEHICLE ?>">Motorización:</label>
-      <input type="text" name="<?= MOTORIZATION_VEHICLE ?>" id="<?= MOTORIZATION_VEHICLE ?>" maxlength="50" placeholder="Gasolina, diésel, híbrido..." value="<?= keepVehicleFields(MOTORIZATION_VEHICLE) ?>" required>
+      <select name="<?= MOTORIZATION_VEHICLE ?>" id="<?= MOTORIZATION_VEHICLE ?>" required>
+        <option value="">Selecciona una transmisión</option>
+        <option value="gasoline" <?php if (keepVehicleFields(MOTORIZATION_VEHICLE) == 'gasoline') {
+                                    echo 'selected';
+                                  } ?>>Gasolina</option>
+        <option value="diesel" <?php if (keepVehicleFields(MOTORIZATION_VEHICLE) == 'diesel') {
+                                  echo 'selected';
+                                } ?>>Diésel</option>
+        <option value="hybrid" <?php if (keepVehicleFields(MOTORIZATION_VEHICLE) == 'hybrid') {
+                                  echo 'selected';
+                                } ?>>Híbrido</option>
+        <option value="electric" <?php if (keepVehicleFields(MOTORIZATION_VEHICLE) == 'electric') {
+                                    echo 'selected';
+                                  } ?>>Eléctrico</option>
+      </select>
       <br>
 
       <label for="<?= CLASS_VEHICLE ?>">Clase:</label>
-      <input type="text" name="<?= CLASS_VEHICLE ?>" id="<?= CLASS_VEHICLE ?>" maxlength="1" pattern="[A-Za-z]" placeholder="A, B, C..." value="<?= keepVehicleFields(CLASS_VEHICLE) ?>" required>
+      <select name="<?= CLASS_VEHICLE ?>" id="<?= CLASS_VEHICLE ?>" required>
+        <option value="">Selecciona una transmisión</option>
+        <option value="a" <?php if (keepVehicleFields(CLASS_VEHICLE) == 'a') {
+                            echo 'selected';
+                          } ?>>A</option>
+        <option value="b" <?php if (keepVehicleFields(CLASS_VEHICLE) == 'b') {
+                            echo 'selected';
+                          } ?>>B</option>
+        <option value="c" <?php if (keepVehicleFields(CLASS_VEHICLE) == 'c') {
+                            echo 'selected';
+                          } ?>>C</option>
+        <option value="d" <?php if (keepVehicleFields(CLASS_VEHICLE) == 'd') {
+                            echo 'selected';
+                          } ?>>D</option>
+      </select>
+      <br>
+
+      <label for="<?= BASE_PRICE_VEHICLE ?>">Precio base:</label>
+      <input type="number" name="<?= BASE_PRICE_VEHICLE ?>" id="<?= BASE_PRICE_VEHICLE ?>" min="0" value="<?= keepVehicleFields(BASE_PRICE_VEHICLE) ?>" required>
       <br>
 
       <button type="submit" name="<?= ACTION_SUBMIT ?>" value="<?= VEHICLE_ACTION_SUBMIT ?>">Añadir vehículo</button>
@@ -91,6 +127,7 @@
             <th>Asientos</th>
             <th>Transmisión</th>
             <th>Motorización</th>
+            <th>Precio base</th>
             <th>Estado</th>
           </tr>
         </thead>
@@ -106,6 +143,7 @@
               <td><?= (int) $vehicle[SEATS_COLUMN] ?></td>
               <td><?= $vehicle[TRANSMISSION_COLUMN] ?></td>
               <td><?= $vehicle[MOTORIZATION_COLUMN] ?></td>
+              <td><?= $vehicle[BASE_PRICE_COLUMN] ?>€</td>
               <td>
                 <?php
                 if ($vehicle[ACTIVE_COLUMN]) {

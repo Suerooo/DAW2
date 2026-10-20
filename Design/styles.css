@@ -1,128 +1,170 @@
-
 /* ========================================
    1. CONFIGURACIÓN GENERAL
    ======================================== */
 
+.montserrat-600 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
-    display: flex;
+  margin: 0;
+  font-family: "Montserrat", Sans-serif;
+  display: flex;
+  flex-direction: column;
+  background-color: #fffffd;
+  color: #7c2d12;
 }
 
 img {
-    max-width: 100%;
-    display: block;
+  max-width: 100%;
+  display: block;
 }
 
 a {
-    /* Decide cómo se mostrarán los enlaces */
+  text-decoration: none;
+  font-weight: 800;
+  color: #c2410c;
+  transition: all 0.1s linear;
 }
 
+a:hover {
+  transform: translateY(-2px);
+  font-weight: 900;
+  transition: all 0.1s linear;
+}
 
 /* ========================================
    2. CABECERA Y NAVEGACIÓN
    ======================================== */
 
 .cabecera {
-    /* Fondo, alineación, espacios y distribución */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fffffd;
 }
 
 .logo {
-    /* Tamaño, peso y espaciado del logotipo */
+  margin-right: auto;
 }
 
-.navegacion ul {
-    /* Elimina las viñetas y organiza los enlaces */
+.cabecera::after {
+  content: "";
+  margin-left: auto;
 }
 
-.navegacion a {
-    /* Color, tamaño y decoración de los enlaces */
+.navegacion {
+  display: flex;
+  justify-content: space-between;
+  gap: 120px;
 }
-
 
 /* ========================================
    3. PRESENTACIÓN PRINCIPAL
    ======================================== */
 
 .hero {
-    /* Espaciado, alineación y fondo */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .etiqueta {
-    /* Estilo de los textos pequeños en mayúsculas */
+  letter-spacing: 10px;
 }
 
 h1 {
-    /* Tamaño, interlineado y ancho máximo */
+  text-transform: uppercase;
 }
 
 .hero-texto {
-    /* Anchura, tamaño y separación del párrafo */
+  margin-bottom: 60px;
+  max-width: 50%;
 }
 
 .boton {
-    /* Aspecto del botón o enlace destacado */
+  border: #7c2d12 solid 1px;
+  padding: 20px;
+  border-radius: 1000px;
+  background-color: #fff7ed;
 }
-
 
 /* ========================================
    4. SERVICIOS
    ======================================== */
 
 .servicios {
-    /* Espaciado de la sección */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .encabezado-seccion {
-    /* Anchura y alineación del encabezado */
+  /* Anchura y alineación del encabezado */
 }
 
 .lista-servicios {
-    /* Distribución de las tres tarjetas */
+  margin-top: 30px;
+  display: flex;
+  gap: 290px;
+  min-width: 100vw;
+  justify-content: center;
 }
 
 .tarjeta {
-    /* Fondo, bordes y distribución */
+  border: #7c2d12 solid 1px;
+  width: 235px;
 }
 
 .tarjeta img {
-    /* Altura y recorte de las imágenes */
+  height: 300px;
+  width: 235px;
+  object-fit: cover;
 }
 
 .contenido-tarjeta {
-    /* Espaciado interior */
+  /* Espaciado interior */
 }
 
 .numero {
-    /* Estilo de la numeración de los servicios */
+  /* Estilo de la numeración de los servicios */
 }
-
 
 /* ========================================
    5. SOBRE NOSOTROS Y CONTACTO
    ======================================== */
 
 .sobre-nosotros {
-    /* Composición y contraste visual */
+  /* Composición y contraste visual */
 }
 
 .contacto {
-    /* Destaca la llamada a la acción */
+  /* Destaca la llamada a la acción */
 }
-
 
 /* ========================================
    6. PIE DE PÁGINA
    ======================================== */
 
 .pie {
-    /* Fondo, color, alineación y espaciado */
+  /* Fondo, color, alineación y espaciado */
 }
-
 
 /* ========================================
    7. INTERACCIÓN Y RESPONSIVE
@@ -130,8 +172,6 @@ h1 {
 
 /* Añade estados :hover para los enlaces y botones */
 
-
 /* Adapta la navegación y las tarjetas a pantallas estrechas */
 @media (max-width: 700px) {
-
 }

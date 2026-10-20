@@ -11,8 +11,10 @@
   <header>
     <h1>Vehículos disponibles</h1>
     <p>Consulta nuestros vehículos organizados por clase.</p>
-    <a href="main.php">Volver al inicio</a>
+    <a href="../main.php">Volver al inicio</a>
   </header>
+
+  <?php $vehicles_by_class = $vehicles_by_class ?? []; ?>
 
   <?php if (!empty($errors_message)) { ?>
     <ul>

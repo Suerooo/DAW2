@@ -13,10 +13,10 @@ function login(string $email_login, string $password_login, PDO $conn, array &$e
 
     switch ($user[ROLE_COLUMN]) {
       case 'client':
-        header("Location: client.php");
+        header("Location: logic/client.php");
         exit;
       case 'admin':
-        header("Location: admin.php");
+        header("Location: logic/admin.php");
         exit;
       default:
         header("Location: main.php");
@@ -30,18 +30,18 @@ function login(string $email_login, string $password_login, PDO $conn, array &$e
 function showLoginForm()
 {
 ?>
-<h1>LOGIN</h1>
-<form action="main.php" method="POST">
-  <label for="<?= EMAIL_LOGIN ?>">Email:</label>
-  <input type="email" name="<?= EMAIL_LOGIN ?>" id="<?= EMAIL_LOGIN ?>" value="<?= keepFields(EMAIL_LOGIN) ?>">
-  <br>
+  <h1>LOGIN</h1>
+  <form action="main.php" method="POST">
+    <label for="<?= EMAIL_LOGIN ?>">Email:</label>
+    <input type="email" name="<?= EMAIL_LOGIN ?>" id="<?= EMAIL_LOGIN ?>" value="<?= keepFields(EMAIL_LOGIN) ?>">
+    <br>
 
-  <label for="<?= PASSWORD_LOGIN ?>">Contraseña:</label>
-  <input type="password" name="<?= PASSWORD_LOGIN ?>" id="<?= PASSWORD_LOGIN ?>">
-  <br>
+    <label for="<?= PASSWORD_LOGIN ?>">Contraseña:</label>
+    <input type="password" name="<?= PASSWORD_LOGIN ?>" id="<?= PASSWORD_LOGIN ?>">
+    <br>
 
-  <button type="submit" name="<?= ACTION_SUBMIT ?>" value="<?= LOGIN_ACTION_SUBMIT ?>">Iniciar sesión</button>
-</form>
+    <button type="submit" name="<?= ACTION_SUBMIT ?>" value="<?= LOGIN_ACTION_SUBMIT ?>">Iniciar sesión</button>
+  </form>
 <?php
 }
 ?>

@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include_once "class/variable.php";
-include_once "class/vehicle.php";
+include_once __DIR__ . "/../class/variable.php";
+include_once __DIR__ . "/../class/vehicle.php";
 
 if (!isset($_SESSION[ROLE_COLUMN]) || $_SESSION[ROLE_COLUMN] !== "admin") {
   header("Location: main.php");
@@ -36,7 +36,8 @@ function validateVehicleForm(array &$errors_message): bool
     SEATS_VEHICLE => "Asientos",
     TRANSMISSION_VEHICLE => "Transmisión",
     MOTORIZATION_VEHICLE => "Motorización",
-    CLASS_VEHICLE => "Clase"
+    CLASS_VEHICLE => "Clase",
+    BASE_PRICE_VEHICLE => "Precio base"
   ];
 
   foreach ($requiredFields as $field => $display_field) {
@@ -51,7 +52,7 @@ function validateVehicleForm(array &$errors_message): bool
 
 function registerVehicle(Vehicle $vehicle, PDO $conn): void
 {
-  $stmt = $conn->prepare("INSERT INTO vehicles (plate, brand, model, color, doors, seats, transmission, motorization, vehicle_class) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+  $stmt = $conn->prepare("INSERT INTO vehicles (plate, brand, model, color, doors, seats, transmission, motorization, vehicle_class, base_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
   $stmt->execute([
     $vehicle->get_plate(),
     $vehicle->get_brand(),
@@ -61,7 +62,8 @@ function registerVehicle(Vehicle $vehicle, PDO $conn): void
     $vehicle->get_seats(),
     $vehicle->get_transmission(),
     $vehicle->get_motorization(),
-    $vehicle->get_vehicle_class()
+    $vehicle->get_vehicle_class(),
+    $vehicle->get_base_price()
   ]);
 }
 
@@ -97,7 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT]) && $_P
       (int) $_POST[SEATS_VEHICLE],
       $_POST[TRANSMISSION_VEHICLE],
       $_POST[MOTORIZATION_VEHICLE],
-      $_POST[CLASS_VEHICLE]
+      $_POST[CLASS_VEHICLE],
+      $_POST[BASE_PRICE_VEHICLE]
     );
 
     try {
@@ -120,7 +123,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT]) && $_P
       SEATS_VEHICLE => $_POST[SEATS_VEHICLE] ?? '',
       TRANSMISSION_VEHICLE => $_POST[TRANSMISSION_VEHICLE] ?? '',
       MOTORIZATION_VEHICLE => $_POST[MOTORIZATION_VEHICLE] ?? '',
-      CLASS_VEHICLE => $_POST[CLASS_VEHICLE] ?? ''
+      CLASS_VEHICLE => $_POST[CLASS_VEHICLE] ?? '',
+      BASE_PRICE_VEHICLE => $_POST[BASE_PRICE_VEHICLE] ?? ''
     ];
   }
 
@@ -139,4 +143,4 @@ if ($conn != null) {
   }
 }
 
-include_once "pages/admin-view.php";
+include_once __DIR__ . "/../admin-view.php";

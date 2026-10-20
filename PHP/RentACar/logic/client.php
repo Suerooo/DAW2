@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include_once "class/variable.php";
+include_once __DIR__ . "/../class/variable.php";
 
 if (!isset($_SESSION[ROLE_COLUMN]) || $_SESSION[ROLE_COLUMN] !== "client") {
   header("Location: main.php");
@@ -26,4 +26,4 @@ try {
   $errors_message[] = "No se pudo cargar el catálogo de vehículos";
 }
 
-include_once "pages/client-view.php";
+include_once __DIR__ . "/../client-view.php";

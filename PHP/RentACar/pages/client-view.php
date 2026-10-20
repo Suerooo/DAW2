@@ -26,7 +26,7 @@
     <p>Ahora mismo no hay vehículos disponibles.</p>
   <?php } ?>
 
-  <?php foreach ($vehicles_by_class as $vehicle_class => $vehicles) { ?>
+  <?php foreach (($vehicles_by_class ?? []) as $vehicle_class => $vehicles) { ?>
     <section>
       <h2>Clase <?= $vehicle_class ?></h2>
 

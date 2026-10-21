@@ -13,7 +13,7 @@ const PASSWORD_LOGIN = "password-login";
 const ACTION_SUBMIT = "action";
 const REGISTER_ACTION_SUBMIT = "register-action";
 const LOGIN_ACTION_SUBMIT = "login-action";
-const VEHICLE_ACTION_SUBMIT = "vehicle-action";
+const SUBMIT_VEHICLE_REGISTER = "vehicle-register";
 
 const ID_COLUMN = "id";
 const USER_ID_COLUMN = "user_id";
@@ -36,6 +36,12 @@ const TRANSMISSION_VEHICLE = "transmission-vehicle";
 const MOTORIZATION_VEHICLE = "motorization-vehicle";
 const CLASS_VEHICLE = "class-vehicle";
 const BASE_PRICE_VEHICLE = "base-price-vehicle";
+
+const VEHICLE_BLOCK = "vehicle-block";
+const START_DATE_BLOCK = "start-date-block";
+const END_DATE_BLOCK = "end-date-block";
+const REASON_BLOCK = "reason-block";
+const SUBMIT_VEHICLE_BLOCK = "submit-block";
 
 const PLATE_COLUMN = "plate";
 const BRAND_COLUMN = "brand";

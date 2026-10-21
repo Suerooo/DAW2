@@ -70,7 +70,7 @@ class Vehicle
   {
     return $this->vehicle_class;
   }
-  
+
   public function get_base_price(): float
   {
     return $this->base_price;

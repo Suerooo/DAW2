@@ -13,10 +13,10 @@ function login(string $email_login, string $password_login, PDO $conn, array &$e
 
     switch ($user[ROLE_COLUMN]) {
       case 'client':
-        header("Location: logic/client.php");
+        header("Location: pages/client.php");
         exit;
       case 'admin':
-        header("Location: logic/admin.php");
+        header("Location: pages/admin.php");
         exit;
       default:
         header("Location: main.php");

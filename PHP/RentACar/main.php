@@ -20,8 +20,8 @@ function keepFields(string $field): string
   return $old_fields[$field] ?? '';
 }
 
-include_once "logic/register.php";
-include_once "logic/login.php";
+include_once "pages/register.php";
+include_once "pages/login.php";
 
 $conn = null;
 try {

@@ -106,6 +106,12 @@ function addVehicleBlock(int $vehicle_id, string $start_date, string $end_date, 
   $stmt->execute([$vehicle_id, $start_date, $end_date, $reason]);
 }
 
+function deleteVehicleBlock(int $vehicle_id, PDO $conn)
+{
+  $stmt = $conn->prepare("DELETE FROM vehicle_blocks WHERE vehicle_id = ?");
+  $stmt->execute([$vehicle_id]);
+}
+
 $conn = null;
 
 try {
@@ -214,6 +220,21 @@ if ($conn != null) {
     $errors_message[] = "No se pudo cargar la lista de vehículos bloqueados";
   }
 }
+
+if ($conn != null) {
+  try {
+    if (isset($_GET["delete-block"])) {
+      deleteVehicleBlock($_GET["delete-block"], $conn);
+
+      header("Location: admin.php");
+      exit;
+    }
+  } catch (PDOException $e) {
+    error_log($e->getMessage());
+    $errors_message[] = "No se pudo eliminar el bloqueo de ese vehículo";
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -421,7 +442,7 @@ if ($conn != null) {
             <th>Fecha inicio</th>
             <th>Fecha final</th>
             <th>Razón</th>
-            <th>Opciones</th>
+            <th colspan="2">Opciones</th>
           </tr>
         </thead>
         <tbody>
@@ -434,7 +455,8 @@ if ($conn != null) {
               <td><?= $vehicle[START_DATE_COLUMN] ?></td>
               <td><?= $vehicle[END_DATE_COLUMN] ?></td>
               <td><?= $vehicle[REASON_COLUMN] ?></td>
-              <td><a href="">Eliminar</a></td>
+              <td><a href="">Editar</a></td>
+              <td><a href="admin.php?vehicle-block=<?= $vehicle["vehicle-id"] ?>">Eliminar</a></td>
             </tr>
           <?php } ?>
         </tbody>

@@ -32,11 +32,7 @@ try {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
-  if ($conn == null) {
-    $_SESSION["errors-message"] = $errors_message;
-    header("Location: main.php");
-    exit;
-  }
+
 
   $errors_message = [];
   $register_completed = false;
@@ -142,11 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
   }
 
   include_once __DIR__ . "/class/variable.php";
-
-  if (!isset($_SESSION[ROLE_COLUMN]) || $_SESSION[ROLE_COLUMN] !== "client") {
-    header("Location: main.php");
-    exit;
-  }
 
   $errors_message = [];
   $vehicles_by_class = [];

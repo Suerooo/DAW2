@@ -55,6 +55,10 @@ const VEHICLE_CLASS_COLUMN = "vehicle_class";
 const ACTIVE_COLUMN = "active";
 const BASE_PRICE_COLUMN = "base_price";
 
+const START_DATE_COLUMN = "start_date";
+const END_DATE_COLUMN = "end_date";
+const REASON_COLUMN = "reason";
+
 const LICENSE_DIR = 'license';
 
 const SERVER_NAME = "localhost";

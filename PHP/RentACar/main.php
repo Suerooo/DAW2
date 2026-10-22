@@ -127,20 +127,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
 </head>
 
 <body>
-<?php
-showRegisterForm();
-showLoginForm();
+  <?php
+  showRegisterForm();
+  showLoginForm();
 
-if (!empty($success_message)) {
-  echo $success_message;
-}
-
-if (!empty($errors_message)) {
-  foreach ($errors_message as $errors) {
-    echo $errors;
+  if (!empty($success_message)) {
+    echo $success_message;
   }
-}
-?>
+
+  if (!empty($errors_message)) {
+    foreach ($errors_message as $errors) {
+      echo $errors;
+    }
+  }
+
+  include_once __DIR__ . "/class/variable.php";
+
+  if (!isset($_SESSION[ROLE_COLUMN]) || $_SESSION[ROLE_COLUMN] !== "client") {
+    header("Location: main.php");
+    exit;
+  }
+
+  $errors_message = [];
+  $vehicles_by_class = [];
+
+  try {
+    $conn = new PDO("mysql:host=" . SERVER_NAME . ";dbname=" . DB_NAME . ";charset=utf8mb4", USERNAME, PASSWORD_DB);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmt = $conn->query("SELECT * FROM vehicles WHERE active = TRUE ORDER BY vehicle_class, brand, model, plate");
+    $vehicles = $stmt->fetchAll();
+
+
+    foreach ($vehicles as $vehicle) {
+      $id = strtolower($vehicle[MODEL_COLUMN] . $vehicle[VEHICLE_CLASS_COLUMN] . $vehicle[TRANSMISSION_COLUMN] . $vehicle[MOTORIZATION_COLUMN]);
+
+      $vehicles_by_class[$vehicle[VEHICLE_CLASS_COLUMN]][$id] = $vehicle;
+    }
+  } catch (PDOException $e) {
+    error_log($e->getMessage());
+    $errors_message[] = "No se pudo cargar el catálogo de vehículos";
+  }
+  ?>
+  <!DOCTYPE html>
+  <html lang="es">
+
+  <body>
+    <header>
+      <h1>Vehículos disponibles</h1>
+    </header>
+
+    <?php $vehicles_by_class = $vehicles_by_class ?? []; ?>
+
+    <?php if (!empty($errors_message)) { ?>
+      <ul>
+        <?php foreach ($errors_message as $error) { ?>
+          <li><?= $error ?></li>
+        <?php } ?>
+      </ul>
+    <?php } ?>
+
+    <?php if (empty($vehicles_by_class) && empty($errors_message)) { ?>
+      <p>Ahora mismo no hay vehículos disponibles</p>
+    <?php } ?>
+
+    <?php foreach (($vehicles_by_class ?? []) as $vehicle_class => $vehicles) { ?>
+      <section>
+        <h2>Clase <?= $vehicle_class ?></h2>
+
+        <?php foreach ($vehicles as $vehicle) { ?>
+          <article>
+            <h3><?= $vehicle[BRAND_COLUMN] . ' ' . $vehicle[MODEL_COLUMN] ?></h3>
+            <ul>
+              <li>Color: <?= $vehicle[COLOR_COLUMN] ?></li>
+              <li>Puertas: <?= (int) $vehicle[DOORS_COLUMN] ?></li>
+              <li>Asientos: <?= (int) $vehicle[SEATS_COLUMN] ?></li>
+              <li>Transmisión: <?= $vehicle[TRANSMISSION_COLUMN] ?></li>
+              <li>Motorización: <?= $vehicle[MOTORIZATION_COLUMN] ?></li>
+            </ul>
+          </article>
+        <?php } ?>
+      </section>
+    <?php } ?>
+  </body>
+
+  </html>
 </body>
 
 </html>

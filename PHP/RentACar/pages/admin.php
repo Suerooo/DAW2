@@ -93,6 +93,13 @@ function getVehicles(PDO $conn): array
   return $stmt->fetchAll();
 }
 
+function getVehiclesBlock(PDO $conn): array
+{
+  $stmt = $conn->query("SELECT * FROM vehicle_blocks");
+
+  return $stmt->fetchAll();
+}
+
 function addVehicleBlock(int $vehicle_id, string $start_date, string $end_date, string $reason, PDO $conn)
 {
   $stmt = $conn->prepare("INSERT INTO vehicle_blocks (vehicle_id, start_date, end_date, reason) values (?, ?, ?, ?)");
@@ -116,16 +123,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT]) && $_P
     $errors_message[] = "No se pudo conectar con la base de datos";
   } elseif (validateVehicleRegisterForm($errors_message)) {
     $vehicle = new Vehicle(
-      $_POST[PLATE_VEHICLE],
-      $_POST[BRAND_VEHICLE],
-      $_POST[MODEL_VEHICLE],
-      $_POST[COLOR_VEHICLE],
+      ucfirst(strtolower($_POST[PLATE_VEHICLE])),
+      ucfirst(strtolower($_POST[BRAND_VEHICLE])),
+      ucfirst(strtolower($_POST[MODEL_VEHICLE])),
+      ucfirst(strtolower($_POST[COLOR_VEHICLE])),
       (int) $_POST[DOORS_VEHICLE],
       (int) $_POST[SEATS_VEHICLE],
-      $_POST[TRANSMISSION_VEHICLE],
-      $_POST[MOTORIZATION_VEHICLE],
-      $_POST[CLASS_VEHICLE],
-      $_POST[BASE_PRICE_VEHICLE]
+      ucfirst(strtolower($_POST[TRANSMISSION_VEHICLE])),
+      ucfirst(strtolower($_POST[MOTORIZATION_VEHICLE])),
+      ucfirst(strtolower($_POST[CLASS_VEHICLE])),
+      (float) $_POST[BASE_PRICE_VEHICLE]
     );
 
     try {
@@ -196,6 +203,17 @@ if ($conn != null) {
     $errors_message[] = "No se pudo cargar la lista de vehículos";
   }
 }
+
+$vehicles_block = [];
+
+if ($conn != null) {
+  try {
+    $vehicles_block = getVehiclesBlock($conn);
+  } catch (PDOException $e) {
+    error_log($e->getMessage());
+    $errors_message[] = "No se pudo cargar la lista de vehículos bloqueados";
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -209,7 +227,7 @@ if ($conn != null) {
 <body>
   <header>
     <h1>Gestor de vehículos</h1>
-    <a href="main.php">Volver al inicio</a>
+    <a href="../main.php">Volver al inicio</a>
   </header>
 
   <?php if (!empty($success_message)) { ?>
@@ -359,7 +377,7 @@ if ($conn != null) {
     <?php } ?>
   </section>
   <section>
-    <h1>BLOQUEAR UN VEHÍCULO</h1>
+    <h2>Bloquear vehículo</h2>
 
     <form action="admin.php" method="post">
       <label for="<?= VEHICLE_BLOCK ?>">Vehículo: </label>
@@ -387,6 +405,41 @@ if ($conn != null) {
       <button type="submit" name="<?= ACTION_SUBMIT ?>" value="<?= SUBMIT_VEHICLE_BLOCK ?>">Bloquear vehículo</button>
     </form>
   </section>
+
+  <section>
+    <h2>Vehículos bloqueados</h2>
+    <?php if (empty($vehicles_block)) { ?>
+      <p>No hay vehículos bloqueados</p>
+    <?php } else { ?>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Matrícula</th>
+            <th>Clase</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Fecha inicio</th>
+            <th>Fecha final</th>
+            <th>Razón</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($vehicles_block as $vehicle) { ?>
+            <tr>
+              <td><?= $vehicles[$vehicle["vehicle_id"]][PLATE_COLUMN] ?></td>
+              <td><?= $vehicles[$vehicle["vehicle_id"]][VEHICLE_CLASS_COLUMN] ?></td>
+              <td><?= $vehicles[$vehicle["vehicle_id"]][BRAND_COLUMN] ?></td>
+              <td><?= $vehicles[$vehicle["vehicle_id"]][MODEL_COLUMN] ?></td>
+              <td><?= $vehicle[START_DATE_COLUMN] ?></td>
+              <td><?= $vehicle[END_DATE_COLUMN] ?></td>
+              <td><?= $vehicle[REASON_COLUMN] ?></td>
+              <td><a href="">Eliminar</a></td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    <?php } ?>
 </body>
 
 </html>

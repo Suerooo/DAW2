@@ -33,7 +33,7 @@ function showLoginForm()
   <h1>LOGIN</h1>
   <form action="main.php" method="POST">
     <label for="<?= EMAIL_LOGIN ?>">Email:</label>
-    <input type="email" name="<?= EMAIL_LOGIN ?>" id="<?= EMAIL_LOGIN ?>" value="<?= keepFields(EMAIL_LOGIN) ?>">
+    <input type="text" name="<?= EMAIL_LOGIN ?>" id="<?= EMAIL_LOGIN ?>" value="<?= keepFields(EMAIL_LOGIN) ?>">
     <br>
 
     <label for="<?= PASSWORD_LOGIN ?>">Contraseña:</label>

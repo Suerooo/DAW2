@@ -19,7 +19,6 @@ async function cargarProductos() {
       const img = document.createElement("img")
       img.src = producto.imagen
       img.alt = producto.nombre
-      img.loading = "lazy"
 
       const info = document.createElement("div")
       info.classList.add("article-info")

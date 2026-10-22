@@ -1,5 +1,5 @@
 /* ========================================
-   1. CONFIGURACIÓN GENERAL
+  1. CONFIGURACIÓN GENERAL
    ======================================== */
 
 .montserrat-600 {
@@ -18,8 +18,8 @@ body {
   font-family: "Montserrat", Sans-serif;
   display: flex;
   flex-direction: column;
-  background-color: #fffffd;
-  color: #7c2d12;
+  background-color: #ffffff;
+  color: #222222;
 }
 
 img {
@@ -30,18 +30,18 @@ img {
 a {
   text-decoration: none;
   font-weight: 800;
-  color: #c2410c;
+  color: #444444;
   transition: all 0.1s linear;
 }
 
 a:hover {
-  transform: translateY(-2px);
+  transform: scale(1.05);
   font-weight: 900;
   transition: all 0.1s linear;
 }
 
 /* ========================================
-   2. CABECERA Y NAVEGACIÓN
+  2. CABECERA Y NAVEGACIÓN
    ======================================== */
 
 .cabecera {
@@ -53,7 +53,7 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: #fffffd;
+  background-color: #ffffff;
 }
 
 .logo {
@@ -72,7 +72,7 @@ a:hover {
 }
 
 /* ========================================
-   3. PRESENTACIÓN PRINCIPAL
+  3. PRESENTACIÓN PRINCIPAL
    ======================================== */
 
 .hero {
@@ -98,14 +98,19 @@ h1 {
 }
 
 .boton {
-  border: #7c2d12 solid 1px;
+  border: #000000 solid 2px;
   padding: 20px;
-  border-radius: 1000px;
-  background-color: #fff7ed;
+  background-color: #000000;
+  color: #e8e8e8;
+}
+
+.boton:hover {
+  background-color: #e8e8e8;
+  color: #444444;
 }
 
 /* ========================================
-   4. SERVICIOS
+  4. SERVICIOS
    ======================================== */
 
 .servicios {
@@ -113,65 +118,85 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.etiqueta {
+  font-size: 35px;
+  font-weight: 300;
 }
 
 .encabezado-seccion {
-  /* Anchura y alineación del encabezado */
 }
 
 .lista-servicios {
   margin-top: 30px;
   display: flex;
-  gap: 290px;
+  gap: 2%;
   min-width: 100vw;
   justify-content: center;
+  padding: 0 20%;
 }
 
 .tarjeta {
-  border: #7c2d12 solid 1px;
-  width: 235px;
+  box-shadow: #333333 3px 3px 20px 2px;
+  width: 535px;
+  transition: all 0.1s linear;
+}
+
+.tarjeta:hover {
+  transform: scale(1.02);
+  transition: all 0.1s linear;
 }
 
 .tarjeta img {
   height: 300px;
-  width: 235px;
+  width: 100%;
   object-fit: cover;
 }
 
 .contenido-tarjeta {
-  /* Espaciado interior */
-}
-
-.numero {
-  /* Estilo de la numeración de los servicios */
+  margin: 20px;
+  text-align: center;
 }
 
 /* ========================================
-   5. SOBRE NOSOTROS Y CONTACTO
+  5. SOBRE NOSOTROS Y CONTACTO
    ======================================== */
 
 .sobre-nosotros {
-  /* Composición y contraste visual */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.sobre-nosotros-container {
+  max-width: 40%;
+  text-align: center;
 }
 
 .contacto {
-  /* Destaca la llamada a la acción */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.contacto .etiqueta {
+  margin: 0;
+}
+
+.contacto .boton {
+  margin-top: 20px;
 }
 
 /* ========================================
-   6. PIE DE PÁGINA
+  7. INTERACCIÓN Y RESPONSIVE
    ======================================== */
 
-.pie {
-  /* Fondo, color, alineación y espaciado */
-}
-
-/* ========================================
-   7. INTERACCIÓN Y RESPONSIVE
-   ======================================== */
-
-/* Añade estados :hover para los enlaces y botones */
-
-/* Adapta la navegación y las tarjetas a pantallas estrechas */
 @media (max-width: 700px) {
 }

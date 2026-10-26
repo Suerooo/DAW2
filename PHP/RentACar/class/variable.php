@@ -52,7 +52,6 @@ const SEATS_COLUMN = "seats";
 const TRANSMISSION_COLUMN = "transmission";
 const MOTORIZATION_COLUMN = "motorization";
 const VEHICLE_CLASS_COLUMN = "vehicle_class";
-const ACTIVE_COLUMN = "active";
 const BASE_PRICE_COLUMN = "base_price";
 
 const START_DATE_COLUMN = "start_date";

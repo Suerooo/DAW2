@@ -77,8 +77,6 @@ CREATE TABLE vehicles (
 
     base_price DECIMAL(10,2) NOT NULL,
 
-    active BOOLEAN NOT NULL DEFAULT TRUE,
-
     CONSTRAINT chk_vehicle_doors
         CHECK (doors IN (2, 3, 4, 5)),
 
@@ -88,11 +86,8 @@ CREATE TABLE vehicles (
     CONSTRAINT chk_vehicle_price
         CHECK (base_price > 0),
 
-    CONSTRAINT chk_vehicle_active
-        CHECK (active IN (0, 1)),
-
     INDEX idx_vehicle_catalog (
-        active, vehicle_class, brand, model
+        vehicle_class, brand, model
     )
 ) ENGINE=InnoDB;
 
@@ -189,61 +184,61 @@ VALUES
 INSERT INTO vehicles
 (id, plate, brand, model, color, doors, seats,
  transmission, motorization, vehicle_class,
- base_price, active)
+ base_price)
 VALUES
 
 -- Clase A
 (1, '1000TST', 'Fiat', '500', 'blanco', 3, 4,
- 'manual', 'gasolina', 'A', 28.50, 1),
+ 'manual', 'gasolina', 'A', 28.50),
 
 (2, '1001TST', 'Fiat', '500', 'rojo', 3, 4,
- 'manual', 'gasolina', 'A', 28.50, 1),
+ 'manual', 'gasolina', 'A', 28.50),
 
 (3, '1002TST', 'Kia', 'Picanto', 'gris', 5, 5,
- 'manual', 'gasolina', 'A', 29.90, 1),
+ 'manual', 'gasolina', 'A', 29.90),
 
 -- Clase B
 (4, '2000TST', 'Seat', 'Ibiza', 'blanco', 5, 5,
- 'manual', 'gasolina', 'B', 35.00, 1),
+ 'manual', 'gasolina', 'B', 35.00),
 
 (5, '2001TST', 'Seat', 'Ibiza', 'azul', 5, 5,
- 'automatic', 'gasolina', 'B', 42.00, 1),
+ 'automatic', 'gasolina', 'B', 42.00),
 
 (6, '2002TST', 'Volkswagen', 'Polo', 'negro', 5, 5,
- 'manual', 'gasolina', 'B', 39.00, 1),
+ 'manual', 'gasolina', 'B', 39.00),
 
 -- Clase C
 (7, '3000TST', 'Renault', 'Clio', 'gris', 5, 5,
- 'automatic', 'hibrido', 'C', 49.00, 1),
+ 'automatic', 'hibrido', 'C', 49.00),
 
 (8, '3001TST', 'Toyota', 'Corolla', 'plata', 5, 5,
- 'automatic', 'hibrido', 'C', 55.00, 1),
+ 'automatic', 'hibrido', 'C', 55.00),
 
 -- Clase D
 (9, '4000TST', 'Dacia', 'Duster', 'blanco', 5, 5,
- 'manual', 'gasolina', 'D', 58.00, 1),
+ 'manual', 'gasolina', 'D', 58.00),
 
 (10, '4001TST', 'Hyundai', 'Tucson', 'gris', 5, 5,
- 'automatic', 'hibrido', 'D', 69.00, 1),
+ 'automatic', 'hibrido', 'D', 69.00),
 
 -- Clase E
 (11, '5000TST', 'Peugeot', '5008', 'azul', 5, 7,
- 'automatic', 'diesel', 'E', 75.00, 1),
+ 'automatic', 'diesel', 'E', 75.00),
 
 -- Clase F
 (12, '6000TST', 'Mercedes', 'Vito', 'negro', 4, 9,
- 'manual', 'diesel', 'F', 110.00, 1),
+ 'manual', 'diesel', 'F', 110.00),
 
 -- Clase G
 (13, '7000TST', 'Tesla', 'Model 3', 'blanco', 4, 5,
- 'automatic', 'electrico', 'G', 125.00, 1),
+ 'automatic', 'electrico', 'G', 125.00),
 
 -- Inactivos
 (14, '9000TST', 'Nissan', 'Micra', 'rojo', 5, 5,
- 'manual', 'gasolina', 'B', 32.00, 0),
+ 'manual', 'gasolina', 'B', 32.00),
 
 (15, '9001TST', 'Opel', 'Corsa', 'gris', 5, 5,
- 'manual', 'gasolina', 'B', 30.00, 0);
+ 'manual', 'gasolina', 'B', 30.00);
 
 
 -- CIERRES DE RESERVA

@@ -2,80 +2,80 @@
 [
   {
     "id": 1,
-    "nombre": "Camiseta básica blanca",
-    "precio": 19.99,
+    "name": "Camiseta básica blanca",
+    "price": 19.99,
     "imagen": "https://euroserigrafia.com/26137-large_default/camiseta-basica-de-algodon-personalizada.jpg"
   },
   {
     "id": 2,
-    "nombre": "Camiseta básica negra",
-    "precio": 19.99,
+    "name": "Camiseta básica negra",
+    "price": 19.99,
     "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhXJmXSw3r95Z2Fl92Kqcbb2aHAwYxkzvuzFIWubruBmyBxWmYslaRlOP_&s=10"
   },
   {
     "id": 1,
-    "nombre": "Camiseta básica blanca",
-    "precio": 19.99,
+    "name": "Camiseta básica blanca",
+    "price": 19.99,
     "imagen": "https://euroserigrafia.com/26137-large_default/camiseta-basica-de-algodon-personalizada.jpg"
   },
   {
     "id": 2,
-    "nombre": "Camiseta básica negra",
-    "precio": 19.99,
+    "name": "Camiseta básica negra",
+    "price": 19.99,
     "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhXJmXSw3r95Z2Fl92Kqcbb2aHAwYxkzvuzFIWubruBmyBxWmYslaRlOP_&s=10"
   },
   {
     "id": 1,
-    "nombre": "Camiseta básica blanca",
-    "precio": 19.99,
+    "name": "Camiseta básica blanca",
+    "price": 19.99,
     "imagen": "https://euroserigrafia.com/26137-large_default/camiseta-basica-de-algodon-personalizada.jpg"
   },
   {
     "id": 2,
-    "nombre": "Camiseta básica negra",
-    "precio": 19.99,
+    "name": "Camiseta básica negra",
+    "price": 19.99,
     "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhXJmXSw3r95Z2Fl92Kqcbb2aHAwYxkzvuzFIWubruBmyBxWmYslaRlOP_&s=10"
   },
   {
     "id": 1,
-    "nombre": "Camiseta básica blanca",
-    "precio": 19.99,
+    "name": "Camiseta básica blanca",
+    "price": 19.99,
     "imagen": "https://euroserigrafia.com/26137-large_default/camiseta-basica-de-algodon-personalizada.jpg"
   },
   {
     "id": 2,
-    "nombre": "Camiseta básica negra",
-    "precio": 19.99,
+    "name": "Camiseta básica negra",
+    "price": 19.99,
     "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhXJmXSw3r95Z2Fl92Kqcbb2aHAwYxkzvuzFIWubruBmyBxWmYslaRlOP_&s=10"
   },
   {
     "id": 1,
-    "nombre": "Camiseta básica blanca",
-    "precio": 19.99,
+    "name": "Camiseta básica blanca",
+    "price": 19.99,
     "imagen": "https://euroserigrafia.com/26137-large_default/camiseta-basica-de-algodon-personalizada.jpg"
   },
   {
     "id": 2,
-    "nombre": "Camiseta básica negra",
-    "precio": 19.99,
+    "name": "Camiseta básica negra",
+    "price": 19.99,
     "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhXJmXSw3r95Z2Fl92Kqcbb2aHAwYxkzvuzFIWubruBmyBxWmYslaRlOP_&s=10"
   },
   {
     "id": 1,
-    "nombre": "Camiseta básica blanca",
-    "precio": 19.99,
+    "name": "Camiseta básica blanca",
+    "price": 19.99,
     "imagen": "https://euroserigrafia.com/26137-large_default/camiseta-basica-de-algodon-personalizada.jpg"
   },
   {
     "id": 2,
-    "nombre": "Camiseta básica negra",
-    "precio": 19.99,
+    "name": "Camiseta básica negra",
+    "price": 19.99,
     "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhXJmXSw3r95Z2Fl92Kqcbb2aHAwYxkzvuzFIWubruBmyBxWmYslaRlOP_&s=10"
   },
   {
     "id": 2,
-    "nombre": "AA básica negra",
-    "precio": 22.99,
+    "name": "AA básica negra",
+    "price": 22.99,
     "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhXJmXSw3r95Z2Fl92Kqcbb2aHAwYxkzvuzFIWubruBmyBxWmYslaRlOP_&s=10"
   }
 ]

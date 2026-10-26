@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
     $conn = new PDO("mysql:host=" . SERVER_NAME . ";dbname=" . DB_NAME . ";charset=utf8mb4", USERNAME, PASSWORD_DB);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $conn->query("SELECT * FROM vehicles WHERE active = TRUE ORDER BY vehicle_class, brand, model, plate");
+    $stmt = $conn->query("SELECT * FROM vehicles ORDER BY vehicle_class, brand, model, plate");
     $vehicles = $stmt->fetchAll();
 
 

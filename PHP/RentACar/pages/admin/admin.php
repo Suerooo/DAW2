@@ -1,115 +1,19 @@
 <?php
 session_start();
 
-include_once __DIR__ . "/../class/variable.php";
-include_once __DIR__ . "/../class/vehicle.php";
+include_once __DIR__ . "/../../class/variable.php";
+include_once __DIR__ . "/../../class/vehicle.php";
 
 if (!isset($_SESSION[ROLE_COLUMN]) || $_SESSION[ROLE_COLUMN] !== "admin") {
   header("Location: main.php");
   exit;
 }
 
-$old_fields = $_SESSION['vehicle-old-fields'] ?? [];
-unset($_SESSION['vehicle-old-fields']);
-
-$errors_message = $_SESSION['vehicle-errors-message'] ?? [];
-unset($_SESSION['vehicle-errors-message']);
-
-$success_message = $_SESSION['vehicle-success-message'] ?? '';
-unset($_SESSION['vehicle-success-message']);
-
 function keepVehicleFields(string $field): string
 {
   global $old_fields;
 
   return $old_fields[$field] ?? '';
-}
-
-function validateVehicleRegisterForm(array &$errors_message): bool
-{
-  $requiredFields = [
-    PLATE_VEHICLE => "Matrícula",
-    BRAND_VEHICLE => "Marca",
-    MODEL_VEHICLE => "Modelo",
-    COLOR_VEHICLE => "Color",
-    DOORS_VEHICLE => "Puertas",
-    SEATS_VEHICLE => "Asientos",
-    TRANSMISSION_VEHICLE => "Transmisión",
-    MOTORIZATION_VEHICLE => "Motorización",
-    CLASS_VEHICLE => "Clase",
-    BASE_PRICE_VEHICLE => "Precio base"
-  ];
-
-  foreach ($requiredFields as $field => $display_field) {
-    if (!isset($_POST[$field]) || empty($_POST[$field])) {
-      $errors_message[] = "El campo $display_field es obligatorio";
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function validateVehicleBlockForm(array &$errors_message): bool
-{
-  $requiredFields = [
-    VEHICLE_BLOCK => "Vehículo",
-    START_DATE_BLOCK => "Fecha inicio",
-    END_DATE_BLOCK => "Fecha final",
-    REASON_BLOCK => "Razón"
-  ];
-
-  foreach ($requiredFields as $field => $display_field) {
-    if (!isset($_POST[$field]) || empty($_POST[$field])) {
-      $errors_message[] = "El campo $display_field es obligatorio";
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function registerVehicle(Vehicle $vehicle, PDO $conn): void
-{
-  $stmt = $conn->prepare("INSERT INTO vehicles (plate, brand, model, color, doors, seats, transmission, motorization, vehicle_class, base_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-  $stmt->execute([
-    $vehicle->get_plate(),
-    $vehicle->get_brand(),
-    $vehicle->get_model(),
-    $vehicle->get_color(),
-    $vehicle->get_doors(),
-    $vehicle->get_seats(),
-    $vehicle->get_transmission(),
-    $vehicle->get_motorization(),
-    $vehicle->get_vehicle_class(),
-    $vehicle->get_base_price()
-  ]);
-}
-
-function getVehicles(PDO $conn): array
-{
-  $stmt = $conn->query("SELECT * FROM vehicles ORDER BY vehicle_class, brand, model, plate");
-
-  return $stmt->fetchAll();
-}
-
-function getVehiclesBlock(PDO $conn): array
-{
-  $stmt = $conn->query("SELECT * FROM vehicle_blocks");
-
-  return $stmt->fetchAll();
-}
-
-function addVehicleBlock(int $vehicle_id, string $start_date, string $end_date, string $reason, PDO $conn)
-{
-  $stmt = $conn->prepare("INSERT INTO vehicle_blocks (vehicle_id, start_date, end_date, reason) values (?, ?, ?, ?)");
-  $stmt->execute([$vehicle_id, $start_date, $end_date, $reason]);
-}
-
-function deleteVehicleBlock(int $vehicle_id, PDO $conn)
-{
-  $stmt = $conn->prepare("DELETE FROM vehicle_blocks WHERE vehicle_id = ?");
-  $stmt->execute([$vehicle_id]);
 }
 
 $conn = null;
@@ -122,82 +26,8 @@ try {
   $errors_message[] = "No se pudo conectar con la base de datos";
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT]) && $_POST[ACTION_SUBMIT] === SUBMIT_VEHICLE_REGISTER) {
-  $errors_message = [];
-
-  if ($conn == null) {
-    $errors_message[] = "No se pudo conectar con la base de datos";
-  } elseif (validateVehicleRegisterForm($errors_message)) {
-    $vehicle = new Vehicle(
-      ucfirst(strtolower($_POST[PLATE_VEHICLE])),
-      ucfirst(strtolower($_POST[BRAND_VEHICLE])),
-      ucfirst(strtolower($_POST[MODEL_VEHICLE])),
-      ucfirst(strtolower($_POST[COLOR_VEHICLE])),
-      (int) $_POST[DOORS_VEHICLE],
-      (int) $_POST[SEATS_VEHICLE],
-      ucfirst(strtolower($_POST[TRANSMISSION_VEHICLE])),
-      ucfirst(strtolower($_POST[MOTORIZATION_VEHICLE])),
-      ucfirst(strtolower($_POST[CLASS_VEHICLE])),
-      (float) $_POST[BASE_PRICE_VEHICLE]
-    );
-
-    try {
-      registerVehicle($vehicle, $conn);
-      $_SESSION['vehicle-success-message'] = "Vehículo añadido correctamente";
-    } catch (PDOException $e) {
-      error_log($e->getMessage());
-      $errors_message[] = "No se pudo añadir el vehículo";
-    }
-  }
-
-  if (!empty($errors_message)) {
-    $_SESSION['vehicle-errors-message'] = $errors_message;
-    $_SESSION['vehicle-old-fields'] = [
-      PLATE_VEHICLE => $_POST[PLATE_VEHICLE] ?? '',
-      BRAND_VEHICLE => $_POST[BRAND_VEHICLE] ?? '',
-      MODEL_VEHICLE => $_POST[MODEL_VEHICLE] ?? '',
-      COLOR_VEHICLE => $_POST[COLOR_VEHICLE] ?? '',
-      DOORS_VEHICLE => $_POST[DOORS_VEHICLE] ?? '',
-      SEATS_VEHICLE => $_POST[SEATS_VEHICLE] ?? '',
-      TRANSMISSION_VEHICLE => $_POST[TRANSMISSION_VEHICLE] ?? '',
-      MOTORIZATION_VEHICLE => $_POST[MOTORIZATION_VEHICLE] ?? '',
-      CLASS_VEHICLE => $_POST[CLASS_VEHICLE] ?? '',
-      BASE_PRICE_VEHICLE => $_POST[BASE_PRICE_VEHICLE] ?? ''
-    ];
-  }
-
-  header("Location: admin.php");
-  exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT]) && $_POST[ACTION_SUBMIT] === SUBMIT_VEHICLE_BLOCK) {
-  $errors_message = [];
-
-  if ($conn == null) {
-    $errors_message[] = "No se pudo conectar con la base de datos";
-  } elseif (validateVehicleBlockForm($errors_message)) {
-    try {
-      addVehicleBlock($_POST[VEHICLE_BLOCK], $_POST[START_DATE_BLOCK], $_POST[END_DATE_BLOCK], $_POST[REASON_BLOCK], $conn);
-      $_SESSION['vehicle-success-message'] = "Bloqueo de vehículo añadido correctamente";
-    } catch (PDOException $e) {
-      error_log($e->getMessage());
-      $errors_message[] = "No se pudo bloquear el vehículo" . $e->getMessage();
-    }
-  }
-
-  if (!empty($errors_message)) {
-    $_SESSION['vehicle-errors-message'] = $errors_message;
-    $_SESSION['vehicle-old-fields'] = [
-      VEHICLE_BLOCK => $_POST[VEHICLE_BLOCK] ?? '',
-      START_DATE_BLOCK => $_POST[START_DATE_BLOCK] ?? '',
-      END_DATE_BLOCK => $_POST[END_DATE_BLOCK] ?? '',
-      REASON_BLOCK => $_POST[REASON_BLOCK] ?? ''
-    ];
-  }
-
-  header("Location: admin.php");
-  exit;
-}
+include_once "vehicle-register.php";
+include_once "vehicle-block.php";
 
 $vehicles = [];
 
@@ -224,10 +54,47 @@ if ($conn != null) {
 if ($conn != null) {
   try {
     if (isset($_GET["delete-block"])) {
-      deleteVehicleBlock($_GET["delete-block"], $conn);
+      deleteVehicleBlock((int) $_GET["delete-block"], $conn);
 
       header("Location: admin.php");
       exit;
+    }
+  } catch (PDOException $e) {
+    error_log($e->getMessage());
+    $errors_message[] = "No se pudo eliminar el bloqueo de ese vehículo";
+  }
+}
+
+if ($conn != null) {
+  try {
+    if (isset($_GET["edit-block"])) {
+      $vehicle_block = $vehicles_block[$_GET["edit-block"]];
+      $vehicle = $vehicles[$vehicle_block["vehicle_id"]];
+?>
+      <form action="admin.php" method="POST">
+        <label for="<?= VEHICLE_BLOCK ?>">Vehículo: </label>
+        <select name="<?= VEHICLE_BLOCK ?>" id="<?= VEHICLE_BLOCK ?>" disabled>
+          <option value="<?= $vehicle[ID_COLUMN] ?>"><?= $vehicle[PLATE_COLUMN] . " " . $vehicle[VEHICLE_CLASS_COLUMN] . " " . $vehicle[BRAND_COLUMN] . " " . $vehicle[MODEL_COLUMN] ?></option>
+
+        </select>
+        <br>
+
+        <label for="<?= START_DATE_BLOCK ?>">Fecha inicio: </label>
+        <input type="date" name="<?= START_DATE_BLOCK ?>" id="<?= START_DATE_BLOCK ?>">
+        <br>
+
+        <label for="<?= END_DATE_BLOCK ?>">Fecha final: </label>
+        <input type="date" name="<?= END_DATE_BLOCK ?>" id="<?= END_DATE_BLOCK ?>">
+        <br>
+
+        <label for="<?= REASON_BLOCK ?>">Razón: </label>
+        <input type="text" name="<?= REASON_BLOCK ?>" id="<?= REASON_BLOCK ?>">
+        <br>
+
+        <button type="submit" name="<?= ACTION_SUBMIT ?>" value="<?= SUBMIT_VEHICLE_BLOCK ?>">Bloquear vehículo</button>
+        <?php var_dump($vehicle_block) ?>
+      </form>
+<?php
     }
   } catch (PDOException $e) {
     error_log($e->getMessage());
@@ -346,7 +213,6 @@ if ($conn != null) {
       <button type="submit" name="<?= ACTION_SUBMIT ?>" value="<?= SUBMIT_VEHICLE_REGISTER ?>">Añadir vehículo</button>
     </form>
   </section>
-
   <section>
     <h2>Vehículos añadidos</h2>
 
@@ -366,7 +232,6 @@ if ($conn != null) {
             <th>Transmisión</th>
             <th>Motorización</th>
             <th>Precio base</th>
-            <th>Estado</th>
           </tr>
         </thead>
         <tbody>
@@ -382,27 +247,18 @@ if ($conn != null) {
               <td><?= $vehicle[TRANSMISSION_COLUMN] ?></td>
               <td><?= $vehicle[MOTORIZATION_COLUMN] ?></td>
               <td><?= $vehicle[BASE_PRICE_COLUMN] ?>€</td>
-              <td>
-                <?php
-                if ($vehicle[ACTIVE_COLUMN]) {
-                  echo "Activo";
-                } else {
-                  echo "Inactivo";
-                }
-                ?>
-              </td>
             </tr>
           <?php } ?>
         </tbody>
       </table>
     <?php } ?>
-  </section>
+  </section>´
   <section>
     <h2>Bloquear vehículo</h2>
 
     <form action="admin.php" method="post">
       <label for="<?= VEHICLE_BLOCK ?>">Vehículo: </label>
-      <select name="<?= VEHICLE_BLOCK ?>" id="<?= VEHICLE_BLOCK ?>">
+      <select name="<?= VEHICLE_BLOCK ?>" id="<?= VEHICLE_BLOCK ?> ">
         <option value="" selected>Selecciona una opción</option>
         <?php foreach ($vehicles as $vehicle) { ?>
           <option value="<?= $vehicle[ID_COLUMN] ?>"><?= $vehicle[PLATE_COLUMN] . " " . $vehicle[VEHICLE_CLASS_COLUMN] . " " . $vehicle[BRAND_COLUMN] . " " . $vehicle[MODEL_COLUMN] ?></option>
@@ -446,7 +302,7 @@ if ($conn != null) {
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($vehicles_block as $vehicle) { ?>
+          <?php foreach ($vehicles_block as $index => $vehicle) { ?>
             <tr>
               <td><?= $vehicles[$vehicle["vehicle_id"]][PLATE_COLUMN] ?></td>
               <td><?= $vehicles[$vehicle["vehicle_id"]][VEHICLE_CLASS_COLUMN] ?></td>
@@ -455,13 +311,15 @@ if ($conn != null) {
               <td><?= $vehicle[START_DATE_COLUMN] ?></td>
               <td><?= $vehicle[END_DATE_COLUMN] ?></td>
               <td><?= $vehicle[REASON_COLUMN] ?></td>
-              <td><a href="">Editar</a></td>
-              <td><a href="admin.php?vehicle-block=<?= $vehicle["vehicle-id"] ?>">Eliminar</a></td>
+              <td><a href="admin.php?edit-block=<?= $vehicles_block[$index]["id"] ?>">Editar</a></td>
+              <td><a href="admin.php?delete-block=<?= $vehicles_block[$index]["id"] ?>">Eliminar</a></td>
             </tr>
           <?php } ?>
         </tbody>
       </table>
     <?php } ?>
+  </section>
+
 </body>
 
 </html>

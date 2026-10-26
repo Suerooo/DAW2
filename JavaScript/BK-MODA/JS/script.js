@@ -1,50 +1,45 @@
-const contenedor = document.getElementById("productos")
+const container = document.getElementById("products")
 
-async function cargarProductos() {
+async function loadProducts() {
   try {
-    const respuesta = await fetch("JS/products.json")
+    const answer = await fetch("JS/products.json")
 
-    if (!respuesta.ok) {
+    if (!answer.ok) {
       throw new Error("No se pudo cargar el JSON")
     }
 
-    const productos = await respuesta.json()
+    const products = await answer.json()
 
-    contenedor.replaceChildren()
-
-    productos.forEach((producto) => {
+    products.forEach((product) => {
       const article = document.createElement("article")
       article.classList.add("article")
 
       const img = document.createElement("img")
-      img.src = producto.imagen
-      img.alt = producto.nombre
+      img.src = product.imagen
+      img.alt = product.nombre
 
       const info = document.createElement("div")
       info.classList.add("article-info")
 
-      const nombre = document.createElement("h3")
-      nombre.textContent = producto.nombre
+      const name = document.createElement("h3")
+      name.textContent = product.name
 
-      const precio = document.createElement("p")
-      precio.textContent = new Intl.NumberFormat("es-ES", {
-        style: "currency",
-        currency: "EUR",
-      }).format(producto.precio)
+      const price = document.createElement("p")
+      price.textContent = product.price + "€"
 
-      const boton = document.createElement("button")
-      boton.type = "button"
-      boton.textContent = "Añadir al carrito"
+      const button = document.createElement("button")
+      button.type = "button"
+      button.textContent = "Añadir al carrito"
 
-      info.append(nombre, precio, boton)
+      info.append(name, price, button)
       article.append(img, info)
 
-      contenedor.appendChild(article)
+      container.appendChild(article)
     })
   } catch (error) {
     console.error(error)
-    contenedor.textContent = "No se pudieron cargar los productos."
+    container.textContent = "No se pudieron cargar los productos."
   }
 }
 
-cargarProductos()
+loadProducts()

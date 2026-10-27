@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+}
+
+a {
+  text-decoration: none;
+}
+
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0d243e;
+  height: 3rem;
+  padding: 2rem;
+}
+
+header a {
+  color: aliceblue;
+}
+
+header nav {
+  display: flex;
+  gap: 4rem;
+}

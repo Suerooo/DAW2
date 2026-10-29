@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Imágenes y audio locales con ejemplos de etiquetas multimedia.">
+  <title>Multimedia | HTML Fácil</title>
+  <link rel="icon" href="assets/icons/blue/logo-code.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <a class="logo" href="index.html"><img src="assets/images/logo-header.svg" alt="HTML Fácil" width="190"
+        height="44"></a>
+    <nav class="navegacion">
+      <a href="index.html">Inicio</a>
+      <a href="curso.html">Curso HTML</a>
+      <a href="ejemplos.html">Ejemplos</a>
+      <a href="etiquetas.html">Etiquetas HTML</a>
+      <a class="activo" href="multimedia.html">Multimedia</a>
+      <a href="faq.html">Preguntas frecuentes</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="contenido" id="contenido">
+    <nav class="ruta">
+      <a href="index.html">Inicio</a>
+      /
+      <a href="curso.html">Curso HTML</a>
+      /
+      <span>Multimedia</span>
+    </nav>
+    <div class="encabezado-seccion">
+      <h1>Imágenes, audio y vídeo</h1>
+      <p>Ejemplos de cómo incorporar recursos multimedia con HTML.</p>
+    </div>
+    <div class="lista-tarjetas">
+      <article class="tarjeta">
+        <h2>Imagen con HTML</h2>
+        <img src="assets/images/example-landscape.svg" alt="Ilustración de un paisaje con montañas y lago" width="720"
+          height="360">
+        <p>La etiqueta img incorpora imágenes. alt añade una descripción alternativa.</p>
+        <div class="codigo">
+          <p>&lt;img src="assets/images/example-landscape.svg" alt="Paisaje con montañas"></p>
+        </div>
+      </article>
+      <article class="tarjeta">
+        <h2>Reproductor de audio</h2>
+        <img src="assets/images/audio-wave.svg" alt="Ilustración de ondas de audio" width="520" height="180">
+        <audio controls preload="metadata">
+          <source src="assets/audio/ding-sound-effect.mp3" type="audio/mpeg">
+          Tu navegador no puede reproducir este audio.
+        </audio>
+        <div class="codigo">
+          <p>&lt;audio controls src="assets/audio/ding-sound-effect.mp3">&lt;/audio></p>
+        </div>
+      </article>
+    </div>
+    <section class="tarjeta multimedia">
+      <div class="columna">
+        <h2>Ejemplo de vídeo HTML</h2>
+        <p>La etiqueta video permite reproducir vídeos con controles de reproducción.</p>
+        <div class="codigo">
+          <p>&lt;video controls</p>
+          <p>&lt;source src="assets/video/html-tutorial.mp4" type="video/mp4"></p>
+          <p>&lt;/video></p>
+        </div>
+      </div>
+      <video controls src="assets/video/html-tutorial.mp4"></video>
+    </section>
+  </main>
+</body>
+
+</html>

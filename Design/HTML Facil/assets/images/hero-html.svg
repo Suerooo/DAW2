@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="460" viewBox="0 0 720 460" role="img">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#EFF6FF"/><stop offset="1" stop-color="#DBEAFE"/></linearGradient>
+  <filter id="shadow" x="-25%" y="-25%" width="150%" height="170%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0F172A" flood-opacity=".12"/></filter>
+</defs>
+<rect width="720" height="460" rx="28" fill="url(#bg)"/>
+<circle cx="85" cy="85" r="43" fill="#BFDBFE" opacity=".65"/>
+<circle cx="645" cy="400" r="73" fill="#BFDBFE" opacity=".4"/>
+<g filter="url(#shadow)" transform="translate(126 64) rotate(-3 230 155)">
+ <rect x="0" y="0" width="475" height="315" rx="17" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="2"/>
+ <path d="M17 0H458a17 17 0 0 1 17 17v35H0V17A17 17 0 0 1 17 0Z" fill="#1D4ED8"/>
+ <circle cx="26" cy="26" r="6" fill="#FFFFFF" opacity=".85"/><circle cx="48" cy="26" r="6" fill="#FFFFFF" opacity=".65"/><circle cx="70" cy="26" r="6" fill="#FFFFFF" opacity=".45"/>
+ <g font-family="Consolas, 'Courier New', monospace" font-size="22" xml:space="preserve">
+ <text x="42" y="104" fill="#7C3AED">&lt;!DOCTYPE html&gt;</text>
+ <text x="42" y="140" fill="#7C3AED">&lt;html&gt;</text>
+ <text x="68" y="176" fill="#1D4ED8">&lt;body&gt;</text>
+ <text x="90" y="212" fill="#0F172A">&lt;h1&gt;Hola, mundo!&lt;/h1&gt;</text>
+ <text x="90" y="248" fill="#0F172A">&lt;p&gt;Mi primera web&lt;/p&gt;</text>
+ <text x="68" y="284" fill="#1D4ED8">&lt;/body&gt;</text>
+ </g>
+</g>
+<g transform="translate(570 305)" filter="url(#shadow)"><rect width="90" height="90" rx="20" fill="#FFFFFF"/><g fill="none" stroke="#1D4ED8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="m35 28-17 17 17 17M55 28l17 17-17 17"/></g></g>
+</svg>

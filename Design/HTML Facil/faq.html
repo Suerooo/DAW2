@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Respuestas a dudas básicas de HTML.">
+  <title>Preguntas frecuentes | HTML Fácil</title>
+  <link rel="icon" href="assets/icons/blue/logo-code.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <a class="logo" href="index.html"><img src="assets/images/logo-header.svg" alt="HTML Fácil" width="190"
+        height="44"></a>
+    <nav class="navegacion">
+      <a href="index.html">Inicio</a>
+      <a href="curso.html">Curso HTML</a>
+      <a href="ejemplos.html">Ejemplos</a>
+      <a href="etiquetas.html">Etiquetas HTML</a>
+      <a href="multimedia.html">Multimedia</a>
+      <a class="activo" href="faq.html">Preguntas frecuentes</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="contenido" id="contenido">
+    <nav class="ruta">
+      <a href="index.html">Inicio</a>
+      /
+      <span>Preguntas frecuentes</span>
+    </nav>
+    <div class="encabezado-seccion">
+      <h1>Preguntas frecuentes</h1>
+      <p>Aquí encontrarás respuestas a las dudas más comunes sobre HTML.</p>
+    </div>
+    <section class="preguntas">
+      <details class="pregunta" open>
+        <summary>¿Qué es HTML?</summary>
+        <p>HTML es un lenguaje de marcado utilizado para estructurar el contenido de las páginas web. Permite definir
+          elementos como títulos, párrafos, imágenes, enlaces y tablas.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Cuál es la diferencia entre HTML y CSS?</summary>
+        <p>HTML organiza el contenido de la página. CSS controla su apariencia, por ejemplo, colores, tamaños de texto,
+          márgenes y distribución.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Necesito instalar algún programa?</summary>
+        <p>Puedes escribir HTML en un editor de texto y abrir el archivo .html con un navegador. Un editor como Visual
+          Studio Code facilita el trabajo, pero no es obligatorio.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Puedo utilizar HTML en cualquier navegador?</summary>
+        <p>Los navegadores modernos interpretan HTML. Algunas funciones o características específicas pueden variar
+          según el navegador y su versión.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Qué son los atributos?</summary>
+        <p>Son datos añadidos a la etiqueta de apertura. Por ejemplo, el atributo href indica el destino de un enlace y
+          alt describe una imagen.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Cómo puedo añadir una imagen?</summary>
+        <p>Utiliza la etiqueta img con src para indicar la ruta del archivo y alt para describir la imagen.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Cómo se crea un enlace?</summary>
+        <p>Utiliza la etiqueta a con el atributo href. Por ejemplo: &lt;a href="https://example.com">Visitar&lt;/a>.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Qué es un formulario?</summary>
+        <p>Es una sección de la página que agrupa campos y botones para introducir datos. Para recibirlos de verdad,
+          hace falta un sistema que procese el envío.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Dónde puedo practicar más?</summary>
+        <p>En la sección Ejemplos encontrarás código completo y su resultado, y en Etiquetas HTML hay ejemplos para cada
+          elemento.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Para qué sirven las etiquetas semánticas?</summary>
+        <p>Elementos como header, nav, main y footer indican qué función tiene cada región de la página y ayudan a
+          organizar su estructura.</p>
+      </details>
+    </section>
+  </main>
+</body>
+
+</html>

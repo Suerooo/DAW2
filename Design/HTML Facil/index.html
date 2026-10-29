@@ -1,54 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTML Fácil</title>
-  <link rel="stylesheet" href="css/variable.css">
+  <meta name="description" content="Aprende HTML paso a paso con lecciones, etiquetas y ejemplos de código.">
+  <title>Inicio | HTML Fácil</title>
+  <link rel="icon" href="assets/icons/blue/logo-code.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <header>
-    <a id="link-logo" href=""><img src="" alt="logo"></a>
-    <nav>
-      <a class="link-nav" href="">Inicio</a>
-      <a class="link-nav" href="">Curso HTML</a>
-      <a class="link-nav" href="">Ejemplos</a>
-      <a class="link-nav" href="">Preguntas frecuentes</a>
-      <a class="link-nav" href="">Contacto</a>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <a class="logo" href="index.html"><img src="assets/images/logo-header.svg" alt="HTML Fácil" width="190" height="44"></a>
+    <nav class="navegacion">
+      <a class="activo" href="index.html">Inicio</a>
+      <a href="curso.html">Curso HTML</a>
+      <a href="ejemplos.html">Ejemplos</a>
+      <a href="etiquetas.html">Etiquetas HTML</a>
+      <a href="multimedia.html">Multimedia</a>
+      <a href="faq.html">Preguntas frecuentes</a>
+      <a href="contacto.html">Contacto</a>
     </nav>
-    <a href=""></a>
   </header>
-  <main>
-    <div id="top-left-main">
-      <p class="muted">APRENDE A TU RITMO</p>
-      <h1>Aprende HTML paso a paso</h1>
-      <p>Explicaciones sencillas, ejemplos prácticos y recursos para crear tus propias páginas web.
-      </p>
-      <button>Comenzar curso -></button>
-    </div>
-    <div id="top-right-main">
-      <img id="decorative-html-img" src="" alt="decoración código html">
-    </div>
-    <div id="bottom-main">
-      <div class="card">
-        <img class="icon" src="" alt="icono libro">
-        <h2>Curso completo</h2>
+
+  <main class="contenido" id="contenido">
+    <section class="hero">
+      <div class="hero-texto">
+        <p class="etiqueta">APRENDE A TU RITMO</p>
+        <h1>Aprende HTML<br>paso a paso</h1>
+        <p>Explicaciones sencillas, ejemplos prácticos y recursos para crear tus propias páginas web.</p>
+        <a class="boton" href="curso.html">Comenzar el curso →</a>
+      </div>
+      <img src="assets/images/hero-html.svg" width="720" height="460" alt="Ilustración de una ventana de navegador con código HTML">
+    </section>
+    <section class="lista-tarjetas">
+      <article class="tarjeta">
+        <img class="icono" src="assets/icons/blue/book-open.svg" width="20" height="20" alt="" loading="lazy">
+        <h2><a href="curso.html">Curso completo</a></h2>
         <p>Lecciones organizadas desde lo básico hasta ejemplos más avanzados.</p>
-      </div>
-      <div class="card">
-        <img class="icon" src="" alt="icono código">
-        <h2>Ejemplos prácticos</h2>
+      </article>
+      <article class="tarjeta">
+        <img class="icono" src="assets/icons/blue/code.svg" width="20" height="20" alt="" loading="lazy">
+        <h2><a href="ejemplos.html">Ejemplos prácticos</a></h2>
         <p>Código y resultado para que veas cómo funciona cada etiqueta.</p>
-      </div>
-      <div class="card">
-        <img class="icon" src="" alt="icono reproducir">
-        <h2>Recursos multimedia</h2>
-        <p>Imágenes, audio y video para reforzar el aprendizaje.</p>
-      </div>
-    </div>
+      </article>
+      <article class="tarjeta">
+        <img class="icono" src="assets/icons/blue/play.svg" width="20" height="20" alt="" loading="lazy">
+        <h2><a href="multimedia.html">Recursos multimedia</a></h2>
+        <p>Imágenes y audio para reforzar el aprendizaje.</p>
+      </article>
+    </section>
   </main>
 </body>
 

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cinco ejemplos de páginas con código HTML y resultado.">
+  <title>Ejemplos HTML | HTML Fácil</title>
+  <link rel="icon" href="assets/icons/blue/logo-code.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <a class="logo" href="index.html"><img src="assets/images/logo-header.svg" alt="HTML Fácil" width="190"
+        height="44"></a>
+    <nav class="navegacion">
+      <a href="index.html">Inicio</a>
+      <a href="curso.html">Curso HTML</a>
+      <a class="activo" href="ejemplos.html">Ejemplos</a>
+      <a href="etiquetas.html">Etiquetas HTML</a>
+      <a href="multimedia.html">Multimedia</a>
+      <a href="faq.html">Preguntas frecuentes</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="contenido" id="contenido">
+    <nav class="ruta">
+      <a href="index.html">Inicio</a>
+      /
+      <span>Ejemplos</span>
+    </nav>
+    <div class="encabezado-seccion">
+      <h1>Ejemplos de páginas web</h1>
+      <p>Aquí puedes ver diferentes ejemplos de páginas creadas con HTML. Cada ejemplo incluye el código y el resultado.
+      </p>
+    </div>
+    <article class="tarjeta" id="presentacion">
+      <h2>Ejemplo 1: Página de presentación</h2>
+      <p>Una página inicial con un título, una descripción y un enlace.</p>
+      <div class="columnas">
+        <div class="columna">
+          <h3>Código HTML</h3>
+          <div class="codigo">
+            <p>&lt;h1>Bienvenido&lt;/h1></p>
+            <p>&lt;p>Esta es mi primera página web.&lt;/p></p>
+            <p>&lt;a href="#mas">Seguir aprendiendo&lt;/a></p>
+            <p>&lt;h2 id="mas">Más contenido&lt;/h2></p>
+          </div>
+        </div>
+        <div class="columna">
+          <h3>Resultado</h3>
+          <div class="resultado">
+            <h1>Bienvenido</h1>
+            <p>Esta es mi primera página web.</p>
+            <a href="#mas">Seguir aprendiendo</a>
+            <h2 id="mas">Más contenido</h2>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="tarjeta" id="personal">
+      <h2>Ejemplo 2: Página personal</h2>
+      <p>Un perfil con información y una lista de intereses.</p>
+      <div class="columnas">
+        <div class="columna">
+          <h3>Código HTML</h3>
+          <div class="codigo">
+            <p>&lt;header>&lt;h1>Mi página personal&lt;/h1>&lt;/header></p>
+            <p>&lt;main></p>
+            <p>&lt;p>Me gusta aprender desarrollo web.&lt;/p></p>
+            <p>&lt;h2>Mis intereses&lt;/h2></p>
+            <p>&lt;ul>&lt;li>HTML&lt;/li>&lt;li>Diseño&lt;/li>&lt;li>Tecnología&lt;/li>&lt;/ul></p>
+            <p>&lt;/main></p>
+          </div>
+        </div>
+        <div class="columna">
+          <h3>Resultado</h3>
+          <div class="resultado">
+            <header>
+              <h1>Mi página personal</h1>
+            </header>
+            <div>
+              <p>Me gusta aprender desarrollo web.</p>
+              <h2>Mis intereses</h2>
+              <ul>
+                <li>HTML</li>
+                <li>Diseño</li>
+                <li>Tecnología</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="tarjeta" id="productos">
+      <h2>Ejemplo 3: Catálogo de productos</h2>
+      <p>Tarjetas sencillas de productos creadas con HTML y estilos directos.</p>
+      <div class="columnas">
+        <div class="columna">
+          <h3>Código HTML</h3>
+          <div class="codigo">
+            <p>&lt;h1>Mis productos&lt;/h1></p>
+            <p>&lt;article class="producto"></p>
+            <p>&lt;h2>Cuaderno&lt;/h2>&lt;p>Para tus apuntes.&lt;/p></p>
+            <p>&lt;/article></p>
+            <p>&lt;article class="producto"></p>
+            <p>&lt;h2>Lápiz&lt;/h2>&lt;p>Para escribir y dibujar.&lt;/p></p>
+            <p>&lt;/article></p>
+          </div>
+        </div>
+        <div class="columna">
+          <h3>Resultado</h3>
+          <div class="resultado">
+            <h1>Mis productos</h1>
+            <article class="producto">
+              <h2>Cuaderno</h2>
+              <p>Para tus apuntes.</p>
+            </article>
+            <article class="producto">
+              <h2>Lápiz</h2>
+              <p>Para escribir y dibujar.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="tarjeta" id="formulario">
+      <h2>Ejemplo 4: Formulario básico</h2>
+      <p>Campos con etiquetas y validación HTML.</p>
+      <div class="columnas">
+        <div class="columna">
+          <h3>Código HTML</h3>
+          <div class="codigo">
+            <p>&lt;h1>Escríbenos&lt;/h1></p>
+            <p>&lt;form></p>
+            <p>&lt;label for="nombre">Nombre&lt;/label></p>
+            <p>&lt;input id="nombre" name="nombre" required></p>
+            <p>&lt;label for="correo">Correo electrónico&lt;/label></p>
+            <p>&lt;input id="correo" type="email" required></p>
+            <p>&lt;label for="mensaje">Mensaje&lt;/label></p>
+            <p>&lt;textarea id="mensaje" rows="3" required>&lt;/textarea></p>
+            <p>&lt;button type="submit">Enviar&lt;/button></p>
+            <p>&lt;/form></p>
+          </div>
+        </div>
+        <div class="columna">
+          <h3>Resultado</h3>
+          <div class="resultado">
+            <h1>Escríbenos</h1>
+            <div class="formulario-ejemplo">
+              <label for="nombre">Nombre</label>
+              <input id="nombre" name="nombre" required>
+              <label for="correo">Correo electrónico</label>
+              <input id="correo" type="email" required>
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" rows="3" required></textarea>
+              <button type="button">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="tarjeta" id="multimedia">
+      <h2>Ejemplo 5: Página con multimedia</h2>
+      <p>Una imagen con texto alternativo y un reproductor de audio local.</p>
+      <div class="columnas">
+        <div class="columna">
+          <h3>Código HTML</h3>
+          <div class="codigo">
+            <p>&lt;h1>Imagen y audio&lt;/h1></p>
+            <p>&lt;img src="assets/images/example-landscape.svg" alt="Paisaje con montañas" width="360"></p>
+            <p>&lt;h2>Reproductor de audio&lt;/h2></p>
+            <p>&lt;audio controls src="assets/audio/ding-sound-effect.mp3">&lt;/audio></p>
+          </div>
+        </div>
+        <div class="columna">
+          <h3>Resultado</h3>
+          <div class="resultado">
+            <h1>Imagen y audio</h1>
+            <img src="assets/images/example-landscape.svg" alt="Paisaje con montañas" width="360">
+            <h2>Reproductor de audio</h2>
+            <audio controls src="assets/audio/ding-sound-effect.mp3"></audio>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+</body>
+
+</html>

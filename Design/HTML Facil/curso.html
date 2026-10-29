@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Curso HTML con explicaciones, ejemplos y recursos para aprender paso a paso.">
+  <title>Curso HTML | HTML Fácil</title>
+  <link rel="icon" href="assets/icons/blue/logo-code.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <a class="logo" href="index.html"><img src="assets/images/logo-header.svg"
+        alt="HTML Fácil" width="190" height="44"></a>
+    <nav class="navegacion">
+      <a href="index.html">Inicio</a>
+      <a class="activo" href="curso.html">Curso HTML</a>
+      <a href="ejemplos.html">Ejemplos</a>
+      <a href="etiquetas.html">Etiquetas HTML</a>
+      <a href="multimedia.html">Multimedia</a>
+      <a href="faq.html">Preguntas frecuentes</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="contenido" id="contenido">
+    <nav class="ruta">
+      <a href="index.html">Inicio</a>
+      /
+      <span>Curso HTML</span>
+    </nav>
+    <div class="encabezado-seccion">
+      <h1>Aprende HTML paso a paso</h1>
+      <p>Lecciones y ejemplos para empezar a crear tus propias páginas web.</p>
+    </div>
+    <section class="tarjeta" id="introduccion">
+      <p class="etiqueta">Lección 01 de 08</p>
+      <h2>¿Qué es HTML?</h2>
+      <p>HTML es un lenguaje de marcado que sirve para estructurar el contenido de una página web mediante elementos
+        como títulos, párrafos, enlaces e imágenes.</p>
+      <p>El navegador interpreta las etiquetas y muestra el contenido.</p>
+    </section>
+    <section class="tarjeta" id="estructura">
+      <p class="etiqueta">Lección 02 de 08</p>
+      <h2>Estructura de una página</h2>
+      <p>Un documento comienza con &lt;!DOCTYPE html>. El elemento html contiene head (información del documento) y body
+        (contenido visible).</p>
+      <div class="codigo">
+        <p>&lt;!DOCTYPE html></p>
+        <p>&lt;html lang="es"></p>
+        <p>&lt;head></p>
+        <p>&lt;meta charset="UTF-8"></p>
+        <p>&lt;title>Mi web&lt;/title></p>
+        <p>&lt;/head></p>
+        <p>&lt;body></p>
+        <p>&lt;h1>Hola, mundo&lt;/h1></p>
+        <p>&lt;p>Mi primera página.&lt;/p></p>
+        <p>&lt;/body></p>
+        <p>&lt;/html></p>
+      </div>
+    </section>
+    <section class="tarjeta" id="primera-pagina">
+      <p class="etiqueta">Lección 03 de 08</p>
+      <h2>Tu primera página</h2>
+      <p>Utiliza la estructura de la lección anterior para crear un documento con un título y un párrafo. Guarda el
+        archivo con la extensión .html y ábrelo en tu navegador.</p>
+      <p><a href="ejemplos.html#presentacion">Ver código y resultado de la página de presentación</a></p>
+    </section>
+    <section class="tarjeta" id="texto">
+      <p class="etiqueta">Lección 04 de 08</p>
+      <h2>Texto y listas</h2>
+      <p>Los encabezados, párrafos y listas permiten organizar la información.</p>
+      <div class="enlaces">
+        <a href="etiquetas.html#texto">Consultar etiquetas de texto</a>
+        <a href="etiquetas.html#tag-listas-ul-2">Ver ejemplos de listas</a>
+      </div>
+    </section>
+    <section class="tarjeta" id="enlaces">
+      <p class="etiqueta">Lección 05 de 08</p>
+      <h2>Enlaces e imágenes</h2>
+      <p>Los enlaces conectan páginas y las imágenes aportan contenido visual.</p>
+      <div class="enlaces">
+        <a href="etiquetas.html#tag-listas-a-1">Ver la etiqueta de enlace &lt;a></a>
+        <a href="etiquetas.html#tag-multimedia-img-1">Ver la etiqueta de imagen &lt;img></a>
+      </div>
+    </section>
+    <section class="tarjeta" id="tablas">
+      <p class="etiqueta">Lección 06 de 08</p>
+      <h2>Tablas</h2>
+      <p>Las tablas presentan datos organizados en filas y columnas.</p>
+      <a href="etiquetas.html#tablas">Consultar etiquetas de tablas →</a>
+    </section>
+    <section class="tarjeta" id="formularios">
+      <p class="etiqueta">Lección 07 de 08</p>
+      <h2>Formularios</h2>
+      <p>Los formularios recogen información mediante campos y botones.</p>
+      <a href="etiquetas.html#formularios">Consultar etiquetas de formularios →</a>
+      <p><a href="contacto.html">Probar el formulario de demostración</a></p>
+    </section>
+    <section class="tarjeta" id="audio-video">
+      <p class="etiqueta">Lección 08 de 08</p>
+      <h2>Audio y vídeo</h2>
+      <p>Las etiquetas audio y video incorporan reproductores a una página. El atributo controls permite mostrar sus
+        controles.</p>
+      <div class="enlaces">
+        <a href="etiquetas.html#tag-multimedia-audio-2">Consultar la etiqueta &lt;audio></a>
+        <a href="etiquetas.html#tag-multimedia-video-3">Consultar la etiqueta &lt;video></a>
+        <a href="multimedia.html">Abrir los ejemplos multimedia</a>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

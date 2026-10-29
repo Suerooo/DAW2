@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="260" viewBox="0 0 800 260" role="img">
+<rect width="800" height="260" rx="22" fill="#EFF6FF"/><rect x="35" y="35" width="730" height="190" rx="20" fill="#FFFFFF" stroke="#BFDBFE"/>
+<circle cx="120" cy="130" r="53" fill="#1D4ED8"/><path d="m104 103 41 27-41 27Z" fill="#FFFFFF"/>
+<text x="204" y="93" fill="#0F172A" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Ejemplo de audio HTML</text>
+<g stroke="#2563EB" stroke-width="7" stroke-linecap="round">
+<path d="M214 151v12M237 141v32M260 130v54M283 148v18M306 116v80M329 139v34M352 126v62M375 147v20M398 118v77M421 138v36M444 124v64M467 148v18M490 132v52M513 142v30M536 128v57M559 148v18M582 118v77M605 137v38M628 143v24M651 128v55M674 147v20"/>
+</g></svg>

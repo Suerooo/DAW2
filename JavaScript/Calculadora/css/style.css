@@ -1,0 +1,26 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.calc {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 3px;
+}
+
+#calculate {
+  grid-column: span 5;
+}
+
+#zero {
+  grid-column: span 3;
+}
+
+#result {
+  grid-column: span 5;
+}

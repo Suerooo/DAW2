@@ -16,9 +16,5 @@ buttons.forEach((button) => {
     } else {
       display.value += button_pressed
     }
-
-    if (number_buttons.includes(button_pressed)) {
-      buttons
-    }
   })
 })

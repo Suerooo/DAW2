@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PixelArena: portal ficticio para descubrir juegos online gratuitos.">
+  <title>PixelArena | Juegos online</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <header class="cabecera" id="inicio">
+    <div class="contenedor cabecera-contenido">
+      <a class="logo" href="#inicio">🎮 PixelArena</a>
+      <nav class="navegacion" aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#juegos">Juegos</a>
+        <a href="#ranking">Ranking</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="bienvenida" aria-labelledby="titulo-bienvenida">
+      <div class="bienvenida-texto">
+        <p class="subtitulo">Tu rincón gamer</p>
+        <h1 id="titulo-bienvenida">¡Elige tu próxima aventura!</h1>
+        <p>Encuentra juegos de aventura, lógica, carreras y acción. Explora nuestro catálogo y descubre tu favorito.</p>
+        <a class="boton-principal" href="#juegos">Explorar juegos</a>
+      </div>
+      <div class="bienvenida-ilustracion" aria-hidden="true">🕹️</div>
+    </section>
+
+    <section class="categorias" aria-label="Categorías disponibles">
+      <h2>Explora por categoría</h2>
+      <div class="lista-categorias">
+        <span class="categoria">🧩 Lógica</span>
+        <span class="categoria">🚀 Acción</span>
+        <span class="categoria">🏎️ Carreras</span>
+        <span class="categoria">🗺️ Aventura</span>
+      </div>
+    </section>
+
+    <section class="juegos" id="juegos" aria-labelledby="titulo-juegos">
+      <div class="encabezado-seccion">
+        <h2 id="titulo-juegos">Juegos populares</h2>
+        <p>Seis propuestas para todos los gustos</p>
+      </div>
+
+      <div class="lista-juegos">
+        <article class="tarjeta-juego">
+          <div class="icono-juego" aria-hidden="true">🚀</div>
+          <div class="contenido-tarjeta">
+            <span class="etiqueta">Acción</span>
+            <h3>Galaxia Express</h3>
+            <p>Esquiva meteoritos y recorre el universo a toda velocidad.</p>
+            <div class="datos-juego"><span>⭐ 4,8</span><span>Gratis</span></div>
+          </div>
+        </article>
+
+        <article class="tarjeta-juego">
+          <div class="icono-juego" aria-hidden="true">🧩</div>
+          <div class="contenido-tarjeta">
+            <span class="etiqueta">Lógica</span>
+            <h3>Reto Mental</h3>
+            <p>Resuelve acertijos y supera desafíos de ingenio.</p>
+            <div class="datos-juego"><span>⭐ 4,6</span><span>Gratis</span></div>
+          </div>
+        </article>
+
+        <article class="tarjeta-juego">
+          <div class="icono-juego" aria-hidden="true">🏎️</div>
+          <div class="contenido-tarjeta">
+            <span class="etiqueta">Carreras</span>
+            <h3>Turbo City</h3>
+            <p>Conduce por circuitos urbanos y busca el mejor tiempo.</p>
+            <div class="datos-juego"><span>⭐ 4,7</span><span>Gratis</span></div>
+          </div>
+        </article>
+
+        <article class="tarjeta-juego">
+          <div class="icono-juego" aria-hidden="true">🏰</div>
+          <div class="contenido-tarjeta">
+            <span class="etiqueta">Aventura</span>
+            <h3>Reino Perdido</h3>
+            <p>Explora un castillo misterioso lleno de secretos.</p>
+            <div class="datos-juego"><span>⭐ 4,9</span><span>Gratis</span></div>
+          </div>
+        </article>
+
+        <article class="tarjeta-juego">
+          <div class="icono-juego" aria-hidden="true">⚽</div>
+          <div class="contenido-tarjeta">
+            <span class="etiqueta">Deportes</span>
+            <h3>Gol de Oro</h3>
+            <p>Compite en partidos rápidos y marca el gol decisivo.</p>
+            <div class="datos-juego"><span>⭐ 4,5</span><span>Gratis</span></div>
+          </div>
+        </article>
+
+        <article class="tarjeta-juego">
+          <div class="icono-juego" aria-hidden="true">🧱</div>
+          <div class="contenido-tarjeta">
+            <span class="etiqueta">Arcade</span>
+            <h3>Bloques Infinitos</h3>
+            <p>Encaja piezas, completa filas y consigue puntos.</p>
+            <div class="datos-juego"><span>⭐ 4,7</span><span>Gratis</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="ranking" id="ranking" aria-labelledby="titulo-ranking">
+      <h2 id="titulo-ranking">🏆 Los más populares</h2>
+      <ol class="lista-ranking">
+        <li><span>Reino Perdido</span><strong>4,9 ★</strong></li>
+        <li><span>Galaxia Express</span><strong>4,8 ★</strong></li>
+        <li><span>Turbo City</span><strong>4,7 ★</strong></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="pie-pagina" id="contacto">
+    <div class="contenedor pie-contenido">
+      <p>© 2026 PixelArena · Proyecto ficticio para practicar CSS</p>
+      <p>Contacto: <a href="mailto:hola@pixelarena.example">hola@pixelarena.example</a></p>
+    </div>
+  </footer>
+</body>
+</html>
+

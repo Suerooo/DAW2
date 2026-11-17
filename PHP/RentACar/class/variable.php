@@ -42,6 +42,15 @@ const START_DATE_BLOCK = "start-date-block";
 const END_DATE_BLOCK = "end-date-block";
 const REASON_BLOCK = "reason-block";
 const SUBMIT_VEHICLE_BLOCK = "submit-block";
+const SUBMIT_VEHICLE_BLOCK_EDIT = "edit-block";
+const SUBMIT_VEHICLE_BLOCK_DELETE = "delete-block";
+const SUBMIT_VEHICLE_PRICE = "vehicle-price";
+
+const START_DATE_RESERVATION = "start-date-reservation";
+const END_DATE_RESERVATION = "end-date-reservation";
+const MODEL_RESERVATION = "model-reservation";
+const SUBMIT_RESERVATION = "submit-reservation";
+const SUBMIT_RESERVATION_CANCEL = "cancel-reservation";
 
 const PLATE_COLUMN = "plate";
 const BRAND_COLUMN = "brand";
@@ -58,9 +67,11 @@ const START_DATE_COLUMN = "start_date";
 const END_DATE_COLUMN = "end_date";
 const REASON_COLUMN = "reason";
 
-const LICENSE_DIR = 'license';
+const LICENSE_DIR = __DIR__ . '/../license';
 
 const SERVER_NAME = "localhost";
 const USERNAME = "root";
 const PASSWORD_DB = "";
 const DB_NAME = "rentacar";
+
+date_default_timezone_set('Atlantic/Canary');

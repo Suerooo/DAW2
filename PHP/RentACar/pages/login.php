@@ -4,10 +4,22 @@ function login(string $email_login, string $password_login, PDO $conn, array &$e
 {
 
   $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-  $stmt->execute([$email_login]);
+  $stmt->execute([trim($email_login)]);
   $user = $stmt->fetch();
 
   if (!empty($user) && password_verify($password_login, $user[PASSWORD_COLUMN])) {
+    if ($user[ROLE_COLUMN] === 'client') {
+      $stmt = $conn->prepare("SELECT id FROM clients WHERE user_id = ?");
+      $stmt->execute([$user[ID_COLUMN]]);
+
+      if (!$stmt->fetch()) {
+        $errors_message[] = "Completa el registro con tu email y contraseña antes de iniciar sesión";
+        return;
+      }
+    }
+
+    session_regenerate_id(true);
+    $_SESSION['token'] = bin2hex(random_bytes(32));
     $_SESSION[USER_ID_COLUMN] = (int) $user[ID_COLUMN];
     $_SESSION[ROLE_COLUMN] = $user[ROLE_COLUMN];
 
@@ -16,7 +28,7 @@ function login(string $email_login, string $password_login, PDO $conn, array &$e
         header("Location: pages/client.php");
         exit;
       case 'admin':
-        header("Location: pages/admin.php");
+        header("Location: pages/admin/admin.php");
         exit;
       default:
         header("Location: main.php");
@@ -32,6 +44,7 @@ function showLoginForm()
 ?>
   <h1>LOGIN</h1>
   <form action="main.php" method="POST">
+    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
     <label for="<?= EMAIL_LOGIN ?>">Email:</label>
     <input type="text" name="<?= EMAIL_LOGIN ?>" id="<?= EMAIL_LOGIN ?>" value="<?= keepFields(EMAIL_LOGIN) ?>">
     <br>

@@ -375,6 +375,35 @@ audio {
   width: 100%;
 }
 
+/* Página de CSS */
+.rejilla-css,
+.rejilla-ejemplo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.texto-css {
+  color: #075bd8;
+  font-size: 20px;
+}
+
+.flex-ejemplo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.caja-css {
+  padding: 10px;
+  background-color: #eaf3ff;
+  color: #10213b;
+  border: 1px solid #dfe8f3;
+  text-align: center;
+}
+
 @media (max-width: 700px) {
   .cabecera {
     flex-direction: column;
@@ -425,5 +454,9 @@ audio {
 
   h2 {
     font-size: 24px;
+  }
+
+  .rejilla-css {
+    grid-template-columns: 1fr;
   }
 }

@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-titular: 
+}
+
+:root {
+  --titular: #183c3b;
+  --enlaces: #255b55;
+  --acento: #a94d32;
+  --fondo: #f7f5ef; 
+  --fondo-secundario: #e4eee8;
+  --bordes: #cad9d4;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -12,6 +12,7 @@ function sumar(a, b) {
   return a + b
 }
 
+<<<<<<< HEAD
 function restar(a, b) {
   return a - b
 }
@@ -102,4 +103,15 @@ botonLimpiar.addEventListener("click", () => {
   numero1.value = ""
   numero2.value = ""
   resultado.textContent = "Esperando operación..."
+=======
+    if (button_pressed === "C") {
+      display.value = ""
+    } else if (button_pressed === "<") {
+      display.value = display.value.slice(0, -1)
+    } else if (button_pressed === "=") {
+    } else {
+      display.value += button_pressed
+    }
+  })
+>>>>>>> f3c14edf3d55d8fb8890e9859a8216232af8e5ee
 })

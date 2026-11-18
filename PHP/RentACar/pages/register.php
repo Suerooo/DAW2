@@ -46,10 +46,32 @@ function validateRegisterForm(array &$errors_message): bool
 
 
   foreach ($requiredFields as $field => $display_field) {
-    if (!isset($_POST[$field]) || empty($_POST[$field])) {
+    if (!is_string($_POST[$field] ?? null) || trim($_POST[$field]) === '') {
       $errors_message[] = "El campo $display_field es obligatorio";
       return false;
     }
+  }
+
+  foreach ([DNI_REGISTER => 20, NAME_REGISTER => 100, SURNAME_REGISTER => 150, EMAIL_REGISTER => 254] as $field => $length) {
+    $_POST[$field] = trim($_POST[$field]);
+
+    if (mb_strlen($_POST[$field]) > $length) {
+      $errors_message[] = "El campo " . $requiredFields[$field] . " es demasiado largo";
+    }
+  }
+
+  if (!filter_var($_POST[EMAIL_REGISTER], FILTER_VALIDATE_EMAIL)) {
+    $errors_message[] = "El email no es válido";
+  }
+
+  if (strlen($_POST[PASSWORD_REGISTER]) < 8 || strlen($_POST[PASSWORD_REGISTER]) > 72) {
+    $errors_message[] = "La contraseña debe tener entre 8 y 72 caracteres";
+  }
+
+  $birthdate = preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST[BIRTHDATE_REGISTER]) ? DateTime::createFromFormat('!Y-m-d', $_POST[BIRTHDATE_REGISTER]) : false;
+
+  if (!$birthdate || $birthdate->format('Y-m-d') !== $_POST[BIRTHDATE_REGISTER] || $_POST[BIRTHDATE_REGISTER] > date('Y-m-d')) {
+    $errors_message[] = "La fecha de nacimiento no es válida";
   }
 
   if (!isset($_FILES[DRIVER_LICENSE_REGISTER]) || $_FILES[DRIVER_LICENSE_REGISTER]['error'] !== UPLOAD_ERR_OK) {
@@ -57,7 +79,7 @@ function validateRegisterForm(array &$errors_message): bool
     return false;
   }
 
-  return true;
+  return empty($errors_message);
 }
 
 function saveDriverLicense(array $file): string
@@ -87,6 +109,10 @@ function saveDriverLicense(array $file): string
 
   $destination = LICENSE_DIR . DIRECTORY_SEPARATOR . $filename;
 
+  if (!is_dir(LICENSE_DIR) && !mkdir(LICENSE_DIR, 0755, true)) {
+    throw new RuntimeException("No se pudo crear la carpeta de licencias");
+  }
+
   if (!move_uploaded_file($file['tmp_name'], $destination)) {
     throw new RuntimeException("No se pudo guardar la licencia");
   }
@@ -98,6 +124,7 @@ function showRegisterForm()
 ?>
   <h1>REGISTER</h1>
   <form action="main.php" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
     <label for="<?= DNI_REGISTER ?>">DNI:</label>
     <input type="text" name="<?= DNI_REGISTER ?>" id="<?= DNI_REGISTER ?>" value="<?= keepFields(DNI_REGISTER) ?>">
     <br>

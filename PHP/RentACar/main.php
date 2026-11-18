@@ -3,6 +3,11 @@ session_start();
 
 include_once "class/variable.php";
 include_once "class/client.php";
+include_once "pages/vehicle-reserve.php";
+
+if (empty($_SESSION['token'])) {
+  $_SESSION['token'] = bin2hex(random_bytes(32));
+}
 
 $old_fields = $_SESSION['old_fields'] ?? [];
 unset($_SESSION['old_fields']);
@@ -17,7 +22,7 @@ function keepFields(string $field): string
 {
   global $old_fields;
 
-  return $old_fields[$field] ?? '';
+  return htmlspecialchars(is_string($old_fields[$field] ?? null) ? $old_fields[$field] : '', ENT_QUOTES, 'UTF-8');
 }
 
 include_once "pages/register.php";
@@ -28,7 +33,8 @@ try {
   $conn = new PDO("mysql:host=" . SERVER_NAME . ";dbname=" . DB_NAME . ";charset=utf8mb4", USERNAME, PASSWORD_DB);
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-  $errors_message[] = "Connection failed: " . $e->getMessage();
+  error_log($e->getMessage());
+  $errors_message[] = "No se pudo conectar con la base de datos";
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
@@ -36,6 +42,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
 
   $errors_message = [];
   $register_completed = false;
+
+  if ($conn == null) {
+    $errors_message[] = "No se pudo conectar con la base de datos";
+  } elseif (!is_string($_POST['token'] ?? null) || !hash_equals($_SESSION['token'], $_POST['token'])) {
+    $errors_message[] = "El formulario ha caducado. Inténtalo de nuevo";
+  }
+
+  if (!empty($errors_message)) {
+    $_SESSION['errors-message'] = $errors_message;
+    header("Location: main.php");
+    exit;
+  }
 
   switch ($_POST[ACTION_SUBMIT]) {
 
@@ -78,13 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
           }
 
           error_log($e->getMessage());
-          $errors_message[] = "No se pudo completar el registro" . $e->getMessage();
+          $errors_message[] = "No se pudo completar el registro. Comprueba que el email y el DNI no estén registrados";
         }
       }
       break;
 
     case LOGIN_ACTION_SUBMIT:
-      if (!isset($_POST[EMAIL_LOGIN], $_POST[PASSWORD_LOGIN]) || $_POST[EMAIL_LOGIN] === '' || $_POST[PASSWORD_LOGIN] === '') {
+      if (!is_string($_POST[EMAIL_LOGIN] ?? null) || !is_string($_POST[PASSWORD_LOGIN] ?? null) || trim($_POST[EMAIL_LOGIN]) === '' || $_POST[PASSWORD_LOGIN] === '') {
         $errors_message[] = "El email y la contraseña son obligatorios";
       } else {
         login($_POST[EMAIL_LOGIN], $_POST[PASSWORD_LOGIN], $conn, $errors_message);
@@ -111,6 +129,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
   header("Location: main.php");
   exit;
 }
+
+$vehicles = [];
+$catalog_loaded = false;
+$start_date = is_string($_GET[START_DATE_RESERVATION] ?? null) ? $_GET[START_DATE_RESERVATION] : '';
+$end_date = is_string($_GET[END_DATE_RESERVATION] ?? null) ? $_GET[END_DATE_RESERVATION] : '';
+$date_errors = [];
+$search = isset($_GET[START_DATE_RESERVATION]) || isset($_GET[END_DATE_RESERVATION]);
+
+if (!$search || validateDates($start_date, $end_date, $date_errors)) {
+  if ($conn != null) {
+    try {
+      $vehicles = getAvailableVehicles($conn, $start_date, $end_date);
+      $catalog_loaded = true;
+    } catch (PDOException $e) {
+      error_log($e->getMessage());
+      $errors_message[] = "No se pudo cargar el catálogo de vehículos";
+    }
+  }
+}
+
+$errors_message = array_merge($errors_message, $date_errors);
 ?>
 
 <!DOCTYPE html>
@@ -123,86 +162,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST[ACTION_SUBMIT])) {
 </head>
 
 <body>
+  <?php if (isset($_SESSION[USER_ID_COLUMN], $_SESSION[ROLE_COLUMN])) { ?>
+    <a href="<?= $_SESSION[ROLE_COLUMN] === 'admin' ? 'pages/admin/admin.php' : 'pages/client.php' ?>">Mi cuenta</a>
+  <?php } ?>
   <?php
   showRegisterForm();
   showLoginForm();
 
   if (!empty($success_message)) {
-    echo $success_message;
+    echo htmlspecialchars($success_message, ENT_QUOTES, 'UTF-8');
   }
 
   if (!empty($errors_message)) {
     foreach ($errors_message as $errors) {
-      echo $errors;
+      echo '<p>' . htmlspecialchars($errors, ENT_QUOTES, 'UTF-8') . '</p>';
     }
   }
 
-  include_once __DIR__ . "/class/variable.php";
+  ?>
+  <header>
+    <h1>Vehículos disponibles</h1>
+  </header>
 
-  $errors_message = [];
-  $vehicles_by_class = [];
+  <?php
+  showAvailabilityForm($start_date, $end_date);
 
-  try {
-    $conn = new PDO("mysql:host=" . SERVER_NAME . ";dbname=" . DB_NAME . ";charset=utf8mb4", USERNAME, PASSWORD_DB);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $stmt = $conn->query("SELECT * FROM vehicles ORDER BY vehicle_class, brand, model, plate");
-    $vehicles = $stmt->fetchAll();
-
-
-    foreach ($vehicles as $vehicle) {
-      $id = strtolower($vehicle[MODEL_COLUMN] . $vehicle[VEHICLE_CLASS_COLUMN] . $vehicle[TRANSMISSION_COLUMN] . $vehicle[MOTORIZATION_COLUMN]);
-
-      $vehicles_by_class[$vehicle[VEHICLE_CLASS_COLUMN]][$id] = $vehicle;
-    }
-  } catch (PDOException $e) {
-    error_log($e->getMessage());
-    $errors_message[] = "No se pudo cargar el catálogo de vehículos";
+  if ($catalog_loaded) {
+    showVehicles($vehicles, $start_date, $end_date);
   }
   ?>
-  <!DOCTYPE html>
-  <html lang="es">
-
-  <body>
-    <header>
-      <h1>Vehículos disponibles</h1>
-    </header>
-
-    <?php $vehicles_by_class = $vehicles_by_class ?? []; ?>
-
-    <?php if (!empty($errors_message)) { ?>
-      <ul>
-        <?php foreach ($errors_message as $error) { ?>
-          <li><?= $error ?></li>
-        <?php } ?>
-      </ul>
-    <?php } ?>
-
-    <?php if (empty($vehicles_by_class) && empty($errors_message)) { ?>
-      <p>Ahora mismo no hay vehículos disponibles</p>
-    <?php } ?>
-
-    <?php foreach (($vehicles_by_class ?? []) as $vehicle_class => $vehicles) { ?>
-      <section>
-        <h2>Clase <?= $vehicle_class ?></h2>
-
-        <?php foreach ($vehicles as $vehicle) { ?>
-          <article>
-            <h3><?= $vehicle[BRAND_COLUMN] . ' ' . $vehicle[MODEL_COLUMN] ?></h3>
-            <ul>
-              <li>Color: <?= $vehicle[COLOR_COLUMN] ?></li>
-              <li>Puertas: <?= (int) $vehicle[DOORS_COLUMN] ?></li>
-              <li>Asientos: <?= (int) $vehicle[SEATS_COLUMN] ?></li>
-              <li>Transmisión: <?= $vehicle[TRANSMISSION_COLUMN] ?></li>
-              <li>Motorización: <?= $vehicle[MOTORIZATION_COLUMN] ?></li>
-            </ul>
-          </article>
-        <?php } ?>
-      </section>
-    <?php } ?>
-  </body>
-
-  </html>
 </body>
 
 </html>

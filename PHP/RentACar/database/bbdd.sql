@@ -1,35 +1,17 @@
-
 CREATE DATABASE IF NOT EXISTS rentacar
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
 USE rentacar;
 
--- ====================================
--- REINICIAR TABLAS
--- ====================================
-
-DROP TABLE IF EXISTS vehicle_blocks;
-DROP TABLE IF EXISTS clients;
-DROP TABLE IF EXISTS vehicles;
-DROP TABLE IF EXISTS users;
-
--- ====================================
--- 1. USUARIOS
--- ====================================
-
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(254) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'client') NOT NULL DEFAULT 'client'
 ) ENGINE=InnoDB;
 
--- ====================================
--- 2. CLIENTES
--- ====================================
-
-CREATE TABLE clients (
+CREATE TABLE IF NOT EXISTS clients (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL UNIQUE,
     dni VARCHAR(20) NOT NULL UNIQUE,
@@ -44,11 +26,7 @@ CREATE TABLE clients (
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ====================================
--- 3. VEHÍCULOS
--- ====================================
-
-CREATE TABLE vehicles (
+CREATE TABLE IF NOT EXISTS vehicles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     plate VARCHAR(15) NOT NULL UNIQUE,
     brand VARCHAR(80) NOT NULL,
@@ -91,11 +69,7 @@ CREATE TABLE vehicles (
     )
 ) ENGINE=InnoDB;
 
--- ====================================
--- 4. CIERRES DE RESERVA
--- ====================================
-
-CREATE TABLE vehicle_blocks (
+CREATE TABLE IF NOT EXISTS vehicle_blocks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     vehicle_id INT NOT NULL,
     start_date DATE NOT NULL,
@@ -115,14 +89,37 @@ CREATE TABLE vehicle_blocks (
     )
 ) ENGINE=InnoDB;
 
--- ====================================
--- INSERTS DE PRUEBA
--- ====================================
+CREATE TABLE IF NOT EXISTS reservations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_id INT NOT NULL,
+    vehicle_id INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    original_price DECIMAL(10,2) NOT NULL,
+    discount TINYINT UNSIGNED NOT NULL,
+    final_price DECIMAL(10,2) NOT NULL,
+    state ENUM('confirmed', 'cancelled') NOT NULL DEFAULT 'confirmed',
+
+    CONSTRAINT fk_reservations_client
+        FOREIGN KEY (client_id)
+        REFERENCES clients(id),
+
+    CONSTRAINT fk_reservations_vehicle
+        FOREIGN KEY (vehicle_id)
+        REFERENCES vehicles(id),
+
+    CONSTRAINT chk_reservation_dates
+        CHECK (end_date >= start_date),
+
+    CONSTRAINT chk_reservation_prices
+        CHECK (original_price > 0 AND discount IN (0, 5, 10) AND final_price > 0),
+
+    INDEX idx_reservation_dates (
+        vehicle_id, state, start_date, end_date
+    )
+) ENGINE=InnoDB;
 
 START TRANSACTION;
-
--- USUARIOS
--- Contraseña de todos: Prueba123!
 
 INSERT INTO users (id, email, password, role) VALUES
 
@@ -154,9 +151,6 @@ INSERT INTO users (id, email, password, role) VALUES
 '$2y$12$Nst/RlcyLj4v29jbG8GdEuHG1frZlwVyVEo2KMEInIPWSLUp9btJG',
 'client');
 
-
--- CLIENTES
-
 INSERT INTO clients
 (user_id, dni, name, surname, birthdate, driver_license)
 VALUES
@@ -178,16 +172,12 @@ VALUES
 (7, '00000005M', 'Javier', 'Morales Perez',
  '1985-03-19', NULL);
 
-
--- VEHÍCULOS
-
 INSERT INTO vehicles
 (id, plate, brand, model, color, doors, seats,
  transmission, motorization, vehicle_class,
  base_price)
 VALUES
 
--- Clase A
 (1, '1000TST', 'Fiat', '500', 'blanco', 3, 4,
  'manual', 'gasolina', 'A', 28.50),
 
@@ -197,7 +187,6 @@ VALUES
 (3, '1002TST', 'Kia', 'Picanto', 'gris', 5, 5,
  'manual', 'gasolina', 'A', 29.90),
 
--- Clase B
 (4, '2000TST', 'Seat', 'Ibiza', 'blanco', 5, 5,
  'manual', 'gasolina', 'B', 35.00),
 
@@ -207,54 +196,42 @@ VALUES
 (6, '2002TST', 'Volkswagen', 'Polo', 'negro', 5, 5,
  'manual', 'gasolina', 'B', 39.00),
 
--- Clase C
 (7, '3000TST', 'Renault', 'Clio', 'gris', 5, 5,
  'automatic', 'hibrido', 'C', 49.00),
 
 (8, '3001TST', 'Toyota', 'Corolla', 'plata', 5, 5,
  'automatic', 'hibrido', 'C', 55.00),
 
--- Clase D
 (9, '4000TST', 'Dacia', 'Duster', 'blanco', 5, 5,
  'manual', 'gasolina', 'D', 58.00),
 
 (10, '4001TST', 'Hyundai', 'Tucson', 'gris', 5, 5,
  'automatic', 'hibrido', 'D', 69.00),
 
--- Clase E
 (11, '5000TST', 'Peugeot', '5008', 'azul', 5, 7,
  'automatic', 'diesel', 'E', 75.00),
 
--- Clase F
 (12, '6000TST', 'Mercedes', 'Vito', 'negro', 4, 9,
  'manual', 'diesel', 'F', 110.00),
 
--- Clase G
 (13, '7000TST', 'Tesla', 'Model 3', 'blanco', 4, 5,
  'automatic', 'electrico', 'G', 125.00),
 
--- Inactivos
 (14, '9000TST', 'Nissan', 'Micra', 'rojo', 5, 5,
  'manual', 'gasolina', 'B', 32.00),
 
 (15, '9001TST', 'Opel', 'Corsa', 'gris', 5, 5,
  'manual', 'gasolina', 'B', 30.00);
 
-
--- CIERRES DE RESERVA
--- Fechas relativas al día en el que ejecutes el script.
-
 INSERT INTO vehicle_blocks
 (vehicle_id, start_date, end_date, reason)
 VALUES
 
--- Cierre pasado
 (1,
  DATE_SUB(CURDATE(), INTERVAL 30 DAY),
  DATE_SUB(CURDATE(), INTERVAL 28 DAY),
  'Mantenimiento pasado'),
 
--- Dos cierres futuros del mismo coche
 (1,
  DATE_ADD(CURDATE(), INTERVAL 10 DAY),
  DATE_ADD(CURDATE(), INTERVAL 12 DAY),
@@ -265,19 +242,16 @@ VALUES
  DATE_ADD(CURDATE(), INTERVAL 42 DAY),
  'Mantenimiento programado'),
 
--- Otro vehículo bloqueado los mismos días
 (2,
  DATE_ADD(CURDATE(), INTERVAL 10 DAY),
  DATE_ADD(CURDATE(), INTERVAL 12 DAY),
  'Uso interno'),
 
--- Bloqueo que incluye el día actual
 (4,
  DATE_SUB(CURDATE(), INTERVAL 1 DAY),
  DATE_ADD(CURDATE(), INTERVAL 1 DAY),
  'Averia actual'),
 
--- Bloqueos futuros
 (4,
  DATE_ADD(CURDATE(), INTERVAL 40 DAY),
  DATE_ADD(CURDATE(), INTERVAL 45 DAY),
@@ -298,13 +272,11 @@ VALUES
  DATE_ADD(CURDATE(), INTERVAL 75 DAY),
  'Mantenimiento'),
 
--- Bloqueo de un solo día
 (13,
  DATE_ADD(CURDATE(), INTERVAL 11 DAY),
  DATE_ADD(CURDATE(), INTERVAL 11 DAY),
  'Inspeccion de un dia'),
 
--- Bloqueo de vehículo inactivo
 (14,
  DATE_SUB(CURDATE(), INTERVAL 1 DAY),
  DATE_ADD(CURDATE(), INTERVAL 9 DAY),

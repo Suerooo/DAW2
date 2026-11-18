@@ -1,0 +1,148 @@
+/* Configuración general */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #243047;
+  background-color: #ffffff;
+  line-height: 1.6;
+}
+
+a {
+  color: #174a92;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+/* Encabezado y presentación */
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navegacion {
+  display: flex;
+  gap: 28px;
+}
+
+.navegacion a:hover,
+.contacto a:hover {
+  text-decoration: underline;
+}
+
+.presentacion {
+  padding: 60px 24px;
+  text-align: center;
+  background-color: #edf3fb;
+}
+
+.etiqueta {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #174a92;
+}
+
+h1 {
+  margin: 18px 0;
+  font-size: 42px;
+}
+
+.presentacion p {
+  max-width: 660px;
+  margin: 0 auto 24px;
+}
+
+.boton {
+  display: inline-block;
+  padding: 12px 24px;
+  color: #ffffff;
+  background-color: #174a92;
+  border-radius: 4px;
+}
+
+.boton:hover {
+  background-color: #10376f;
+}
+
+/* Servicios, empresa y contacto */
+.servicios,
+.sobre-nosotros,
+.contacto {
+  max-width: 1100px;
+  margin: auto;
+  padding: 26px 24px;
+}
+
+.lista-servicios {
+  display: flex;
+  gap: 20px;
+}
+
+.tarjeta {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #d6dfeb;
+  border-radius: 4px;
+}
+
+.tarjeta h3 {
+  margin-top: 0;
+  color: #174a92;
+}
+
+.tarjeta p {
+  margin-bottom: 0;
+}
+
+.sobre-nosotros,
+.contacto {
+  padding-top: 12px;
+}
+
+.pie {
+  padding: 16px 24px;
+  text-align: center;
+  background-color: #edf3fb;
+  font-size: 13px;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 700px) {
+  .cabecera,
+  .lista-servicios {
+    flex-direction: column;
+  }
+
+  .cabecera {
+    gap: 14px;
+  }
+
+  .navegacion {
+    gap: 20px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .presentacion {
+    padding: 40px 24px;
+  }
+}

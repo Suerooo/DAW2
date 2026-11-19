@@ -1,15 +1,15 @@
 
-CREATE DATABASE online_shop
+CREATE DATABASE IF NOT EXISTS online_shop;
 
 USE online_shop;
 
-CREATE TABLE category (
+CREATE TABLE IF NOT EXISTS category (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(255) DEFAULT NULL
 );
 
-CREATE TABLE product (
+CREATE TABLE IF NOT EXISTS product (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     category_id INT UNSIGNED NOT NULL,
     name VARCHAR(180) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE product (
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-CREATE TABLE client (
+CREATE TABLE IF NOT EXISTS client (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     surname VARCHAR(150) DEFAULT NULL,
@@ -35,11 +35,11 @@ CREATE TABLE client (
     register_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     client_id INT UNSIGNED NOT NULL,
     order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    state ENUM('pendiente', 'confirmado') NOT NULL DEFAULT 'pendiente',
+    state ENUM('pending', 'confirmed') NOT NULL DEFAULT 'pending',
     total DECIMAL(12,2) NOT NULL DEFAULT 0.00 CHECK (total >= 0), 
     shipping_address VARCHAR(255) DEFAULT NULL,
     CONSTRAINT fk_order_client
@@ -47,17 +47,17 @@ CREATE TABLE orders (
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-CREATE TABLE details_order (
+CREATE TABLE IF NOT EXISTS details_order (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     order_id INT UNSIGNED NOT NULL,
     product_id INT UNSIGNED NOT NULL,
     amount INT UNSIGNED NOT NULL CHECK (amount > 0),
     unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00 CHECK (unit_price >= 0),
     subtotal DECIMAL(12,2) NOT NULL DEFAULT 0.00 CHECK (subtotal >= 0),
-    CONSTRAINT fk_details_order
-        FOREIGN KEY (order_id) REFERENCES order(id)
+    CONSTRAINT fk_details_orders
+        FOREIGN KEY (order_id) REFERENCES orders(id)
         ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT fk_details_order
+    CONSTRAINT fk_details_product
         FOREIGN KEY (product_id) REFERENCES product(id)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -72,7 +72,7 @@ INSERT IGNORE INTO category (id, name, description) VALUES
 (7, 'Almacenamiento SSD', 'Unidades de almacenamiento en estado sólido'),
 (8, 'Placas base', 'Placas base para diferentes plataformas');
 
-INSERT IGNORE INTO productos
+INSERT IGNORE INTO product
 (id, category_id, name, brand, model, description, price, stock, imagen) VALUES
 (1, 1, 'Logitech G305 LIGHTSPEED', 'Logitech', 'G305 LIGHTSPEED', 'Ratón inalámbrico con sensor óptico.', 39.90, 15, NULL),
 (2, 1, 'Razer DeathAdder Essential', 'Razer', 'DeathAdder Essential', 'Ratón con cable y diseño ergonómico.', 24.95, 0, NULL),

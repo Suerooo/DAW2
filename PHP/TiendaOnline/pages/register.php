@@ -1,8 +1,13 @@
 <?php
-function registerUser(string $email, string $password, string $name, string $surname, PDO $conn): int
+function registerUser(Client $client, PDO $conn): int
 {
-  $stmt = $conn->prepare("INSERT INTO user (email, password_hash, name, surname) VALUES (?, ?, ?, ?)");
-  $stmt->execute([$email, password_hash($password, PASSWORD_DEFAULT), $name, $surname]);
+  $stmt = $conn->prepare("INSERT INTO client (email, password_hash, name, surname) VALUES (?, ?, ?, ?)");
+  $stmt->execute([
+    $client->get_email(),
+    password_hash($client->get_password(), PASSWORD_DEFAULT),
+    $client->get_name(),
+    $client->get_surname()
+  ]);
 
   return (int) $conn->lastInsertId();
 }
@@ -11,7 +16,7 @@ function showRegisterForm()
 {
 ?>
   <h1>REGISTER</h1>
-  <form action="main.php" method="POST" enctype="multipart/form-data">
+  <form action="index.php" method="POST" enctype="multipart/form-data">
 
     <label for="<?= "name-register-fr" ?>">Nombre:</label>
     <input type="text" name="<?= "name-register-fr" ?>" id="<?= "name-register-fr" ?>">

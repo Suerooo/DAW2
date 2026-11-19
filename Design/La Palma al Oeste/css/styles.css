@@ -14,21 +14,34 @@ body {
   margin: 0;
   background-color: #f7f5ef;
   color: var(--ink-green);
-  font: 16px/1.5 Arial, sans-serif;
+  font:
+    16px/1.5 Arial,
+    sans-serif;
 }
 
-h1, h2, h3, p {
+h1,
+h2,
+h3,
+p {
   margin: 0;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: Georgia, serif;
   font-weight: normal;
 }
 
-h1 { font-size: 40px; }
-h2 { font-size: 26px; }
-h3 { font-size: 18px; font-weight: bold; }
+h1 {
+  font-size: 40px;
+}
+h2 {
+  font-size: 26px;
+}
+h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
 
 a {
   color: var(--atlantic-green);
@@ -48,7 +61,9 @@ a:focus-visible {
   background-color: white;
 }
 
-.skip-link:focus { top: 8px; }
+.skip-link:focus {
+  top: 8px;
+}
 
 .site-container {
   width: 1120px;
@@ -60,62 +75,84 @@ a:focus-visible {
   min-height: 400px;
 }
 
-.site-header, .footer {
+.site-header,
+.footer {
   padding: 20px 0;
   background-color: var(--mist-green);
 }
 
-.header-content, .footer-content, .navigation, .footer-links {
+.header-content,
+.footer-content,
+.navigation,
+.footer-links {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.header-content, .footer-content {
+.header-content,
+.footer-content {
   justify-content: space-between;
 }
 
-.brand, .footer-brand, .navigation .active {
+.brand,
+.footer-brand,
+.navigation .active {
   font-weight: bold;
 }
 
-.brand, .navigation a {
+.brand,
+.navigation a {
   text-decoration: none;
 }
 
-.navigation a:hover, .navigation .active {
+.navigation a:hover,
+.navigation .active {
   text-decoration: underline;
 }
 
-.section { margin: 36px 0; }
-
-.section-heading { margin-bottom: 20px; }
-
-.section-heading > * + *,
-.hero-text > * + *,
-.card > * + *,
-.schedule-source {
-  margin-top: 12px;
+.section {
+  margin: 36px 0;
 }
 
-.text-label, .event-time { color: #a94d32; }
+.section-heading {
+  margin-bottom: 20px;
+}
 
-.cards-grid, .schedule-grid {
+.text-label,
+.event-time {
+  color: #a94d32;
+}
+
+.cards-grid,
+.schedule-grid {
   display: grid;
   gap: 16px;
 }
 
-.cards-grid { grid-template-columns: repeat(3, 1fr); }
-.schedule-grid { grid-template-columns: repeat(7, 1fr); gap: 8px; }
+.cards-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+.schedule-grid {
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
 
-.card, .schedule-day {
+.card,
+.schedule-day {
   border: 1px solid var(--gray-green);
   background-color: white;
 }
 
-.card, .schedule-day h2, .day-content { padding: 12px; }
+.card,
+.schedule-day h2,
+.day-content {
+  padding: 12px;
+}
 
-.card-link { display: inline-block; }
+.card-link {
+  display: inline-block;
+}
 
 .schedule-banner {
   display: block;
@@ -125,12 +162,17 @@ a:focus-visible {
 
 .schedule-day h2 {
   background-color: var(--mist-green);
-  font: bold 16px Arial, sans-serif;
+  font:
+    bold 16px Arial,
+    sans-serif;
 }
 
-.day-content { font-size: 14px; }
-.day-content h3 { font-size: 16px; }
-.day-content > * + * { margin-top: 6px; }
+.day-content {
+  font-size: 14px;
+}
+.day-content h3 {
+  font-size: 16px;
+}
 
 .event-detail {
   padding: 12px 0;

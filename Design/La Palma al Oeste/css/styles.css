@@ -1,8 +1,12 @@
+@import "tailwindcss";
+
 :root {
   --ink-green: #183c3b;
   --atlantic-green: #255b55;
   --mist-green: #e4eee8;
   --gray-green: #cad9d4;
+  --terracotta: #a94d32;
+  --light-sand: #f7f5ef;
 }
 
 * {
@@ -12,11 +16,9 @@
 body {
   min-width: 1120px;
   margin: 0;
-  background-color: #f7f5ef;
+  background-color: var(--light-sand);
   color: var(--ink-green);
-  font:
-    16px/1.5 Arial,
-    sans-serif;
+  font: Arial, sans-serif;
 }
 
 h1,
@@ -45,24 +47,11 @@ h3 {
 
 a {
   color: var(--atlantic-green);
-  text-decoration: underline;
 }
 
 a:focus-visible {
   outline: 2px solid var(--atlantic-green);
   outline-offset: 2px;
-}
-
-.skip-link {
-  position: absolute;
-  top: -60px;
-  left: 16px;
-  padding: 8px;
-  background-color: white;
-}
-
-.skip-link:focus {
-  top: 8px;
 }
 
 .site-container {
@@ -90,6 +79,10 @@ a:focus-visible {
   gap: 20px;
 }
 
+body footer {
+  align-self: self-end;
+}
+
 .header-content,
 .footer-content {
   justify-content: space-between;
@@ -106,11 +99,6 @@ a:focus-visible {
   text-decoration: none;
 }
 
-.navigation a:hover,
-.navigation .active {
-  text-decoration: underline;
-}
-
 .section {
   margin: 36px 0;
 }
@@ -121,7 +109,7 @@ a:focus-visible {
 
 .text-label,
 .event-time {
-  color: #a94d32;
+  color: var(--terracotta);
 }
 
 .cards-grid,
@@ -154,17 +142,9 @@ a:focus-visible {
   display: inline-block;
 }
 
-.schedule-banner {
-  display: block;
-  padding: 12px;
-  background-color: var(--mist-green);
-}
-
 .schedule-day h2 {
   background-color: var(--mist-green);
-  font:
-    bold 16px Arial,
-    sans-serif;
+  font: Arial, sans-serif;
 }
 
 .day-content {
@@ -177,4 +157,10 @@ a:focus-visible {
 .event-detail {
   padding: 12px 0;
   border-top: 1px solid var(--gray-green);
+}
+
+.schedule-banner {
+  display: block;
+  padding: 12px;
+  background-color: var(--mist-green);
 }

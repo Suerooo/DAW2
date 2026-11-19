@@ -10,7 +10,6 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#main-content">Saltar al contenido</a>
   <header class="site-header">
     <div class="site-container header-content">
       <a class="brand tracking-wide" href="index.html">LA PALMA AL OESTE</a>
@@ -25,53 +24,34 @@
     </div>
   </header>
 
-  <main class="site-container main-content" id="main-content">
-    <section class="section" aria-labelledby="news-heading">
+  <main class="site-container main-content">
+    <section class="section">
       <div class="section-heading">
         <p class="text-label text-sm uppercase tracking-wider">Noticias semanales · 9–15 de noviembre de 2026</p>
         <h1 id="news-heading" class="text-3xl md:text-5xl">Actualidad del oeste</h1>
-        <p class="max-w-3xl leading-relaxed">Ideas, paisajes y propuestas para preparar una visita al oeste de La Palma.</p>
+        <p class="max-w-3xl leading-relaxed">Ideas, paisajes y propuestas para preparar una visita al oeste de La Palma.
+        </p>
       </div>
-      <div class="cards-grid">
-        <article class="card rounded-xl shadow-sm" aria-labelledby="news-1-heading">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <article class="card rounded-xl shadow-sm md:row-span-2">
+          <img class="w-full h-140 object-cover rounded-2xl" src="img/news/Autobus.jpeg" alt="Autobus">
           <p class="text-label text-sm"><time datetime="2026-11-09">9 de noviembre de 2026</time> · Destacada</p>
           <h2 id="news-1-heading">La guía propone tres formas de descubrir el oeste</h2>
           <p>Una selección editorial conecta paisaje, gastronomía y planes para preparar una primera visita.</p>
-          <a class="card-link" href="#news-1-detail">Leer noticia</a>
         </article>
-        <article class="card rounded-xl shadow-sm" aria-labelledby="news-2-heading">
+        <article class="card rounded-xl shadow-sm">
+          <img class="w-full max-h-50 rounded-2xl" src="img/news/CarneCabra.jpg" alt="CarneCabra">
           <p class="text-label text-sm"><time datetime="2026-11-11">11 de noviembre de 2026</time></p>
           <h2 id="news-2-heading">Sabores locales para una escapada sin prisas</h2>
           <p>Un recorrido divulgativo presenta productos y costumbres gastronómicas de la isla.</p>
-          <a class="card-link" href="#news-2-detail">Leer noticia</a>
         </article>
-        <article class="card rounded-xl shadow-sm" aria-labelledby="news-3-heading">
+        <article class="card rounded-xl shadow-sm">
+          <img class="w-full max-h-50 rounded-2xl" src="img/news/Fotografia.jpg" alt="Fotografía">
           <p class="text-label text-sm"><time datetime="2026-11-13">13 de noviembre de 2026</time></p>
           <h2 id="news-3-heading">Cómo preparar una jornada de fotografía</h2>
           <p>Consejos generales sobre la luz, el respeto al entorno y la selección de lugares.</p>
-          <a class="card-link" href="#news-3-detail">Leer noticia</a>
         </article>
       </div>
-    </section>
-    <section class="section" aria-labelledby="news-detail-heading">
-      <div class="section-heading">
-        <h2 id="news-detail-heading">Leer las publicaciones</h2>
-      </div>
-      <article class="event-detail leading-relaxed" id="news-1-detail">
-        <h3>La guía propone tres formas de descubrir el oeste</h3>
-        <p>Una primera visita puede comenzar por los paisajes de la zona, continuar con una aproximación a los sabores tradicionales y terminar con una consulta a las propuestas de la agenda semanal.</p>
-        <p><a href="gallery.html">Explorar los paisajes</a> · <a href="schedule.html">Consultar la agenda</a></p>
-      </article>
-      <article class="event-detail leading-relaxed" id="news-2-detail">
-        <h3>Sabores locales para una escapada sin prisas</h3>
-        <p>El plátano, el queso palmero y la repostería tradicional son algunas de las referencias gastronómicas de esta guía. La sección de recomendaciones reúne ideas para conocerlas.</p>
-        <p><a href="recommendations.html#gastronomia">Ver gastronomía local</a></p>
-      </article>
-      <article class="event-detail leading-relaxed" id="news-3-detail">
-        <h3>Cómo preparar una jornada de fotografía</h3>
-        <p>Antes de salir, conviene pensar qué lugares se quieren fotografiar, qué luz habrá y cómo visitar cada entorno con respeto. La galería ofrece seis motivos como punto de partida.</p>
-        <p><a href="gallery.html">Consultar la galería</a></p>
-      </article>
     </section>
   </main>
 

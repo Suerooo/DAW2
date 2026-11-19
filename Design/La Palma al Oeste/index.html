@@ -4,116 +4,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LA PALMA AL OESTE</title>
-  <link rel="stylesheet" href="css/estilo.css">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <meta name="description" content="Paisajes, sabores y planes para descubrir el oeste de La Palma.">
+  <title>Inicio | La Palma al Oeste</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-  <header class="header">
-    <h1 class="font">LA PALMA AL OESTE</h1>
-    <nav>
-      <a href="index.html">Inicio</a>
-      <a href="galeria.html">Galería</a>
-      <a href="agenda.html">Agenda</a>
-      <a href="recomendaciones.html">Recomendaciones</a>
-      <a href="noticias.html">Noticias</a>
-      <a href="contacto.html">Contacto</a>
-    </nav>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="site-container header-content">
+      <a class="brand" href="index.html">LA PALMA AL OESTE</a>
+      <nav class="navigation">
+        <a href="index.html" class="active">Inicio</a>
+        <a href="gallery.html">Galería</a>
+        <a href="schedule.html">Agenda</a>
+        <a href="recommendations.html">Recomendaciones</a>
+        <a href="news.html">Noticias</a>
+        <a href="contact.html">Contacto</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <section>
-      <article>
-        <h1>Tu puerta al oeste de La Palma</h1>
-        <p>
-          Descubre el oeste de La Palma, un lugar lleno de
-          paisajes volcánicos, pueblos con encanto y
-          tradiciones únicas. Explora Los Llanos de Aridane,
-          Tazacorte, El Paso, Tijarafe y Puntagorda.
-          Disfruta de la gastronomía local, la naturaleza
-          y las diferentes actividades que ofrece esta
-          zona de la isla.
-        </p>
-        <a href="recomendaciones.html">
-          Explorar recomendaciones
-        </a>
-      </article>
-
-      <article>
-        <img src="" alt="Paisaje del oeste">
-      </article>
+  <main class="site-container main-content" id="main-content">
+    <section class="section">
+      <div class="hero-text">
+        <p class="text-label text-sm uppercase">Paisaje, cultura y vida local</p>
+        <h1 id="home-heading">Tu puerta al oeste de La Palma</h1>
+        <p>Descubre paisajes volcánicos, pueblos con encanto y sabores tradicionales. Explora Los Llanos de Aridane, Tazacorte, El Paso, Tijarafe y Puntagorda a tu ritmo.</p>
+      </div>
     </section>
-
-    <div>
-      <a href="agenda.html">
-        ENLACE A LA AGENDA DE ESTA SEMANA
-      </a>
-    </div>
-
-    <section>
-      <article>
-        <a href="galeria.html">
-          <img src="" alt="Descubre los paisajes del oeste">
-        </a>
-        <div>
-          <h2>Descubre el paisaje</h2>
-          <p>
-            Explora los paisajes del oeste de La Palma,
-            desde sus costas y playas hasta sus montañas
-            y miradores. Descubre lugares como el Puerto
-            de Tazacorte, los paisajes de El Paso y los
-            entornos naturales de Tijarafe y Puntagorda.
-          </p>
-        </div>
-      </article>
-
-      <article>
-        <a href="recomendaciones.html">
-          <img src="" alt="Descubre la gastronomía palmera">
-        </a>
-        <div>
-          <h2>Saborea la isla</h2>
-          <p>
-            Conoce los sabores tradicionales de La Palma.
-            Disfruta de productos locales como el plátano,
-            el queso palmero y la repostería típica.
-            Encuentra recomendaciones de restaurantes,
-            cafeterías y lugares donde conocer la
-            gastronomía de la isla.
-          </p>
-        </div>
-      </article>
-
-      <article>
-        <a href="agenda.html">
-          <img src="" alt="Consulta los planes de la semana">
-        </a>
-        <div>
-          <h2>Organiza tu semana</h2>
-          <p>
-            Consulta nuestra agenda semanal de ejemplo
-            y descubre diferentes propuestas culturales,
-            gastronómicas y actividades al aire libre.
-            Organiza tu visita y encuentra ideas para
-            disfrutar del oeste de La Palma.
-            Los eventos publicados son simulados.
-          </p>
-        </div>
-      </article>
+    <a class="schedule-banner" href="schedule.html"><span><span class="text-label text-sm uppercase">Agenda de esta semana</span><br>Del 9 al 15 de noviembre · Consulta los planes de la semana</span> <span>→</span></a>
+    <section class="section">
+      <div class="section-heading">
+        <p class="text-label text-sm uppercase">Tres formas de descubrirla</p>
+        <h2 id="suggestions-heading">Elige por dónde empezar</h2>
+      </div>
+      <div class="cards-grid">
+        <article class="card">
+          <h3>Descubre el paisaje</h3>
+          <p>De la costa de Tazacorte a los paisajes de El Paso, el oeste reúne playas, barrancos y montañas.</p>
+        </article>
+        <article class="card">
+          <h3>Saborea la isla</h3>
+          <p>Plátano, queso palmero y repostería tradicional forman parte de la cocina local.</p>
+        </article>
+        <article class="card">
+          <h3>Organiza tu semana</h3>
+          <p>Paseos, fotografía y encuentros creativos. Consulta las cinco actividades de nuestra agenda semanal.</p>
+          <a class="card-link" href="schedule.html">Consultar la agenda</a>
+        </article>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <p>
-      La Palma al Oeste - Guía turística del oeste
-      de La Palma.
-    </p>
-    <p>
-      Proyecto educativo de demostración.
-      <a href="contacto.html">Contacto</a>
-    </p>
+  <footer class="footer">
+    <div class="site-container footer-content">
+      <div>
+        <p class="footer-brand">La Palma al Oeste</p>
+        <p>Los Llanos · Tazacorte · El Paso · Tijarafe · Puntagorda</p>
+      </div>
+      <nav class="footer-links">
+        <a href="https://visitlapalma.es/">Turismo de La Palma</a>
+      </nav>
+    </div>
   </footer>
 </body>
 

@@ -1,0 +1,138 @@
+:root {
+  --ink-green: #183c3b;
+  --atlantic-green: #255b55;
+  --mist-green: #e4eee8;
+  --gray-green: #cad9d4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 1120px;
+  margin: 0;
+  background-color: #f7f5ef;
+  color: var(--ink-green);
+  font: 16px/1.5 Arial, sans-serif;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+h1, h2 {
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+h1 { font-size: 40px; }
+h2 { font-size: 26px; }
+h3 { font-size: 18px; font-weight: bold; }
+
+a {
+  color: var(--atlantic-green);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--atlantic-green);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 16px;
+  padding: 8px;
+  background-color: white;
+}
+
+.skip-link:focus { top: 8px; }
+
+.site-container {
+  width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.main-content {
+  min-height: 400px;
+}
+
+.site-header, .footer {
+  padding: 20px 0;
+  background-color: var(--mist-green);
+}
+
+.header-content, .footer-content, .navigation, .footer-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-content, .footer-content {
+  justify-content: space-between;
+}
+
+.brand, .footer-brand, .navigation .active {
+  font-weight: bold;
+}
+
+.brand, .navigation a {
+  text-decoration: none;
+}
+
+.navigation a:hover, .navigation .active {
+  text-decoration: underline;
+}
+
+.section { margin: 36px 0; }
+
+.section-heading { margin-bottom: 20px; }
+
+.section-heading > * + *,
+.hero-text > * + *,
+.card > * + *,
+.schedule-source {
+  margin-top: 12px;
+}
+
+.text-label, .event-time { color: #a94d32; }
+
+.cards-grid, .schedule-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.cards-grid { grid-template-columns: repeat(3, 1fr); }
+.schedule-grid { grid-template-columns: repeat(7, 1fr); gap: 8px; }
+
+.card, .schedule-day {
+  border: 1px solid var(--gray-green);
+  background-color: white;
+}
+
+.card, .schedule-day h2, .day-content { padding: 12px; }
+
+.card-link { display: inline-block; }
+
+.schedule-banner {
+  display: block;
+  padding: 12px;
+  background-color: var(--mist-green);
+}
+
+.schedule-day h2 {
+  background-color: var(--mist-green);
+  font: bold 16px Arial, sans-serif;
+}
+
+.day-content { font-size: 14px; }
+.day-content h3 { font-size: 16px; }
+.day-content > * + * { margin-top: 6px; }
+
+.event-detail {
+  padding: 12px 0;
+  border-top: 1px solid var(--gray-green);
+}

@@ -3,7 +3,7 @@ const cartSummary = document.getElementById("cart-summary")
 const emptyCart = document.getElementById("empty-cart")
 
 let cartQuantity = 0
-let cartTotal = 0
+let cartTotal = 0 
 
 function updateCart() {
   const cartIsEmpty = cartQuantity === 0

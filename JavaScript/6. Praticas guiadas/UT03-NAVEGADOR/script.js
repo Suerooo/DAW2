@@ -52,5 +52,19 @@ function changeTitle() {
   })
 }
 
+function openPage() {
+  btnPopup.addEventListener("click", () => {
+    const ventanaAux = window.open("", "VentanaAuxiliar", "width=400,height=300")
+
+    if (!ventanaAux || ventanaAux.closed || typeof ventanaAux.closed === "undefined") {
+      panelInfo.innerHTML = `<p class="alerta">⚠️ El navegador ha bloqueado la ventana emergente. Permite los pop-ups para este sitio.</p>`
+    } else {
+      ventanaAux.document.write("<h2>Página auxiliar abierta correctamente</h2><p>Esta ventana se generó usando <code>window.open()</code>.</p>")
+      ventanaAux.document.close()
+      panelInfo.innerHTML = `<p>✅ Página auxiliar abierta con éxito.</p>`
+    }
+  })
+}
 showHideData()
 changeTitle()
+changePage()

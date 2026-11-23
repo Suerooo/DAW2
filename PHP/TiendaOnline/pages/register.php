@@ -3,10 +3,10 @@ function registerUser(Client $client, PDO $conn): int
 {
   $stmt = $conn->prepare("INSERT INTO client (email, password_hash, name, surname) VALUES (?, ?, ?, ?)");
   $stmt->execute([
-    $client->get_email(),
-    password_hash($client->get_password(), PASSWORD_DEFAULT),
-    $client->get_name(),
-    $client->get_surname()
+    $client->getEmail(),
+    password_hash($client->getPassword(), PASSWORD_DEFAULT),
+    $client->getName(),
+    $client->getSurname()
   ]);
 
   return (int) $conn->lastInsertId();
@@ -15,27 +15,26 @@ function registerUser(Client $client, PDO $conn): int
 function showRegisterForm()
 {
 ?>
-  <h1>REGISTER</h1>
-  <form action="index.php" method="POST" enctype="multipart/form-data">
+  <section class="panel">
+    <h2>Crear una cuenta</h2>
+    <form action="index.php?view=account" method="POST" class="form-fields">
+      <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
 
-    <label for="<?= "name-register-fr" ?>">Nombre:</label>
-    <input type="text" name="<?= "name-register-fr" ?>" id="<?= "name-register-fr" ?>">
-    <br>
+      <label for="name-register-fr">Nombre</label>
+      <input type="text" name="name-register-fr" id="name-register-fr" maxlength="100" autocomplete="given-name" required>
 
-    <label for="<?= "surname-register-fr" ?>">Apellidos:</label>
-    <input type="text" name="<?= "surname-register-fr" ?>" id="<?= "surname-register-fr" ?>">
-    <br>
+      <label for="surname-register-fr">Apellidos</label>
+      <input type="text" name="surname-register-fr" id="surname-register-fr" maxlength="150" autocomplete="family-name" required>
 
-    <label for="<?= "email-register-fr" ?>">Email:</label>
-    <input type="email" name="<?= "email-register-fr" ?>" id="<?= "email-register-fr" ?>">
-    <br>
+      <label for="email-register-fr">Correo electrónico</label>
+      <input type="email" name="email-register-fr" id="email-register-fr" maxlength="190" autocomplete="email" required>
 
-    <label for="<?= "password-register-fr" ?>">Contraseña:</label>
-    <input type="password" name="<?= "password-register-fr" ?>" id="<?= "password-register-fr" ?>">
-    <br>
+      <label for="password-register-fr">Contraseña</label>
+      <input type="password" name="password-register-fr" id="password-register-fr" minlength="8" maxlength="72" autocomplete="new-password" required>
 
-    <button type="submit" name="<?= "action" ?>" value="<?= "register-action" ?>">Registrar</button>
-  </form>
+      <button type="submit" name="action" value="register-action">Registrarme</button>
+    </form>
+  </section>
 <?php
 }
 ?>

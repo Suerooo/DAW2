@@ -14,22 +14,22 @@ class Client
     $this->surname = $surname;
   }
 
-  public function get_name(): string
+  public function getName(): string
   {
     return $this->name;
   }
 
-  public function get_surname(): string
+  public function getSurname(): string
   {
     return $this->surname;
   }
 
-  public function get_email(): string
+  public function getEmail(): string
   {
     return $this->email;
   }
 
-  public function get_password(): string
+  public function getPassword(): string
   {
     return $this->password;
   }

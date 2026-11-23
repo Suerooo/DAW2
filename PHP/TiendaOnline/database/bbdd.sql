@@ -1,5 +1,5 @@
 
-CREATE DATABASE IF NOT EXISTS online_shop;
+CREATE DATABASE IF NOT EXISTS online_shop CHARACTER SET utf8mb4;
 
 USE online_shop;
 
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS category (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(255) DEFAULT NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS product (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS product (
     CONSTRAINT fk_product_category
         FOREIGN KEY (category_id) REFERENCES category(id)
         ON UPDATE CASCADE ON DELETE RESTRICT
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS client (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -33,7 +33,17 @@ CREATE TABLE IF NOT EXISTS client (
     email VARCHAR(190) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     register_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Añadir el índice también si la tabla ya existía.
+SET @email_index = (
+    SELECT IF(COUNT(*) = 0, 'ALTER TABLE client ADD UNIQUE INDEX email (email)', 'SELECT 1')
+    FROM information_schema.statistics
+    WHERE table_schema = DATABASE() AND table_name = 'client' AND index_name = 'email'
 );
+PREPARE client_email_index FROM @email_index;
+EXECUTE client_email_index;
+DEALLOCATE PREPARE client_email_index;
 
 CREATE TABLE IF NOT EXISTS orders (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -45,7 +55,7 @@ CREATE TABLE IF NOT EXISTS orders (
     CONSTRAINT fk_order_client
         FOREIGN KEY (client_id) REFERENCES client(id)
         ON UPDATE CASCADE ON DELETE RESTRICT
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS details_order (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -60,7 +70,7 @@ CREATE TABLE IF NOT EXISTS details_order (
     CONSTRAINT fk_details_product
         FOREIGN KEY (product_id) REFERENCES product(id)
         ON UPDATE CASCADE ON DELETE RESTRICT
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT IGNORE INTO category (id, name, description) VALUES
 (1, 'Ratones', 'Ratones con cable e inalámbricos'),
@@ -105,33 +115,3 @@ INSERT IGNORE INTO product
 (22, 8, 'ASUS PRIME B550M-A', 'ASUS', 'PRIME B550M-A', 'Placa base micro-ATX para procesadores AMD compatibles.', 99.00, 9, NULL),
 (23, 8, 'MSI B650 GAMING PLUS WIFI', 'MSI', 'B650 GAMING PLUS WIFI', 'Placa base ATX con conexión Wi-Fi.', 179.00, 6, NULL),
 (24, 8, 'Gigabyte B760M DS3H DDR4', 'Gigabyte', 'B760M DS3H DDR4', 'Placa base micro-ATX con ranuras para DDR4.', 119.00, 0, NULL);
-
--- CONSULTAS PARA IMPLEMENTAR LAS VISTAS EN PHP (EJEMPLOS)
---
--- Catálogo agrupado por categoría:
--- SELECT c.id AS categoria_id, c.nombre AS categoria,
---        p.id AS producto_id, p.nombre, p.precio, p.imagen, p.stock
--- FROM categorias AS c
--- LEFT JOIN productos AS p ON p.categoria_id = c.id AND p.activo = 1
--- ORDER BY c.nombre, p.nombre;
---
--- Detalle de un producto (en PHP, sustituir ? con un parámetro PDO):
--- SELECT p.*, c.nombre AS categoria
--- FROM productos p JOIN categorias c ON c.id = p.categoria_id
--- WHERE p.id = ? AND p.activo = 1;
---
--- Búsqueda AJAX, devolviendo como máximo 8 resultados (usar parámetros PDO):
--- SELECT id, nombre, precio, imagen, stock
--- FROM productos
--- WHERE activo = 1 AND (nombre LIKE CONCAT('%', ?, '%')
---     OR marca LIKE CONCAT('%', ?, '%') OR modelo LIKE CONCAT('%', ?, '%'))
--- ORDER BY nombre LIMIT 8;
---
--- Pedidos confirmados de un cliente:
--- SELECT * FROM pedidos
--- WHERE cliente_id = ? AND estado = 'confirmado'
--- ORDER BY fecha_pedido DESC;
---
--- El carrito puede guardarse en una cookie como pares producto_id/cantidad.
--- Las consultas o categorías visitadas se pueden guardar en otra cookie.
--- Nunca confiar en precios o stock de cookies: se consultan a productos.

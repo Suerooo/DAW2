@@ -1,15 +1,30 @@
 const container = document.getElementById("products")
+const cartSummary = document.getElementById("cart-summary")
+const emptyCart = document.getElementById("empty-cart")
 
-async function loadProducts() {
+let cartQuantity = 0
+let cartTotal = 0
+
+function updateCart() {
+  const cartIsEmpty = cartQuantity === 0
+  emptyCart.disabled = cartIsEmpty
+
+  if (cartIsEmpty) {
+    cartSummary.textContent = "El carrito está vacío."
+  } else {
+    const total = cartTotal.toFixed(2).replace(".", ",")
+    cartSummary.textContent = "Unidades: " + cartQuantity + " · Total: " + total + " €"
+  }
+}
+
+emptyCart.addEventListener("click", () => {
+  cartQuantity = 0
+  cartTotal = 0
+  updateCart()
+})
+
+function loadProducts() {
   try {
-    const answer = await fetch("JS/products.json")
-
-    if (!answer.ok) {
-      throw new Error("No se pudo cargar el JSON")
-    }
-
-    const products = await answer.json()
-
     products.forEach((product) => {
       const article = document.createElement("article")
       article.classList.add("article")
@@ -30,6 +45,11 @@ async function loadProducts() {
       const button = document.createElement("button")
       button.type = "button"
       button.textContent = "Añadir al carrito"
+      button.addEventListener("click", () => {
+        cartQuantity += 1
+        cartTotal += product.price
+        updateCart()
+      })
 
       info.append(name, price, button)
       article.append(img, info)
@@ -42,4 +62,5 @@ async function loadProducts() {
   }
 }
 
+updateCart()
 loadProducts()

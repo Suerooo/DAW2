@@ -1,42 +1,47 @@
 <?php
+require_once __DIR__ . '/cookie.php';
+
 class Cart
 {
-  private string $;
-  private string $password;
-  private string $name;
-  private string $surname;
+  private array $products = [];
 
-  public function __construct(string $name, string $surname, string $email, string $password)
+  public function __construct()
   {
-    $this->email = $email;
-    $this->password = $password;
-    $this->name = $name;
-    $this->surname = $surname;
+    foreach (readShopCookie('shop_cart') as $id => $amount) {
+      if (is_int($id) && $id > 0 && $id <= 4294967295 &&
+          is_int($amount) && $amount > 0 && $amount <= 4294967295) {
+        $this->products[$id] = $amount;
+      }
+    }
   }
 
-  public function get_name(): string
+  public function getProducts(): array
   {
-    return $this->name;
+    return $this->products;
   }
 
-  public function get_surname(): string
+  public function addProductCart(int $id, int $amount, int $stock): void
   {
-    return $this->surname;
+    $new_amount = ($this->products[$id] ?? 0) + $amount;
+    if ($new_amount > $stock) {
+      throw new RuntimeException("No hay stock suficiente para esa cantidad");
+    }
+
+    $products = $this->products;
+    $products[$id] = $new_amount;
+    saveShopCookie('shop_cart', $products);
+    $this->products = $products;
   }
 
-  public function get_email(): string
+  public function removeProductCart(int $id): void
   {
-    return $this->email;
+    unset($this->products[$id]);
+    saveShopCookie('shop_cart', $this->products);
   }
 
-  public function get_password(): string
+  public function clearCart(): void
   {
-    return $this->password;
+    saveShopCookie('shop_cart', []);
+    $this->products = [];
   }
-  
-  public function showCart() {}
-
-  public function addProductCart() {}
-
-  public function removeProductCart() {}
 }

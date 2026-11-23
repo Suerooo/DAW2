@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -15,10 +15,18 @@
   </header>
   <main>
     <h1>Catálogo de productos</h1>
+    <section class="cart" aria-labelledby="cart-title">
+      <div>
+        <h2 id="cart-title">Carrito</h2>
+        <p id="cart-summary" role="status"></p>
+      </div>
+      <button type="button" id="empty-cart" disabled>Vaciar carrito</button>
+    </section>
     <section class="articles-list" id="products">
     </section>
   </main>
 
+  <script src="JS/products.js" defer></script>
   <script src="JS/script.js" defer></script>
 
 </body>

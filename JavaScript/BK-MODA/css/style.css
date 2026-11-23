@@ -9,6 +9,11 @@ body {
   font-family: Arial, sans-serif;
 }
 
+header,
+main {
+  box-sizing: border-box;
+}
+
 header {
   display: flex;
   flex-direction: column;
@@ -35,6 +40,33 @@ main h1 {
   font-weight: 600;
   margin: 20px 0 35px;
   letter-spacing: 0.5px;
+}
+
+.cart {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  max-width: 440px;
+  margin: 0 auto 20px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1px solid #e8e0d5;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.cart h2 {
+  font-size: 19px;
+  margin: 0 0 4px;
+}
+
+.cart p {
+  margin: 0;
 }
 
 .articles-list {
@@ -104,8 +136,8 @@ main h1 {
   margin: 0;
 }
 
-.article button {
-  width: 100%;
+.article button,
+.cart button {
   min-height: 44px;
   padding: 10px 15px;
   border: none;
@@ -115,14 +147,24 @@ main h1 {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 10px;
 
   transition:
     background 0.3s ease,
     color 0.3s ease;
 }
 
-.article button:hover {
+.article button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.article button:hover,
+.cart button:not(:disabled):hover {
   background: #d4af70;
   color: #1c1c1c;
+}
+
+.cart button:disabled {
+  opacity: 0.5;
+  cursor: default;
 }

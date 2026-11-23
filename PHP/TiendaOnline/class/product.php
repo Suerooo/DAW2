@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/cookie.php';
 
 class Product {
     public function __construct(
@@ -18,8 +19,6 @@ class Product {
             $this->added_date = date('Y-m-d H:i:s');
         }
     }
-
-    // --- Getters ---
 
     public function getId(): int {
         return $this->id;
@@ -100,9 +99,8 @@ class Product {
 
 function getProducts(PDO $conn)
 {
-  $stmt = $conn->prepare("SELECT p.*, c.name AS category FROM product p JOIN category c ON c.id = p.category_id WHERE p.active = 1;");
-  $stmt->execute();
-  return $stmt->fetchAll();
+  return $conn->query("SELECT p.*, c.name AS category FROM product p JOIN category c ON c.id = p.category_id
+    WHERE p.active = 1 ORDER BY c.id, p.name")->fetchAll();
 }
 
 function getProductById(PDO $conn, int $id)
@@ -112,57 +110,48 @@ function getProductById(PDO $conn, int $id)
   return $stmt->fetch();
 }
 
-function getCategoryDescription(PDO $conn, string $category_name)
+function searchProducts(PDO $conn, string $search): array
 {
-  $stmt = $conn->prepare("SELECT description from category where name = ?;");
-  $stmt->execute([$category_name]);
-  $category = $stmt->fetch();
-  return $category["description"];
+  $term = '%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $search) . '%';
+  $stmt = $conn->prepare("SELECT p.id, p.name, p.category_id FROM product p JOIN category c ON c.id = p.category_id
+    WHERE p.active = 1 AND (p.name LIKE ? ESCAPE '!' OR p.brand LIKE ? ESCAPE '!'
+      OR p.model LIKE ? ESCAPE '!' OR c.name LIKE ? ESCAPE '!')
+    ORDER BY p.name LIMIT 8");
+  $stmt->execute([$term, $term, $term, $term]);
+  return $stmt->fetchAll();
 }
 
-function showProductsOrdered(PDO $conn)
+function getSearchCategories(): array
 {
-  $products = getProducts($conn);
+  $categories = array_filter(readShopCookie('shop_recommendations'), function ($id) {
+    return is_int($id) && $id > 0 && $id <= 4294967295;
+  });
+  return array_slice(array_unique($categories), 0, 5);
+}
 
-  $ordered_product = [];
-
-  foreach ($products as $product) {
-    $ordered_product[$product["category"]][] = $product;
-  }
-
-  foreach ($ordered_product as $category => $products_of_category) {
-?>
-    <section>
-      <h2><?= $category ?></h2>
-      <p><?= getCategoryDescription($conn, $category) ?></p>
-      <ul>
-        <?php foreach ($products_of_category as $product): ?>
-          <article class="product">
-            <img src="<?= $product["imagen"] ?>">
-            <h2><a href="index.php?details-product=<?= $product["id"] ?>"><?= $product["name"] ?></a></h2>
-            <p>Precio: <?= $product["price"] ?>€</p>
-          </article>
-        <?php endforeach; ?>
-      </ul>
-    </section>
-  <?php
+function saveSearchCategories(array $products): void
+{
+  if ($products) {
+    $recent_categories = [];
+    foreach ($products as $product) {
+      $recent_categories[] = (int) $product['category_id'];
+    }
+    $categories = array_unique(array_merge($recent_categories, getSearchCategories()));
+    saveShopCookie('shop_recommendations', array_slice($categories, 0, 5));
   }
 }
 
-function showDetailsProduct(PDO $conn, int $id)
+function getRecommendedProducts(PDO $conn): array
 {
-  $product = getProductById($conn, $id);
+  $categories = getSearchCategories();
+  if (!$categories) {
+    return [];
+  }
 
-  ?>
-  <article>
-    <img src="<?= $product["imagen"] ?>">
-    <h2><?= $product["name"] ?></h2>
-    <p><?= $product["description"] ?></p>
-    <p>Precio: <?= $product["price"] ?>€</p>
-    <p>Marca: <?= $product["brand"] ?></p>
-    <p>Modelo: <?= $product["model"] ?></p>
-    <p>Stock: <?= $product["stock"] ?></p>
-    <a href="index.php">Volver al catalogo</a>
-  </article>
-<?php
+  $parameters = implode(', ', array_fill(0, count($categories), '?'));
+  $stmt = $conn->prepare("SELECT id, name, price, stock, imagen FROM product
+    WHERE active = 1 AND stock > 0 AND category_id IN ($parameters)
+    ORDER BY FIELD(category_id, $parameters), name LIMIT 6");
+  $stmt->execute(array_merge($categories, $categories));
+  return $stmt->fetchAll();
 }

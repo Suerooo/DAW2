@@ -1,0 +1,52 @@
+// Variables
+$primary-color: #2563eb;
+$primary-hover: #1d4ed8;
+$bg-color: #f8fafc;
+$text-color: #1e293b;
+$radius: 8px;
+
+// Mixin reutilizable para botones
+@mixin button-style($bg, $hover-bg) {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: $bg;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: $radius;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $hover-bg;
+  }
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background-color: $bg-color;
+  color: $text-color;
+  padding: 2rem;
+}
+
+// Anidación de selectores
+.card {
+  max-width: 360px;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: $radius;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  &__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+  }
+
+  &__text {
+    margin: 0 0 1.25rem;
+    line-height: 1.5;
+  }
+
+  &__button {
+    @include button-style($primary-color, $primary-hover);
+  }
+}

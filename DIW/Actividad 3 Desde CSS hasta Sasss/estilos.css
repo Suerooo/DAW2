@@ -7,7 +7,6 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  background-color: oklch(96.8% 0.007 247.896deg);
   color: oklch(27.9% 0.041 260.031deg);
 }
 
@@ -80,18 +79,23 @@ p {
   margin-bottom: 0;
 }
 .destacado .boton {
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+.destacado .boton:hover {
+  background-color: #eff6ff;
+}
+.destacado .boton {
   display: inline-block;
-  background-color: oklch(82.8% 0.189 84.429deg);
-  color: oklch(27.9% 0.041 260.031deg);
   font-weight: 600;
   padding-block: 0.75rem;
   padding-inline: 1.25rem;
   margin-top: 1.5rem;
   border-radius: 0.5rem;
   text-decoration: inherit;
-}
-.destacado .boton:hover {
-  background-color: oklch(87.1% 0.189 84.429deg);
 }
 
 .tarjetas {

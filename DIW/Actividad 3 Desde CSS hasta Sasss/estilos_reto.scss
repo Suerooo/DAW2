@@ -13,6 +13,35 @@ $color-slate-800: oklch(27.9% 0.041 260.031);
 $color-slate-900: oklch(27.9% 0.041 260.031);
 $spacing: 0.25rem;
 
+@mixin boton($variante: "primario") {
+  padding: 10px 16px;
+  border-radius: 6px;
+
+  @if $variante == "primario" {
+    background-color: $color-amber-400;
+    color: $color-slate-900;
+
+    &:hover {
+      background-color: color.scale($color-amber-400, $lightness: 25%);
+    }
+  } @else if $variante == "secundario" {
+    background-color: #e5e7eb;
+    color: #111827;
+
+    &:hover {
+      background-color: #d1d5db;
+    }
+  } @else {
+    background-color: transparent;
+    color: #2563eb;
+    border: 1px solid #2563eb;
+
+    &:hover {
+      background-color: #eff6ff;
+    }
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -22,7 +51,6 @@ $spacing: 0.25rem;
 body {
   margin: 0;
   font-family: $fonts-sans;
-  background-color: $color-slate-100;
   color: $color-slate-800;
 }
 
@@ -105,19 +133,14 @@ p {
   }
 
   .boton {
+    @include boton("transparent");
     display: inline-block;
-    background-color: $color-amber-400;
-    color: $color-slate-900;
     font-weight: 600;
     padding-block: calc($spacing * 3);
     padding-inline: calc($spacing * 5);
     margin-top: calc($spacing * 6);
     border-radius: 0.5rem;
     text-decoration: inherit;
-
-    &:hover {
-      background-color: color.scale($color-amber-400, $lightness: 25%);
-    }
   }
 }
 
@@ -158,7 +181,7 @@ p {
   padding-block: calc($spacing * 6);
   padding-inline: calc($spacing * 6);
   background-color: $color-slate-800;
-  
+
   p {
     margin-bottom: 0;
   }

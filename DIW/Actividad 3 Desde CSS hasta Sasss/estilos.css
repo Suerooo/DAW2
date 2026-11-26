@@ -1,0 +1,134 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  background-color: oklch(96.8% 0.007 247.896deg);
+  color: oklch(27.9% 0.041 260.031deg);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+.cabecera {
+  background-color: oklch(45.7% 0.24 277.023deg);
+  color: white;
+}
+.cabecera .interior {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.cabecera h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+.cabecera .menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.cabecera .menu a {
+  color: white;
+  text-decoration: none;
+}
+.cabecera .menu a:hover {
+  text-decoration: underline;
+}
+
+.contenido {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.destacado {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+.destacado .etiqueta {
+  text-transform: uppercase;
+  color: oklch(45.7% 0.24 277.023deg);
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+.destacado h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+.destacado .descripcion {
+  color: oklch(44.6% 0.043 257.281deg);
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+.destacado .boton {
+  display: inline-block;
+  background-color: oklch(82.8% 0.189 84.429deg);
+  color: oklch(27.9% 0.041 260.031deg);
+  font-weight: 600;
+  padding-block: 0.75rem;
+  padding-inline: 1.25rem;
+  margin-top: 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: inherit;
+}
+.destacado .boton:hover {
+  background-color: oklch(87.1% 0.189 84.429deg);
+}
+
+.tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+.tarjetas .tarjeta {
+  flex: 1 1 200px;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px oklch(45.7% 0.24 277.023deg / 0.15), 0 2px 4px -2px oklch(45.7% 0.24 277.023deg / 0.15);
+}
+.tarjetas .tarjeta:hover {
+  background-color: rgb(92%, 92%, 92%);
+}
+.tarjetas .tarjeta .icono {
+  font-size: 1.875rem;
+}
+.tarjetas .tarjeta h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.tarjetas .tarjeta p {
+  color: oklch(44.6% 0.043 257.281deg);
+}
+
+.pie {
+  color: white;
+  text-align: center;
+  padding-block: 1.5rem;
+  padding-inline: 1.5rem;
+  background-color: oklch(27.9% 0.041 260.031deg);
+}
+.pie p {
+  margin-bottom: 0;
+}
+
+/*# sourceMappingURL=estilos.css.map */

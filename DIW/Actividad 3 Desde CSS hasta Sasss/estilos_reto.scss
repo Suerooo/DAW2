@@ -1,0 +1,165 @@
+// PRÁCTICA SASS: completa las reglas para reproducir la referencia.
+// @if, @else y @for se estudiarán en la próxima sesión.
+@use "sass:color";
+
+// PISTA: los colores base de Tailwind pueden verse en la web de referencia.
+$fonts-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$color-indigo-600: oklch(51.1% 0.262 276.966);
+$color-indigo-700: oklch(45.7% 0.24 277.023);
+$color-amber-400: oklch(82.8% 0.189 84.429);
+$color-slate-100: oklch(96.8% 0.007 247.896);
+$color-slate-600: oklch(44.6% 0.043 257.281);
+$color-slate-800: oklch(27.9% 0.041 260.031);
+$color-slate-900: oklch(27.9% 0.041 260.031);
+$spacing: 0.25rem;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $fonts-sans;
+  background-color: $color-slate-100;
+  color: $color-slate-800;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+.cabecera {
+  background-color: $color-indigo-700;
+  color: white;
+
+  .interior {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    a {
+      color: white;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.contenido {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.destacado {
+  background-color: white;
+  padding: calc($spacing * 8);
+  border-radius: 0.75rem;
+  margin-bottom: calc($spacing * 8);
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+  .etiqueta {
+    text-transform: uppercase;
+    color: $color-indigo-700;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin-bottom: calc($spacing * 2);
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+  }
+
+  .descripcion {
+    color: $color-slate-600;
+    margin-top: calc($spacing * 4);
+    margin-bottom: 0;
+  }
+
+  .boton {
+    display: inline-block;
+    background-color: $color-amber-400;
+    color: $color-slate-900;
+    font-weight: 600;
+    padding-block: calc($spacing * 3);
+    padding-inline: calc($spacing * 5);
+    margin-top: calc($spacing * 6);
+    border-radius: 0.5rem;
+    text-decoration: inherit;
+
+    &:hover {
+      background-color: color.scale($color-amber-400, $lightness: 25%);
+    }
+  }
+}
+
+.tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+
+  .tarjeta {
+    flex: 1 1 200px;
+    padding: calc($spacing * 6);
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow:
+      0 4px 6px -1px color.change($color-indigo-700, $alpha: 0.15),
+      0 2px 4px -2px color.change($color-indigo-700, $alpha: 0.15);
+
+    &:hover {
+      background-color: color.scale(white, $lightness: -8%);
+    }
+
+    .icono {
+      font-size: 1.875rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    p {
+      color: $color-slate-600;
+    }
+  }
+}
+
+.pie {
+  color: white;
+  text-align: center;
+  padding-block: calc($spacing * 6);
+  padding-inline: calc($spacing * 6);
+  background-color: $color-slate-800;
+  
+  p {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rutas de La Palma | Versión Sass</title>
+  <!-- NO incluir Tailwind en esta versión. -->
+  <link rel="stylesheet" href="estilos.css">
+
+<body>
+  <header class="cabecera">
+    <div class="interior">
+      <h1>Rutas de La Palma</h1>
+      <nav class="menu" aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#rutas">Rutas</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio" class="contenido">
+    <section class="destacado" aria-labelledby="titulo-principal">
+      <p class="etiqueta">Explora la isla</p>
+      <h2 id="titulo-principal">Descubre La Palma a tu ritmo</h2>
+      <p class="descripcion">Tres propuestas para disfrutar de la naturaleza, los paisajes y la costa.</p>
+      <a class="boton" href="#rutas">Ver las rutas</a>
+    </section>
+
+    <section id="rutas" class="tarjetas" aria-label="Rutas recomendadas">
+      <article class="tarjeta">
+        <div class="icono" aria-hidden="true">🥾</div>
+        <h3>Senderismo</h3>
+        <p>Caminos entre bosques y paisajes volcánicos.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="icono" aria-hidden="true">🌊</div>
+        <h3>Costa</h3>
+        <p>Playas y miradores junto al Atlántico.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="icono" aria-hidden="true">🌌</div>
+        <h3>Estrellas</h3>
+        <p>Cielos nocturnos para descubrir el universo.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer id="contacto" class="pie">
+    <p>Práctica de Diseño de Interfaces Web · La Palma</p>
+  </footer>
+</body>
+
+</html>

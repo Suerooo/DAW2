@@ -1,0 +1,24 @@
+/* CSS tradicional: los elementos se distribuyen con Flexbox. */
+.cabecera-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.menu-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.tarjetas-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.tarjetas-flex > article {
+  flex: 1 1 220px;
+}

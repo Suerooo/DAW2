@@ -1,0 +1,29 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; background: #f5f4f0; color: #202820; }
+header { background: #183c32; color: white; padding: 36px max(24px, calc((100% - 1040px)/2)); }
+.marca { font-size: 12px; font-weight: bold; letter-spacing: 3px; color: #d8e9b9; margin-bottom: 25px; }
+header h1 { margin: 0; font-size: clamp(30px, 5vw, 46px); letter-spacing: -1.5px; }
+header p { margin: 10px 0 0; color: #d6e4db; }
+main { max-width: 1088px; margin: 28px auto; padding: 0 24px 40px; }
+.intro { margin-bottom: 24px; }
+.intro span { font-size: 12px; font-weight: bold; letter-spacing: 2px; color: #486557; }
+.intro p { margin: 8px 0; color: #56635a; }
+.distribucion { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.panel { background: white; padding: 28px; border: 1px solid #dfe3da; border-radius: 14px; }
+.resultados { display: grid; gap: 20px; }
+h2 { font-size: 21px; margin: 0 0 22px; letter-spacing: -.4px; }
+label { display: block; font-size: 14px; font-weight: bold; margin: 18px 0 8px; }
+input, select { width: 100%; padding: 12px; border: 1px solid #b9c5bb; border-radius: 7px; background: #fafbf8; color: inherit; font: inherit; }
+input:focus, select:focus, button:focus-visible { outline: 2px solid #4c8065; outline-offset: 3px; }
+.checkbox { display: flex; align-items: center; gap: 10px; font-weight: normal; }
+.checkbox input { width: auto; accent-color: #183c32; }
+.botones { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+button { padding: 13px 20px; border: 1px solid #183c32; border-radius: 7px; cursor: pointer; background: #183c32; color: white; font: inherit; font-weight: bold; }
+#calcular { flex: 1; }
+#limpiar { background: white; color: #183c32; }
+button:hover { filter: brightness(.92); }
+#error { color: #a52222; line-height: 1.5; }
+#error:empty { margin: 0; }
+#resultado, #entradas { line-height: 1.8; min-height: 70px; overflow-wrap: anywhere; }
+#resultado:empty, #entradas:empty { border: 1px dashed #d2dbd0; border-radius: 8px; background: #fafbf8; }
+@media (max-width: 720px) { .distribucion { grid-template-columns: 1fr; } .panel { padding: 22px; } }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TicketShop</title>
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+  <header>
+    <div class="marca">TICKET / SHOP</div>
+    <h1>Reserva tus entradas</h1>
+    <p>Sistema de gestión y venta de entradas</p>
+  </header>
+  <main>
+    <div class="intro"><span>RESERVAS · 01</span>
+      <p>Selecciona tus entradas y consulta el resumen de tu compra.</p>
+    </div>
+    <div class="distribucion">
+      <section class="panel reserva">
+        <h2>Datos de la reserva</h2>
+        <label for="nombre">Nombre del cliente</label>
+        <input type="text" id="nombre">
+        <label for="edad">Edad</label>
+        <input type="number" id="edad">
+        <label for="tipo">Tipo de entrada</label>
+        <select id="tipo">
+          <option value="">Seleccionar entrada</option>
+          <option value="general">General - 15 €</option>
+          <option value="premium">Premium - 25 €</option>
+          <option value="vip">VIP - 40 €</option>
+        </select>
+        <label for="cantidad">Número de entradas</label>
+        <input type="number" id="cantidad">
+        <label for="estudiante">Estudiante</label>
+        <select id="estudiante">
+          <option value="">Seleccionar una opción</option>
+          <option value="true">Si soy un estudiante</option>
+          <option value="false">No soy un estudiante</option>
+        </select>
+        <div class="botones">
+          <button type="button" id="calcular">Calcular reserva</button>
+          <button type="button" id="limpiar">Limpiar</button>
+        </div>
+        <p id="error" role="alert"></p>
+      </section>
+      <div class="resultados">
+        <section class="panel">
+          <h2>Resumen de la reserva</h2>
+          <div id="resultado"></div>
+        </section>
+        <section class="panel">
+          <h2>Entradas generadas</h2>
+          <div id="entradas"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
